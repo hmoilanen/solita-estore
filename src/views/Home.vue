@@ -1,18 +1,15 @@
 <template>
-  <div class="home">
-    <img alt="Vue logo" src="../assets/logo.png">
-    <HelloWorld msg="Welcome to Your Vue.js App"/>
+  <div class="view--home">
+    <QuantitySelector/>
   </div>
 </template>
 
 <script>
-// @ is an alias to /src
-import HelloWorld from '@/components/HelloWorld.vue'
+import QuantitySelector from '@/components/QuantitySelector'
 
 export default {
-  name: 'Home',
-  components: {
-    HelloWorld
-  }
+	name: 'ViewHome',
+
+	components: { QuantitySelector }
 }
 </script>
