@@ -1,0 +1,31 @@
+// // // // // // // // // //
+Vuex / store:
+-ostoskori
+-itemit
+
+// // // // // // // // // //
+Logiikka:
+-increaseAmountOfProducts
+-decreaseAmountOfProducts
+-addProductToCart
+-removeProductFromCart
+-emptyCart
+-makePurchase
+
+// // // // // // // // // //
+Rakenne:
+-perusnäkymä (valittavat tuotteet)
+	-tuote
+		=tuotetiedot
+		-addToCart-nappi
+-ostoskorinäkymä (valitut tuotteet) -> oma route?
+	-tuote
+		-määrä
+	-summa
+	-kassalle-nappi
+-ostotapahtuma ("modaali"?)
+	-phase 1: valitut tuotteet ja varmistus
+	-phase 2: ostajan tiedot (+ vastaanottajan tiedot jos eri)
+	-phase 3: maksutiedot (tee dummyna!)
+	-phase 4: palaute ostotapahtumasta (success / error -> käytä huumoria :))
+

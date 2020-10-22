@@ -1,25 +1,29 @@
 <template>
 	<div class="quantity-selector">
 		<button
-			@click="increase"
+			@click="increaseAmount"
 			:class="classing.increase"
 		>+</button>
 		<div class="amount">{{ amount }}</div>
 		<button
-			@click="decrease"
+			@click="decreaseAmount"
 			:class="classing.decrease"
 		>-</button>
 	</div>
 </template>
 
 <script>
-import increaseAmount from '@/logic/increaseAmount'
-import decreaseAmount from '@/logic/decreaseAmount'
+import increaseAmountOfProducts from '@/logic/increaseAmountOfProducts'
+import decreaseAmountOfProducts from '@/logic/decreaseAmountOfProducts'
 
 export default {
 	name: 'QuantitySelector',
 
 	props: {
+		value: {
+			type: Number,
+			//required: true
+		},
 		max: {
 			type: Number,
 			default: 5
@@ -33,14 +37,22 @@ export default {
 		}
 	},
 
+	created() {
+		// If amount is v-model:ed from parent
+		if (this.value) {
+			this.amount = this.value
+		}
+	},
+
 	methods: {
-		increase() {
-			this.amount = increaseAmount(this.amount, this.max)
+		increaseAmount() {
+			this.amount = increaseAmountOfProducts(this.amount, this.max)
+			this.$emit('input', this.amount)
 		},
 
-		decrease() {
-			// Decreasing amount of items can't get below 0!
-			this.amount = decreaseAmount(this.amount, this.min)
+		decreaseAmount() {
+			this.amount = decreaseAmountOfProducts(this.amount, this.min)
+			this.$emit('input', this.amount)
 		},
 	},
 
