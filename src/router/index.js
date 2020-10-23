@@ -14,6 +14,16 @@ const routes = [
     name: 'Shop',
     component: () => import('@/views/Shop')
   },
+  {
+    path: '/cart',
+    name: 'Cart',
+    component: () => import('@/views/Cart')
+  },
+  {
+    path: '/checkout',
+    name: 'Checkout',
+    component: () => import('@/views/Checkout')
+  },
 ]
 
 const router = new VueRouter({

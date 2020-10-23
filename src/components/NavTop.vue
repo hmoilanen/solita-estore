@@ -4,17 +4,17 @@
 			<strong>WHEE</strong>
 			<span>The most definitive shape store in the wööörld</span>
 		</div>
-		<Nav-top-cart-summary/>
+		<Nav-top-cart/>
 	</div>
 </template>
 
 <script>
-import NavTopCartSummary from '@/components/NavTopCartSummary'
+import NavTopCart from '@/components/NavTopCart'
 
 export default {
 	name: 'NavTop',
 
-	components: { NavTopCartSummary }
+	components: { NavTopCart }
 }
 </script>
 
