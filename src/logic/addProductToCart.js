@@ -1,3 +1,4 @@
-export default function addProductToCart(productName) {
-	console.log(productName, 'added to cart!');
+export default function addProductToCart(product) {
+	console.log(product.name, 'added to cart!');
+	//...
 }

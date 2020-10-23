@@ -17,7 +17,9 @@ export default {
 
 	methods: {
 		addToCart() {
-			addProductToCart(this.product.name)
+			addProductToCart(this.product) // DUMMY VIELÄ TÄLLÄ HETKELLÄ
+
+			this.$store.dispatch('ADD_PRODUCT_TO_CART', this.product)
 		}
 	}
 }

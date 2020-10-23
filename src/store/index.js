@@ -5,7 +5,7 @@ Vue.use(Vuex)
 
 export default new Vuex.Store({
   state: {
-		currency: 'eu',
+		//currency: 'eu', // OTA MYÖHEMMIN KÄYTTÖÖN
 		products: [
 			{
 				id: 'jxTCTha12r',
@@ -30,26 +30,33 @@ export default new Vuex.Store({
 			}
 		],
 		cart: {
-			products: [
-				/* product: {
-					amount: 0,
-					price: 0,
-					name: '',
-					description: ''
-				} */
-			],
-			sum: 0
+			products: {} // Stored with product.id as a key
 		}
 	},
 	
   getters: {
-		//GET_PRICE
+		//GET_PRICE (with custom currency!)
 	},
 
   mutations: {
+		ADD_PRODUCT_TO_CART: (state, product) => {
+			const productsInCart = state.cart.products
+			let productToAdd = { ...product, amount: 1 }
+
+			// If similar product is aready added to cart
+			// just increase it's amount property.
+			if (productsInCart[product.id]) {
+				productToAdd.amount = productsInCart[product.id].amount + 1
+			}
+
+			Vue.set(state.cart.products, product.id, productToAdd)
+		}
 	},
 	
   actions: {
+		ADD_PRODUCT_TO_CART: ({commit}, product) => {
+			commit('ADD_PRODUCT_TO_CART', product)
+		}
 	},
 	
   modules: {

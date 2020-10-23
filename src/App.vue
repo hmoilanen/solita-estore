@@ -1,8 +1,19 @@
 <template>
   <div id="app">
+		<Nav-top/>
     <router-view/>
   </div>
 </template>
+
+<script>
+import NavTop from '@/components/NavTop'
+
+export default {
+	name: 'App',
+
+	components: { NavTop }
+}
+</script>
 
 <style lang="scss">
 *,

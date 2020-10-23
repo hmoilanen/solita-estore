@@ -1,4 +1,11 @@
 // // // // // // // // // //
+App - yleisiä ajatuksia / ideoita:
+-hae tuotteet erillisestä js-filusta (mock request) ja talleta ne storeen
+	-> see: https://mocki.io/
+-kun ostoskori päivittyy, päivitä myös ko. cookiet / local storage
+	-> ...jotta ostotapahtuma ei mene hukkaan vaikka esim selain kaatuu
+
+// // // // // // // // // //
 Vuex / store:
 -ostoskori
 -itemit
@@ -14,6 +21,8 @@ Logiikka:
 
 // // // // // // // // // //
 Rakenne:
+-ländäysnäkymä / home
+	-linkki varisnaiseen kauppaan
 -perusnäkymä (valittavat tuotteet)
 	-tuote
 		=tuotetiedot
@@ -29,3 +38,27 @@ Rakenne:
 	-phase 3: maksutiedot (tee dummyna!)
 	-phase 4: palaute ostotapahtumasta (success / error -> käytä huumoria :))
 
+// // // // // // // // // //
+Bäkkiin lähtevä data: 
+
+tilaus: {
+	tekijä: {
+		...tiedot
+	},
+	tuotteet: [
+		tuote1: {
+			id: '',
+			nimi: '',
+			määrä: '',
+			...?
+		},
+		tuote2: {
+			id: '',
+			nimi: '',
+			määrä: '',
+			...?
+		},
+		...
+	],
+	// laskutus ei kuulu tähän datapakettiin
+}
