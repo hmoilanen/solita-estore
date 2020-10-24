@@ -62,3 +62,36 @@ tilaus: {
 	],
 	// laskutus ei kuulu tähän datapakettiin
 }
+
+
+// // // // // // // // // // // // // // // // // // // // 
+Checkout:
+-sisältää komponentit:
+	-CheckoutPhase
+	-CheckoutSummary
+-pitää lukua mi(t)kä phaset on validoitu
+-pitää lukua mikä phase on auki (piilottaa muut)
+-syöttää CheckoutPhase:en proppina mitkä kaikki phaset on validoitu
+
+// // //
+CheckoutPhase:
+-sisältää validate-napin (jatka)
+	-täytyy painaa joka kerta kun tietoja muutetaan
+-sisältää edit-napin (muokkaa)
+	-täytyy painaa joka kerta kun tietoja haluaa uudelleenmuuttaa
+
+-tallettaa tiedot storeen !!!
+	-halutaan pitää tallessa, koska esim tilausta pitää voida vielä muuttaa!
+-huom!: pitääköhän tehdä niin että luottokortin tietoja ei koskaan tallenneta
+	-> pitää aina täyttää uudelleen tietoturvan takia
+
+-viimeinen phase (= payment) sisältää "lähetä/vahvista tilaus"-napin
+	-...joka ottaa storesta tarvittavat tiedot ja koostaa niistä halutun dataobjektin
+
+// // //
+CheckoutSummary:
+-sisältää tiedot:
+	-otsikko: "Tilauksen yhteenveto" + linkki takaisin ostoskoriin
+	-mitä tuotteita tilattu
+	-kuponki-input + vahvista-nappi (vaikuttaa summaan) -> lisää tähän myös jotain huumoria
+	-"yhteensä" + summa
