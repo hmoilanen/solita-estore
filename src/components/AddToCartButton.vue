@@ -1,5 +1,5 @@
 <template>
-	<button @click="addToCart">add to cart</button>
+	<button @click="addToCart">lisää ostoskoriin</button>
 </template>
 
 <script>
@@ -12,14 +12,21 @@ export default {
 		product: {
 			type: Object,
 			required: true
+		},
+		amount: {
+			type: Number,
+			required: true
 		}
 	},
 
 	methods: {
 		addToCart() {
-			addProductToCart(this.product) // DUMMY VIELÄ TÄLLÄ HETKELLÄ
+			//addProductToCart(this.product) // DUMMY VIELÄ TÄLLÄ HETKELLÄ
 
-			this.$store.dispatch('ADD_PRODUCT_TO_CART', this.product)
+			this.$store.dispatch('ADD_PRODUCT_TO_CART', {
+				product: this.product,
+				amount: this.amount
+			})
 		}
 	}
 }

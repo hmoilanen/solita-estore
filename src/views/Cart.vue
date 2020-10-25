@@ -1,9 +1,12 @@
 <template>
   <div class="view--cart">
 		<router-link :to="{ name: 'Shop' }">takaisin kauppaan</router-link>
+
+		<h1>Ostoskori</h1>
 		
 		<template v-if="typeof productsInCart === 'object'">
-			<Cart-product
+			<Cart-summary/>
+			<Product
 				v-for="product in productsInCart"
 				:key="product.id"
 				:product="product"
@@ -15,12 +18,16 @@
 </template>
 
 <script>
-import CartProduct from '@/components/CartProduct'
+import CartSummary from '@/components/CartSummary'
+import Product from '@/components/Product'
 
 export default {
 	name: 'ViewCart',
 
-	components: { CartProduct },
+	components: {
+		CartSummary,
+		Product
+	},
 
 	computed: {
 		productsInCart() {

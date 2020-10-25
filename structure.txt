@@ -107,3 +107,46 @@ CheckoutPhase:
 -> kun validoidaan, luetaan storen arvot ja jos ei ole ok invalidate
 -> kun phase3 kopioidaan phase2:sta, sitä EI kuitenkaan validoida!!!
 -> jos phase2 editoidaan ja duplikoidaan, se muuttaa AINA validoidessa valluet vastaamaan phase2:sta
+
+// // // // // // // // // // // // // // // // // // // // 
+Product:
+
+-yhdistä CartProduct ja ShopProduct (turha tehdä samoja asioita moneen kertaan)
+
+// // //
+Product - ominaisuudet (toiminnallisuus mahdolistetaan tilanteen mukaan):
+-1. tiedot
+-2. tuotteiden määrän lisääminen (QuantitySelector)
+-3. add product -nappi (AddToCartButton)
+-4. remove product -nappi
+
+// // //
+Tilanteet:
+-shop: 1,2,3
+-cart: 1,2,4
+-checkout: 1
+
+// // //
+Propit / data:
+-jos SHOP:
+	-product: product
+	-amount: amount
+-jos CART:
+	-product: product
+	-amount: product.amount
+-jos CHECKOUT:
+	-product: product
+	-amount: product.amount
+
+-> määrän päpivittäminen -> kaksi erilaista moodia
+	-päivitä määrä komponentissa ja vasta storessa, kun tuote lisätään koriin
+	-päivitä määrä suoraan storeen
+	-> props.mode = 'shop' /  'cart' TAI katsotaan aautomaattisesti!
+
+// // //
+Toiminnallisuus:
+-kun painetaan "add to cart" -nappia, lisätäämn tuote storeen
+	-jos painetaan uudestaan, tarkastetaan onko tuotetta vielä storessa...
+		-jos on, lisätään vain lisättty määrä olemassaolevaan
+-lisää myöhemmin: QuantitySelectorissa numero pitää voida syöttää myös näppäimistöltä (= input)
+-lisää localStore refressi' varten

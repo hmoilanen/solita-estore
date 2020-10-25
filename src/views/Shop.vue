@@ -1,6 +1,8 @@
 <template>
   <div class="view--home">
-    <Shop-product
+		<h1>Tuotteet / kauppa</h1>
+
+    <Product
 			v-for="product in products"
 			:key="product.id"
 			:product="product"
@@ -9,12 +11,12 @@
 </template>
 
 <script>
-import ShopProduct from '@/components/ShopProduct'
+import Product from '@/components/Product'
 
 export default {
 	name: 'ViewHome',
 
-	components: { ShopProduct },
+	components: { Product },
 
 	computed: {
 		products() {

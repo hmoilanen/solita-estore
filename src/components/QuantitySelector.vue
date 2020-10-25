@@ -4,7 +4,7 @@
 			@click="increaseAmount"
 			:class="classing.increase"
 		>+</button>
-		<div class="amount">{{ amount }}</div>
+		<div class="amount">{{ value }}</div>
 		<button
 			@click="decreaseAmount"
 			:class="classing.decrease"
@@ -22,47 +22,37 @@ export default {
 	props: {
 		value: {
 			type: Number,
-			//required: true
+			required: true
 		},
 		max: {
 			type: Number,
-			default: 5
-		}
+			default: 50
+		},
+		min: {
+			type: Number,
+			default: 1
+		},
 	},
-
-	data() {
-		return {
-			amount: 0,
-			min: 0
-		}
-	},
-
-	created() {
-		// If amount is v-model:ed from parent
-		if (this.value) {
-			this.amount = this.value
+	
+	computed: {
+		classing() {
+			return {
+				increase: { disabled: this.value >= this.max },
+				decrease: { disabled: this.value <= this.min }
+			}
 		}
 	},
 
 	methods: {
 		increaseAmount() {
-			this.amount = increaseAmountOfProducts(this.amount, this.max)
-			this.$emit('input', this.amount)
+			const increasedAmount = increaseAmountOfProducts(this.value, this.max)
+			this.$emit('input', increasedAmount)
 		},
 
 		decreaseAmount() {
-			this.amount = decreaseAmountOfProducts(this.amount, this.min)
-			this.$emit('input', this.amount)
+			const decreasedAmount = decreaseAmountOfProducts(this.value, this.min)
+			this.$emit('input', decreasedAmount)
 		},
-	},
-
-	computed: {
-		classing() {
-			return {
-				increase: { disabled: this.amount === this.max },
-				decrease: { disabled: this.amount === this.min }
-			}
-		}
 	}
 }
 </script>

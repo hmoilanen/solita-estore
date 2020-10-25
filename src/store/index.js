@@ -8,7 +8,9 @@ Vue.use(Vuex)
 export default new Vuex.Store({
   state: {
 		//currency: 'eu', // OTA MYÖHEMMIN KÄYTTÖÖN
+
 		products: [
+			// SIIRRÄ NÄMÄ ERILLISEEN JS-FILUUN JA LATAA TÄNNE KÄYNNISTYKSEN YHTEYDESSÄ!
 			{
 				id: 'jxTCTha12r',
 				name: 'Circle',
@@ -70,6 +72,28 @@ export default new Vuex.Store({
   getters: {
 		//GET_PRICE (with custom currency!)
 
+		TOTAL_AMOUNT_OF_PRODUCTS_IN_CART: state => {
+			const products = state.cart.products
+			let totalAmount = 0
+
+			for (const product in products) {
+				totalAmount += products[product].amount
+			}
+
+			return totalAmount
+		},
+
+		SUMMARY_OF_PRODUCT_PRICES: state => {
+			const products = state.cart.products
+			let subtotal = 0
+
+			for (const product in products) {
+				subtotal += (products[product].amount * products[product].price)
+			}
+
+			return subtotal
+		},
+
 		ALL_CHECKOUT_PHASES_VALIDATED: state => {
 			let allPhasesValidated = true
 
@@ -99,17 +123,25 @@ export default new Vuex.Store({
 	},
 
   mutations: {
-		ADD_PRODUCT_TO_CART: (state, product) => {
+		ADD_PRODUCT_TO_CART: (state, { product, amount }) => {
 			const productsInCart = state.cart.products
-			let productToAdd = { ...product, amount: 1 }
+			let productToAdd = { ...product, amount }
 
-			// If similar product is aready added to cart
-			// just increase it's amount property.
+			// If similar product is aready added to cart just increase the amount
 			if (productsInCart[product.id]) {
-				productToAdd.amount = productsInCart[product.id].amount + 1
+				console.log('määrän lisäys');
+				const newAmount = productsInCart[product.id].amount + amount
+
+				Vue.set(productsInCart[product.id], 'amount', newAmount)
+				return
 			}
 
+			// Add the new product to cart
 			Vue.set(state.cart.products, product.id, productToAdd)
+		},
+
+		UPDATE_PRODUCT_AMOUNT: (state, { productId, amount }) => {
+			Vue.set(state.cart.products[productId], 'amount', amount)
 		},
 
 		UPDATE_CHECKOUT_PHASE: (state, { phaseFields, phaseId, duplicated }) => {
@@ -158,8 +190,12 @@ export default new Vuex.Store({
 	},
 	
   actions: {
-		ADD_PRODUCT_TO_CART: ({commit}, product) => {
-			commit('ADD_PRODUCT_TO_CART', product)
+		ADD_PRODUCT_TO_CART: ({commit}, { product, amount }) => {
+			commit('ADD_PRODUCT_TO_CART', { product, amount })
+		},
+
+		UPDATE_PRODUCT_AMOUNT: ({ commit }, { productId, amount }) => {
+			commit('UPDATE_PRODUCT_AMOUNT',  { productId, amount })
 		},
 
 		UPDATE_CHECKOUT_PHASE: ({ commit }, { phaseFields, phaseId, duplicated }) => {

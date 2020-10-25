@@ -1,15 +1,19 @@
 <template>
-	<div class="nav-top-cart">
-		<button @click="goToCart">{{ productsInCart }}</button>
+	<div class="nav-top-summary">
+		<button @click="goToCart">{{ totalAmountOfProducts }}</button>
 	</div>
 </template>
 
 <script>
 export default {
-	name: 'NavTopCartSummary',
+	name: 'NavTopSummary',
 
 	computed: {
-		productsInCart() {
+		totalAmountOfProducts() {
+			return this.$store.getters['TOTAL_AMOUNT_OF_PRODUCTS_IN_CART']
+		}
+		//...mapGetters({ totalAmountOfProducts: 'TOTAL_AMOUNT_OF_PRODUCTS_IN_CART' })
+		/* productsInCart() {
 			const products = this.$store.state.cart.products
 			let total = 0
 
@@ -18,7 +22,7 @@ export default {
 			}
 
 			return total
-		}
+		} */
 	},
 
 	methods: {
@@ -32,7 +36,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.nav-top-cart {
+.nav-top-summary {
 	button {
 		width: 30px; // DUMMY
 		height: 30px; // DUMMY

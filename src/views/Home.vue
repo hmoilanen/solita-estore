@@ -1,24 +1,9 @@
 <template>
   <div class="view--home">
-		<router-link to="/shop">to shop</router-link>
-    <QuantitySelector/>
-    <!-- <QuantitySelector v-model="amount"/> -->
-		<div>amount: {{amount}}</div>
+		<router-link :to="{ name: 'Shop' }">to shop</router-link>
   </div>
 </template>
 
 <script>
-import QuantitySelector from '@/components/QuantitySelector'
-
-export default {
-	name: 'ViewHome',
-
-	components: { QuantitySelector },
-
-	/* data() {
-		return {
-			amount: 4
-		}
-	} */
-}
+export default { name: 'ViewHome' }
 </script>
