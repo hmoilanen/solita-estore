@@ -24,10 +24,22 @@ export default {
 	padding: 0;
 }
 
+
+input {
+	&[type='number'] {
+  	-moz-appearance:textfield;
+	}
+	&::-webkit-outer-spin-button,
+	&::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+	}
+}
+
+input
+
 #app {
   font-family: Avenir, Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-
 }
 </style>

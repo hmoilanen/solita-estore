@@ -1,19 +1,23 @@
 <template>
 	<div class="checkout-phase">
-		<h3>{{ phase.id }}: {{ phase.title }}</h3>
+		<h3>{{ phase.main.id }}: {{ phase.main.title }}</h3>
 		<button
 			v-if="allowEditing"
 			@click="editPhase"
 		>muokkaa</button>
-		<div v-for="(field, key) in currentPhase">{{ key }}: {{ field.value }}</div>
 
-		<template v-if="opened">
+		<template v-if="phase.main.opened">
 			<input
-				v-for="(field, key) in currentPhase"
+				v-for="(field, key) in fields"
 				:key="key"
 				v-model="field.value"
 				:type="field.type || 'text'"
 				:placeholder="field.label"
+			>
+			<input
+				v-if="phase.main.id === 2"
+				v-model="billingSameAsShipping"
+				type="checkbox"
 			>
 			<button @click="validatePhase">jatka</button>
 		</template>
@@ -21,8 +25,6 @@
 </template>
 
 <script>
-import { valueExists, onlyNumbers, validateEmail } from '@/utils/regex'
-
 export default {
 	name: 'CheckoutPhase',
 
@@ -30,24 +32,24 @@ export default {
 		phase: {
 			type: Object,
 			required: true
-		},
-		opened: {
-			type: Boolean,
-			default: true
-		},
-		validated: {
-			type: Boolean,
-			default: true
-		},
+		}
+	},
+
+	data() {
+		return {
+			billingSameAsShipping: false
+		}
 	},
 
 	computed: {
-		currentPhase() {
-			return this[`phase${this.phase.id}-fields`]
+		fields() {
+			const { main, ...fields } = this.phase
+			return fields
 		},
 
 		allowEditing() {
-			return this.validated && !this.opened
+			const main = this.phase.main
+			return main.validated && !main.opened
 		}
 	},
 
@@ -55,8 +57,9 @@ export default {
 		validatePhase() {
 			let allValid = true
 
-			for (const field in this.currentPhase) {
-				const currentField = this.currentPhase[field]
+			// Validate all fields
+			for (const field in this.fields) {
+				const currentField = this.fields[field]
 
 				if (currentField.pattern && !currentField.pattern.test(currentField.value)) {
 					allValid = false
@@ -64,45 +67,24 @@ export default {
 				}
 			}
 
+			// If all fields are validated update phases in store
 			if (allValid) {
-				this.$emit('validate', this.phase.id)
+				let phaseFields = {}
+
+				for (const field in this.fields) {
+					phaseFields[field] = this.fields[field].value
+				}
+
+				this.$store.dispatch('UPDATE_CHECKOUT_PHASE', {
+					phaseFields,
+					phaseId: this.phase.main.id,
+					duplicated: this.billingSameAsShipping
+				})
 			}
 		},
 
 		editPhase() {
-			this.$emit('edit', this.phase.id)
-		}
-	},
-
-	data() {
-		return {
-			'phase1-fields': {
-				email: { value: '', label: 'Sähköpostiosoite', type: 'email', valid: true, pattern: validateEmail }
-			},
-			'phase2-fields': {
-				firstName: { value: '', label: 'Etunimi', pattern: valueExists },
-				lastName: { value: '', label: 'Sukunimi', pattern: valueExists },
-				address: { value: '', label: 'Katuosoite', pattern: valueExists },
-				city: { value: '', label: 'Kaupunki', pattern: valueExists },
-				country: { value: '', label: 'Maa', pattern: valueExists },
-				//phone: { value: '', label: 'Puhelinnumero (*)', type: 'number', pattern: onlyNumbers }
-				phone: { value: '', label: 'Puhelinnumero (*)', type: 'number' }
-			},
-			'phase3-fields': {
-				firstName: { value: '', label: 'Etunimi', pattern: valueExists },
-				lastName: { value: '', label: 'Sukunimi', pattern: valueExists },
-				address: { value: '', label: 'Katuosoite', pattern: valueExists },
-				city: { value: '', label: 'Kaupunki', pattern: valueExists },
-				country: { value: '', label: 'Maa', pattern: valueExists },
-				//phone: { value: '', label: 'Puhelinnumero (*)', type: 'number', pattern: onlyNumbers }
-				phone: { value: '', label: 'Puhelinnumero (*)', type: 'number' }
-			},
-			'phase4-fields': {
-				cardNumber: { value: '', label: 'Kortin numero', type: 'number', pattern: valueExists },
-				nameOnCard: { value: '', label: 'Kortin omistaja', pattern: valueExists },
-				validity: { value: '', label: 'Voimassa', type: 'number', pattern: valueExists },
-				security: { value: '', label: 'CVV', type: 'number', pattern: valueExists }
-			}
+			this.$store.dispatch('EDIT_PHASE', this.phase.main.id)
 		}
 	}
 }

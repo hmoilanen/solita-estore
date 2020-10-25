@@ -1,63 +1,46 @@
 <template>
   <div class="view--cart">
 		<h1>Kassa</h1>
-		<div>validatedPhases: {{ validatedPhases }}</div>
+		<!-- <div v-for="jee in customerData">{{ jee }}</div> -->
+		
 		<form @submit.prevent>
 			<Checkout-phase
 				v-for="phase in phases"
-				:key="phase.id"
-				:ref="`phase${phase.id}`"
+				:key="phase.main.id"
 				:phase="phase"
-				:opened="openedPhase === phase.id"
-				:validated="validatedPhases[`phase${phase.id}`]"
-				@validate="validatePhase"
-				@edit="editPhase"
 			/>
+			<button
+				v-if="allowSubmit"
+				@click="submitCheckout"
+			>lähetä tilaus</button>
 		</form>
   </div>
 </template>
 
 <script>
 import CheckoutPhase from '@/components/CheckoutPhase'
+import { mapGetters } from 'vuex'
 
 export default {
 	name: 'ViewCart',
 
 	components: { CheckoutPhase },
 
-	data() {
-		return {
-			phases: [
-				{ id: 1, title: 'Tilaaja' },
-				{ id: 2, title: 'Vastaanottaja' },
-				{ id: 3, title: 'Maksaja' },
-				{ id: 4, title: 'Maksusuoritus' }
-			],
-			openedPhase: 1,
-			validatedPhases: {
-				phase1: false,
-				phase2: false,
-				phase3: false,
-				phase4: false
-			}
+	computed: {
+		...mapGetters({
+			allowSubmit: 'ALL_CHECKOUT_PHASES_VALIDATED',
+			customerData: 'GET_CUSTOMER_DATA',
+		}),
+
+		phases() {
+			return this.$store.state.checkout
 		}
 	},
 
 	methods: {
-		validatePhase(phaseId) {
-			this.validatedPhases[`phase${phaseId}`] = true
-
-			// Open the first not-validated phase
-			for (let i = 1; i <= 4; i++) {
-				if (!this.validatedPhases[`phase${i}`]) {
-					this.openedPhase = i
-					break
-				}
-			}
-		},
-
-		editPhase(phaseId) {
-			this.openedPhase = phaseId
+		submitCheckout() {
+			const checkoutData = this.customerData
+			console.log('Checkout!:', checkoutData);
 		}
 	}
 }

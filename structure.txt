@@ -1,3 +1,5 @@
+https://mocki.io/docs
+
 // // // // // // // // // //
 App - yleisiä ajatuksia / ideoita:
 -hae tuotteet erillisestä js-filusta (mock request) ja talleta ne storeen
@@ -95,3 +97,13 @@ CheckoutSummary:
 	-mitä tuotteita tilattu
 	-kuponki-input + vahvista-nappi (vaikuttaa summaan) -> lisää tähän myös jotain huumoria
 	-"yhteensä" + summa
+
+// // //
+CheckoutPhase:
+-pitäisi täyttää kentät saman tien
+-> kun käynnistetään, kentät tyhjiä
+-> luetaan suoraan storesta?!
+-> kun klikaataan edit, invalidate ko. phase
+-> kun validoidaan, luetaan storen arvot ja jos ei ole ok invalidate
+-> kun phase3 kopioidaan phase2:sta, sitä EI kuitenkaan validoida!!!
+-> jos phase2 editoidaan ja duplikoidaan, se muuttaa AINA validoidessa valluet vastaamaan phase2:sta
