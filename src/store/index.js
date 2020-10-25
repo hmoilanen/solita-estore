@@ -129,19 +129,34 @@ export default new Vuex.Store({
 
 			// If similar product is aready added to cart just increase the amount
 			if (productsInCart[product.id]) {
-				console.log('määrän lisäys');
 				const newAmount = productsInCart[product.id].amount + amount
 
 				Vue.set(productsInCart[product.id], 'amount', newAmount)
-				return
+			} else {
+				// Add the new product to cart
+				Vue.set(state.cart.products, product.id, productToAdd)
 			}
 
-			// Add the new product to cart
-			Vue.set(state.cart.products, product.id, productToAdd)
+			// Set products in local storage / 'mimic' backend
+			storageProducts(state)
 		},
 
 		UPDATE_PRODUCT_AMOUNT: (state, { productId, amount }) => {
 			Vue.set(state.cart.products[productId], 'amount', amount)
+
+			// Set products in local storage / 'mimic' backend
+			storageProducts(state)
+		},
+
+		REMOVE_PRODUCT_FROM_CART: (state, productId) => {
+			Vue.delete(state.cart.products, productId)
+
+			// Set products in local storage / 'mimic' backend
+			storageProducts(state)
+		},
+
+		SET_CART: (state, localStorageData ) => {
+			Vue.set(state.cart, 'products', localStorageData)
 		},
 
 		UPDATE_CHECKOUT_PHASE: (state, { phaseFields, phaseId, duplicated }) => {
@@ -174,7 +189,7 @@ export default new Vuex.Store({
 			}
 		},
 
-		EDIT_PHASE: (state, phaseId) => {
+		EDIT_CHECKOUT_PHASE: (state, phaseId) => {
 			// First close currently opened phase...
 			for (const phase in state.checkout) {
 				const mainOfPhase = state.checkout[phase].main
@@ -193,20 +208,37 @@ export default new Vuex.Store({
 		ADD_PRODUCT_TO_CART: ({commit}, { product, amount }) => {
 			commit('ADD_PRODUCT_TO_CART', { product, amount })
 		},
-
+		
 		UPDATE_PRODUCT_AMOUNT: ({ commit }, { productId, amount }) => {
 			commit('UPDATE_PRODUCT_AMOUNT',  { productId, amount })
+		},
+
+		REMOVE_PRODUCT_FROM_CART: ({ commit }, productId) => {
+			commit('REMOVE_PRODUCT_FROM_CART', productId)
+		},
+
+		SET_CART: ({commit}, localStorageData) => {
+			commit('SET_CART', localStorageData)
 		},
 
 		UPDATE_CHECKOUT_PHASE: ({ commit }, { phaseFields, phaseId, duplicated }) => {
 			commit('UPDATE_CHECKOUT_PHASE', { phaseFields, phaseId, duplicated })
 		},
 
-		EDIT_PHASE: ({commit}, phaseId) => {
-			commit('EDIT_PHASE', phaseId)
+		EDIT_CHECKOUT_PHASE: ({commit}, phaseId) => {
+			commit('EDIT_CHECKOUT_PHASE', phaseId)
 		},
 	},
 	
   modules: {
   }
 })
+
+// For clearing old and storing updated products in local storage
+function storageProducts(state) {
+	const ls = window.localStorage
+	const key = 'whee-products'
+
+	ls.removeItem(key)
+	ls.setItem(key, JSON.stringify(state.cart.products))
+}

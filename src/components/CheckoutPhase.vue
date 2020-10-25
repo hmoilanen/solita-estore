@@ -84,7 +84,7 @@ export default {
 		},
 
 		editPhase() {
-			this.$store.dispatch('EDIT_PHASE', this.phase.main.id)
+			this.$store.dispatch('EDIT_CHECKOUT_PHASE', this.phase.main.id)
 		}
 	}
 }

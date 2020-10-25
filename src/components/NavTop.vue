@@ -4,7 +4,7 @@
 			<strong>WHEE</strong>
 			<span>The most definitive shape store in the wööörld</span>
 		</div>
-		<Nav-top-summary/>
+		<Nav-top-summary v-if="displaySummary"/>
 	</div>
 </template>
 
@@ -14,7 +14,13 @@ import NavTopSummary from '@/components/NavTopSummary'
 export default {
 	name: 'NavTop',
 
-	components: { NavTopSummary }
+	components: { NavTopSummary },
+
+	computed: {
+		displaySummary() {
+			return this.$route.name !== 'Checkout'
+		}
+	}
 }
 </script>
 

@@ -15,7 +15,7 @@ export default {
 
 	methods: {
 		removeFromCart() {
-			this.$store.dispatch('REMOVE_PRODUCT_FROM_CART', productId)
+			this.$store.dispatch('REMOVE_PRODUCT_FROM_CART', this.product.id)
 		}
 	}
 }

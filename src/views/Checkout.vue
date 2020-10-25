@@ -1,7 +1,8 @@
 <template>
   <div class="view--cart">
 		<h1>Kassa</h1>
-		<!-- <div v-for="jee in customerData">{{ jee }}</div> -->
+
+		<Checkout-summary/>
 		
 		<form @submit.prevent>
 			<Checkout-phase
@@ -18,13 +19,17 @@
 </template>
 
 <script>
+import CheckoutSummary from '@/components/CheckoutSummary'
 import CheckoutPhase from '@/components/CheckoutPhase'
 import { mapGetters } from 'vuex'
 
 export default {
 	name: 'ViewCart',
 
-	components: { CheckoutPhase },
+	components: {
+		CheckoutSummary,
+		CheckoutPhase
+	},
 
 	computed: {
 		...mapGetters({

@@ -11,7 +11,21 @@ import NavTop from '@/components/NavTop'
 export default {
 	name: 'App',
 
-	components: { NavTop }
+	components: { NavTop },
+
+	created() {
+		// Check if local storage contains product data and store it
+		const ls = window.localStorage
+		const productsInLocalStorage = ls.getItem('whee-products')
+
+		if (productsInLocalStorage) {
+			this.$store.dispatch(
+				'SET_CART',
+				JSON.parse(productsInLocalStorage)
+			)
+		}
+
+	}
 }
 </script>
 
