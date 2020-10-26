@@ -4,23 +4,17 @@
 			<strong>WHEE</strong>
 			<span>The most definitive shape store in the wööörld</span>
 		</div>
-		<Nav-top-summary v-if="displaySummary"/>
+		<Nav-top-options/>
 	</div>
 </template>
 
 <script>
-import NavTopSummary from '@/components/NavTopSummary'
+import NavTopOptions from '@/components/NavTopOptions'
 
 export default {
 	name: 'NavTop',
 
-	components: { NavTopSummary },
-
-	computed: {
-		displaySummary() {
-			return this.$route.name !== 'Checkout'
-		}
-	}
+	components: { NavTopOptions }
 }
 </script>
 

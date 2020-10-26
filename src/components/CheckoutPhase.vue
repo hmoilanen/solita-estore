@@ -1,6 +1,9 @@
 <template>
 	<div class="checkout-phase">
-		<h3>{{ phase.main.id }}: {{ phase.main.title }}</h3>
+		<h3>
+			{{ phase.main.id }}: {{ phase.main.title }}
+			<span v-if="phase.main.validated">OK!</span>
+		</h3>
 		<button
 			v-if="allowEditing"
 			@click="editPhase"
@@ -15,13 +18,6 @@
 				:label="field.label"
 				:optional="!field.pattern"
 			/>
-			<!-- <input
-				v-for="(field, key) in fields"
-				:key="key"
-				v-model="field.value"
-				:type="field.type || 'text'"
-				:placeholder="field.label"
-			> -->
 			<div v-if="phase.main.id === 2">
 				<input
 					v-model="billingSameAsShipping"

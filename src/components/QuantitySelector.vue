@@ -13,9 +13,6 @@
 </template>
 
 <script>
-import increaseAmountOfProducts from '@/logic/increaseAmountOfProducts'
-import decreaseAmountOfProducts from '@/logic/decreaseAmountOfProducts'
-
 export default {
 	name: 'QuantitySelector',
 
@@ -45,12 +42,16 @@ export default {
 
 	methods: {
 		increaseAmount() {
-			const increasedAmount = increaseAmountOfProducts(this.value, this.max)
+			const increasedAmount = this.value < this.max
+				?	this.value + 1
+				: this.max
 			this.$emit('input', increasedAmount)
 		},
 
 		decreaseAmount() {
-			const decreasedAmount = decreaseAmountOfProducts(this.value, this.min)
+			const decreasedAmount = this.value > this.min
+				?	this.value - 1
+				: this.min
 			this.$emit('input', decreasedAmount)
 		},
 	}

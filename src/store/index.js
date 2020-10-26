@@ -80,7 +80,7 @@ export default new Vuex.Store({
 
 			return euro
 				? convertedPrice + type
-				: type + convertedPrice
+				: type + convertedPrice.toFixed(2)
 		},
 
 		TOTAL_AMOUNT_OF_PRODUCTS_IN_CART: state => {
@@ -217,6 +217,10 @@ export default new Vuex.Store({
 
 		INVALIDATE_CHECKOUT_PHASE_FIELD: (state, { phaseId, field }) => {
 			Vue.set(state.checkout[`phase${phaseId}`][field], 'valid', false)
+		},
+
+		SET_CURRENCY: (state, currency) => {
+			Vue.set(state, 'currency', currency)
 		}
 	},
 	
@@ -247,11 +251,12 @@ export default new Vuex.Store({
 
 		INVALIDATE_CHECKOUT_PHASE_FIELD: ({ commit }, { phaseId, field }) => {
 			commit('INVALIDATE_CHECKOUT_PHASE_FIELD', { phaseId, field })
+		},
+
+		SET_CURRENCY: ({ commit }, currency) => {
+			commit('SET_CURRENCY', currency)
 		}
-	},
-	
-  modules: {
-  }
+	}
 })
 
 // For clearing old and storing updated products in local storage

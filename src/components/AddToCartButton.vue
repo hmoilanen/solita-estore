@@ -1,34 +1,32 @@
 <template>
 	<div class="add-to-cart-button">
 		<button @click="addToCart">lisää ostoskoriin</button>
-		<div
-			v-if="displayConfirmationModal"
-			class="confirmation-modal"
-		>
-			<div class="product">
-				<h3>{{ product.name }}</h3>
-				<!-- <div>{{ product.price }}{{ currency }}</div> -->
-				<div>{{ dynamicPrice }}</div>
-				<div>Quantity: <strong>{{ amount }}</strong></div>
-				<div>
-					You have currently
-					<strong>{{ totalAmountOfProductsInCart }}</strong>
-					 products in your cart.
-				</div>
-				<router-link :to="{ name: 'Cart' }">View or edit your cart.</router-link>
-				<hr>
-				<button @click="closeConfirmationModal">Continue shopping</button>
-				<button @click="goToCheckout">Checkout</button>
+
+		<Confirmation-modal v-if="displayConfirmationModal">
+			<div>Product has been added to cart!</div>
+			<h3>{{ product.name }}</h3>
+			<div>{{ dynamicPrice }}</div>
+			<div>Quantity: <strong>{{ amount }}</strong></div>
+			<div>
+				You have currently
+				<strong>{{ totalAmountOfProductsInCart }}</strong>
+				products in your cart.
 			</div>
-		</div>
+			<router-link :to="{ name: 'Cart' }">View or edit your cart.</router-link>
+			<hr>
+			<button @click="closeConfirmationModal">Continue shopping</button>
+			<button @click="goToCheckout">Checkout</button>
+		</Confirmation-modal>
 	</div>
 </template>
 
 <script>
-import addProductToCart from '@/logic/addProductToCart'
+import ConfirmationModal from '@/components/ConfirmationModal'
 
 export default {
 	name: 'AddToCartButton',
+
+	components: { ConfirmationModal },
 
 	props: {
 		product: {
@@ -82,23 +80,7 @@ export default {
 .add-to-cart-button {
 	
 	.confirmation-modal {
-		z-index: 10;
-		position: fixed;
-		top: 0;
-		left: 0;
-		right: 0;
-		bottom: 0;
-		background: rgba(144, 238, 144, 0.5);
-		display: flex;
-		align-items: center;
-		justify-content: center;
-
-		.product {
-			background: white;
-			border: 1px solid black;
-			padding: 1rem;
-			border-radius: 3px;
-		}
+		
 	}
 }
 </style>
