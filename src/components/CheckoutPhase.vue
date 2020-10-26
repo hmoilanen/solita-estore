@@ -7,18 +7,30 @@
 		>muokkaa</button>
 
 		<template v-if="phase.main.opened">
-			<input
+			<Base-input
+				v-for="(field, key) in fields"
+				:key="key"
+				v-model="field.value"
+				:type="field.type || 'text'"
+				:label="field.label"
+				:optional="!field.pattern"
+			/>
+			<!-- <input
 				v-for="(field, key) in fields"
 				:key="key"
 				v-model="field.value"
 				:type="field.type || 'text'"
 				:placeholder="field.label"
-			>
-			<input
-				v-if="phase.main.id === 2"
-				v-model="billingSameAsShipping"
-				type="checkbox"
-			>
+			> -->
+			<div v-if="phase.main.id === 2">
+				<input
+					v-model="billingSameAsShipping"
+					type="checkbox"
+					@keydown.enter.prevent="toggleCheckbox"
+				>
+				<span>Billing address same as shippping address</span>
+			</div>
+			<div v-if="phaseNotValidated">Please provide correct information to proceed...</div>
 			<button @click="validatePhase">jatka</button>
 		</template>
 	</div>
@@ -37,7 +49,8 @@ export default {
 
 	data() {
 		return {
-			billingSameAsShipping: false
+			billingSameAsShipping: false,
+			phaseNotValidated: false
 		}
 	},
 
@@ -61,13 +74,19 @@ export default {
 			for (const field in this.fields) {
 				const currentField = this.fields[field]
 
+				// Check if field's value is provided as required
 				if (currentField.pattern && !currentField.pattern.test(currentField.value)) {
 					allValid = false
-					break
+
+					// Invalidate all necessary fields
+					this.$store.dispatch('INVALIDATE_CHECKOUT_PHASE_FIELD', {
+						phaseId: this.phase.main.id,
+						field
+					})
 				}
 			}
 
-			// If all fields are validated update phases in store
+			// If all fields are validated, update phases in store
 			if (allValid) {
 				let phaseFields = {}
 
@@ -80,11 +99,17 @@ export default {
 					phaseId: this.phase.main.id,
 					duplicated: this.billingSameAsShipping
 				})
+			} else {
+				this.phaseNotValidated = true
 			}
 		},
 
 		editPhase() {
 			this.$store.dispatch('EDIT_CHECKOUT_PHASE', this.phase.main.id)
+		},
+
+		toggleCheckbox() {
+			this.billingSameAsShipping = !this.billingSameAsShipping
 		}
 	}
 }
@@ -95,7 +120,7 @@ export default {
 	padding: 0.5rem 0;
 	border-bottom: 1px solid lightgreen;
 
-	input {
+	input:not([type="checkbox"]) {
 		display: block;
 		padding: 0.2rem;
 		margin-bottom: 0.2rem;

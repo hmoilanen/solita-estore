@@ -43,28 +43,30 @@ export default new Vuex.Store({
 			},
 			phase2: {
 				main: { id: 2, tag: 'shipping', title: 'Vastaanottaja', validated: false, opened: false },
-				firstName: { value: '', label: 'Etunimi', pattern: valueExists },
-				lastName: { value: '', label: 'Sukunimi', pattern: valueExists },
-				address: { value: '', label: 'Katuosoite', pattern: valueExists },
-				city: { value: '', label: 'Kaupunki', pattern: valueExists },
-				country: { value: '', label: 'Maa', pattern: valueExists },
-				phone: { value: '', label: 'Puhelinnumero (*)', type: 'number', pattern: onlyNumbers }
+				firstName: { value: '', label: 'Etunimi', valid: true, pattern: valueExists },
+				lastName: { value: '', label: 'Sukunimi', valid: true, pattern: valueExists },
+				address: { value: '', label: 'Katuosoite', valid: true, pattern: valueExists },
+				city: { value: '', label: 'Kaupunki', valid: true, pattern: valueExists },
+				country: { value: '', label: 'Maa', valid: true, pattern: valueExists },
+				phone: { value: '', label: 'Puhelinnumero', type: 'number' }
+				//phone: { value: '', label: 'Puhelinnumero (*)', type: 'number', valid: true, pattern: onlyNumbers }
 			},
 			phase3: {
 				main: { id: 3, tag: 'billing', title: 'Maksaja', validated: false, opened: false },
-				firstName: { value: '', label: 'Etunimi', pattern: valueExists },
-				lastName: { value: '', label: 'Sukunimi', pattern: valueExists },
-				address: { value: '', label: 'Katuosoite', pattern: valueExists },
-				city: { value: '', label: 'Kaupunki', pattern: valueExists },
-				country: { value: '', label: 'Maa', pattern: valueExists },
-				phone: { value: '', label: 'Puhelinnumero (*)', type: 'number', pattern: onlyNumbers }
+				firstName: { value: '', label: 'Etunimi', valid: true, pattern: valueExists },
+				lastName: { value: '', label: 'Sukunimi', valid: true, pattern: valueExists },
+				address: { value: '', label: 'Katuosoite', valid: true, pattern: valueExists },
+				city: { value: '', label: 'Kaupunki', valid: true, pattern: valueExists },
+				country: { value: '', label: 'Maa', valid: true, pattern: valueExists },
+				phone: { value: '', label: 'Puhelinnumero', type: 'number' }
+				//phone: { value: '', label: 'Puhelinnumero', type: 'number', valid: true, pattern: onlyNumbers }
 			},
 			phase4: {
 				main: { id: 4, tag: 'payment', title: 'Maksusuoritus', validated: false, opened: false },
-				cardNumber: { value: '', label: 'Kortin numero', type: 'number', pattern: valueExists },
-				nameOnCard: { value: '', label: 'Kortin omistaja', pattern: valueExists },
-				validity: { value: '', label: 'Voimassa', type: 'number', pattern: valueExists },
-				security: { value: '', label: 'CVV', type: 'number', pattern: valueExists }
+				cardNumber: { value: '', label: 'Kortin numero', type: 'number', valid: true, pattern: valueExists },
+				nameOnCard: { value: '', label: 'Kortin omistaja', valid: true, pattern: valueExists },
+				validity: { value: '', label: 'Voimassa', type: 'number', valid: true, pattern: valueExists },
+				security: { value: '', label: 'CVV', type: 'number', valid: true, pattern: valueExists }
 			},
 		} 
 	},
@@ -162,9 +164,10 @@ export default new Vuex.Store({
 		UPDATE_CHECKOUT_PHASE: (state, { phaseFields, phaseId, duplicated }) => {
 			const currentPhase = state.checkout[`phase${phaseId}`]
 
-			// Set all values of the corresponding fields in store
+			// Set all values of the corresponding fields in store and validate them (for UI)
 			for (const field in phaseFields) {
 				Vue.set(currentPhase[field], 'value', phaseFields[field])
+				Vue.set(currentPhase[field], 'valid', true)
 				
 				// If billing information is same as shipping, update accordingy
 				if (duplicated) {
@@ -201,6 +204,10 @@ export default new Vuex.Store({
 			// ...then open to-be-edited phase
 			Vue.set(state.checkout[`phase${phaseId}`].main, 'validated', false)
 			Vue.set(state.checkout[`phase${phaseId}`].main, 'opened', true)
+		},
+
+		INVALIDATE_CHECKOUT_PHASE_FIELD: (state, { phaseId, field }) => {
+			Vue.set(state.checkout[`phase${phaseId}`][field], 'valid', false)
 		}
 	},
 	
@@ -228,6 +235,10 @@ export default new Vuex.Store({
 		EDIT_CHECKOUT_PHASE: ({commit}, phaseId) => {
 			commit('EDIT_CHECKOUT_PHASE', phaseId)
 		},
+
+		INVALIDATE_CHECKOUT_PHASE_FIELD: ({ commit }, { phaseId, field }) => {
+			commit('INVALIDATE_CHECKOUT_PHASE_FIELD', { phaseId, field })
+		}
 	},
 	
   modules: {

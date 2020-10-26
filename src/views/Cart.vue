@@ -5,13 +5,12 @@
 		<h1>Ostoskori</h1>
 		
 		<template v-if="typeof productsInCart === 'object'">
-			<Cart-summary/>
 			<Product
 				v-for="product in productsInCart"
 				:key="product.id"
 				:product="product"
 			/>
-			<button @click="goToCheckout">Kassalle</button>
+			<Cart-summary/>
 		</template>
 		<h2 v-else>{{ productsInCart }}</h2>
   </div>
@@ -36,12 +35,6 @@ export default {
 			return Object.keys(productsInCart).length > 0
 				? productsInCart
 				: 'Ei lisättyjä tuotteita'
-		}
-	},
-
-	methods: {
-		goToCheckout() {
-			this.$router.push({ name: 'Checkout' })
 		}
 	}
 }

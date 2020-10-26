@@ -1,6 +1,15 @@
 https://mocki.io/docs
 
 // // // // // // // // // //
+POINTTEJA!!!:
+-tuttuus: ostotapahtuman pitää olla samaistuttava / tutun näköinen
+	-> lisää luotettavuudeen tunnetta suorittaa itse ostotapahtuma
+
+-koodi on maahdollisimman uudellenkäyteettävää
+-projekti helpposti laajennettavissa
+-käyttäjäkäyttäjäkäyttäjäkäyttäjä
+
+// // // // // // // // // //
 App - yleisiä ajatuksia / ideoita:
 -hae tuotteet erillisestä js-filusta (mock request) ja talleta ne storeen
 	-> see: https://mocki.io/
@@ -150,3 +159,11 @@ Toiminnallisuus:
 		-jos on, lisätään vain lisättty määrä olemassaolevaan
 -lisää myöhemmin: QuantitySelectorissa numero pitää voida syöttää myös näppäimistöltä (= input)
 -lisää localStore refressi' varten
+
+// // // // // // // // // //
+-kun klikataan 'validate'...
+	-tarkastetaan, läpäiseekö field valuet patternin
+		-> jos KYLLÄ, validate whole phase!
+			-> jos validoidaan koko phase, voidaan validoida samalla myös kaikki fieldit!
+		-> jos EI, invalidoi kaikki kentät jotka eivät läpäise patternia
+	-vaihtoehtoisia kenttiä ei tarvitse tarkastella / ei omaa patternia

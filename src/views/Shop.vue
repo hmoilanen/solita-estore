@@ -6,6 +6,7 @@
 			v-for="product in products"
 			:key="product.id"
 			:product="product"
+			@product-added-to-cart="openConfirmationModal"
 		/>
   </div>
 </template>
@@ -21,6 +22,12 @@ export default {
 	computed: {
 		products() {
 			return this.$store.state.products
+		}
+	},
+
+	methods: {
+		openConfirmationModal() {
+			
 		}
 	}
 }

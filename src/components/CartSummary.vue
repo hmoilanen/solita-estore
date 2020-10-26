@@ -1,8 +1,8 @@
 <template>
 	<div class="cart-summary">
-		<h2>Tilaus - yhteenveto</h2>
+		<h2>Order summary</h2>
 
-		<div>Yhteensä: {{ summaryOfProductPrices }}{{ currency }}</div>
+		<div>Total: {{ summaryOfProductPrices }}{{ currency }}</div>
 		<button @click="goTo('Shop')">Continue shopping</button>
 		<button @click="goTo('Checkout')">Check out</button>
 	</div>

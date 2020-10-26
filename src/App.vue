@@ -14,7 +14,7 @@ export default {
 	components: { NavTop },
 
 	created() {
-		// Check if local storage contains product data and store it
+		// Check if local storage contains product data and get it
 		const ls = window.localStorage
 		const productsInLocalStorage = ls.getItem('whee-products')
 
@@ -48,8 +48,6 @@ input {
     -webkit-appearance: none;
 	}
 }
-
-input
 
 #app {
   font-family: Avenir, Helvetica, Arial, sans-serif;
