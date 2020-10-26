@@ -7,7 +7,8 @@
 		>
 			<div class="product">
 				<h3>{{ product.name }}</h3>
-				<div>{{ product.price }}{{ currency }}</div>
+				<!-- <div>{{ product.price }}{{ currency }}</div> -->
+				<div>{{ dynamicPrice }}</div>
 				<div>Quantity: <strong>{{ amount }}</strong></div>
 				<div>
 					You have currently
@@ -42,14 +43,17 @@ export default {
 
 	data() {
 		return {
-			displayConfirmationModal: false,
-			currency: '€'
+			displayConfirmationModal: false
 		}
 	},
 
 	computed: {
 		totalAmountOfProductsInCart() {
 			return this.$store.getters['TOTAL_AMOUNT_OF_PRODUCTS_IN_CART']
+		},
+
+		dynamicPrice() {
+			return this.$store.getters['GET_PRICE'](this.product.price)
 		}
 	},
 

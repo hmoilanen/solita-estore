@@ -2,11 +2,11 @@
 	<div class="product-price">
 		<div>
 			<span v-if="inCart">price:</span>
-			<strong>{{ product.price }}{{ currency }}</strong>
+			<strong>{{ dynamicPrice(product.price) }}</strong>
 		</div>
 		<div v-if="inCart">
 			<span>total:</span>
-			<strong>{{ totalPrice }}{{ currency }}</strong>
+			<strong>{{ dynamicPrice(totalPrice) }}</strong>
 		</div>
 	</div>
 </template>
@@ -22,12 +22,6 @@ export default {
 		}
 	},
 
-	data() {
-		return {
-			currency: '€'
-		}
-	},
-
 	computed: {
 		inCart() {
 			return this.$route.name === 'Cart'
@@ -35,6 +29,12 @@ export default {
 
 		totalPrice() {
 			return this.product.price * this.product.amount
+		}
+	},
+
+	methods: {
+		dynamicPrice(price) {
+			return this.$store.getters['GET_PRICE'](price)
 		}
 	}
 }

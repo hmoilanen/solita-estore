@@ -1,13 +1,13 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
 
-import { valueExists, onlyNumbers, validateEmail } from '@/utils/regex'
+import { valueExists, validateEmail, onlyNumbers } from '@/utils/regex'
 
 Vue.use(Vuex)
 
 export default new Vuex.Store({
   state: {
-		//currency: 'eu', // OTA MYÖHEMMIN KÄYTTÖÖN
+		currency: 'eu',
 
 		products: [
 			// SIIRRÄ NÄMÄ ERILLISEEN JS-FILUUN JA LATAA TÄNNE KÄYNNISTYKSEN YHTEYDESSÄ!
@@ -72,7 +72,16 @@ export default new Vuex.Store({
 	},
 	
   getters: {
-		//GET_PRICE (with custom currency!)
+		GET_PRICE: state => price => {
+			const euro = state.currency === 'eu'
+			const conversionRate = euro ? 1 : 1.18
+			const convertedPrice = price * conversionRate
+			const type = euro ? '€' : '$'
+
+			return euro
+				? convertedPrice + type
+				: type + convertedPrice
+		},
 
 		TOTAL_AMOUNT_OF_PRODUCTS_IN_CART: state => {
 			const products = state.cart.products

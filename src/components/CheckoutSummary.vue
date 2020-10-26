@@ -4,14 +4,14 @@
 		<router-link :to="{ name: 'Cart' }">Edit cart</router-link>
 		<hr>
 		<div>
-			<div>{{ this.totalAmountOfProducts }} items</div>
+			<div>{{ totalAmountOfProducts }} items</div>
 			<div
 				v-for="product in products"
 				:key="product.id"
 			>{{ product.amount }} x {{ product.name }}</div>
 		</div>
 		<hr>
-		<div>total: {{ summaryOfProductPrices }}{{ currency }}</div>
+		<div>total: {{ dynamicPrice }}</div>
 	</div>
 </template>
 
@@ -21,20 +21,19 @@ import { mapGetters } from 'vuex'
 export default {
 	name: 'CheckoutSummary',
 
-	data() {
-		return {
-			currency: '€'
-		}
-	},
-
 	computed: {
 		...mapGetters({
 			totalAmountOfProducts: 'TOTAL_AMOUNT_OF_PRODUCTS_IN_CART',
-			summaryOfProductPrices: 'SUMMARY_OF_PRODUCT_PRICES'
+			summaryOfProductPrices: 'SUMMARY_OF_PRODUCT_PRICES',
+			getPrice: 'GET_PRICE'
 		}),
 
 		products() {
 			return this.$store.state.cart.products
+		},
+
+		dynamicPrice() {
+			return this.getPrice(this.summaryOfProductPrices)
 		}
 	}
 }
