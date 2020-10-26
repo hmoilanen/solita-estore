@@ -1,6 +1,6 @@
 <template>
   <div class="view--cart">
-		<h1>Kassa</h1>
+		<h1>Checkout</h1>
 
 		<Checkout-summary/>
 		
@@ -9,9 +9,12 @@
 				v-for="phase in phases"
 				:key="phase.main.id"
 				:phase="phase"
+				@update-phase="updatePhase"
+				@edit-phase="editPhase"
+				@invalidate-field="invalidateField"
 			/>
 			<button
-				v-if="allowSubmit"
+				v-if="allowCheckoutSubmit"
 				@click="submitCheckout"
 			>lähetä tilaus</button>
 		</form>
@@ -19,9 +22,9 @@
 </template>
 
 <script>
+import { valueExists, validateEmail } from '@/utils/regex'
 import CheckoutSummary from '@/components/CheckoutSummary'
 import CheckoutPhase from '@/components/CheckoutPhase'
-import { mapGetters } from 'vuex'
 
 export default {
 	name: 'ViewCart',
@@ -31,20 +34,126 @@ export default {
 		CheckoutPhase
 	},
 
-	computed: {
-		...mapGetters({
-			allowSubmit: 'ALL_CHECKOUT_PHASES_VALIDATED',
-			customerData: 'GET_CUSTOMER_DATA',
-		}),
+	data() {
+		return {
+			phases: {
+				phase1: {
+					main: { id: 1, title: 'Customer', validated: false, opened: true },
+					email: { value: '', label: 'Email', type: 'email', valid: true, pattern: validateEmail }
+				},
+				phase2: {
+					main: { id: 2, title: 'Shipping', validated: false, opened: false },
+					firstName: { value: '', label: 'First name', valid: true, pattern: valueExists },
+					lastName: { value: '', label: 'Last name', valid: true, pattern: valueExists },
+					address: { value: '', label: 'Address', valid: true, pattern: valueExists },
+					city: { value: '', label: 'City', valid: true, pattern: valueExists },
+					country: { value: '', label: 'Country', valid: true, pattern: valueExists },
+					phone: { value: '', label: 'Phone', type: 'number' }
+				},
+				phase3: {
+					main: { id: 3, title: 'Billing', validated: false, opened: false },
+					firstName: { value: '', label: 'Etunimi', valid: true, pattern: valueExists },
+					lastName: { value: '', label: 'Sukunimi', valid: true, pattern: valueExists },
+					address: { value: '', label: 'Katuosoite', valid: true, pattern: valueExists },
+					city: { value: '', label: 'Kaupunki', valid: true, pattern: valueExists },
+					country: { value: '', label: 'Maa', valid: true, pattern: valueExists },
+					phone: { value: '', label: 'Puhelinnumero', type: 'number' }
+				},
+				phase4: {
+					main: { id: 4, title: 'Payment', validated: false, opened: false },
+					cardNumber: { value: '', label: 'Kortin numero', type: 'number', valid: true, pattern: valueExists },
+					nameOnCard: { value: '', label: 'Kortin omistaja', valid: true, pattern: valueExists },
+					validity: { value: '', label: 'Voimassa', type: 'number', valid: true, pattern: valueExists },
+					security: { value: '', label: 'CVV', type: 'number', valid: true, pattern: valueExists }
+				}
+			}
+		}
+	},
 
-		phases() {
-			return this.$store.state.checkout
+	computed: {
+		allowCheckoutSubmit() {
+			const phases = this.phases
+			let allPhasesValidated = true
+
+			for (let phase in phases) {
+				if (!phases[phase].main.validated) {
+					allPhasesValidated = false
+					break
+				}
+			}
+
+			return allPhasesValidated
 		}
 	},
 
 	methods: {
+		updatePhase({ phaseFields, phaseId, duplicated }) {
+			const phases = this.phases
+			const currentPhase = phases[`phase${phaseId}`]
+
+			// Set all values of the corresponding fields and validate them (for UI)
+			for (const field in phaseFields) {
+				this.$set(currentPhase[field], 'value', phaseFields[field])
+				this.$set(currentPhase[field], 'valid', true)
+				
+				// If billing information is same as shipping, update accordingy
+				if (duplicated) {
+					this.$set(phases[`phase${phaseId + 1}`][field], 'value', phaseFields[field])
+				}
+			}
+
+			// Validate and close current phase
+			this.$set(currentPhase.main, 'validated', true)
+			this.$set(currentPhase.main, 'opened', false)
+			
+			// Open next not-validated phase
+			const amountOfPhases = Object.keys(phases).length
+
+			for (let i = 1; i <= amountOfPhases; i++) {
+				const mainOfPhase = phases[`phase${i}`].main
+
+				if (!mainOfPhase.validated) {
+					this.$set(mainOfPhase, 'opened', true)
+					break
+				}
+			}
+		},
+
+		editPhase(phaseId) {
+			// First close currently opened phase...
+			const phases = this.phases
+			
+			for (const phase in phases) {
+				const mainOfPhase = phases[phase].main
+				if (mainOfPhase.opened) {
+					this.$set(mainOfPhase, 'opened', false)
+				}
+			}
+
+			// ...then open the to-be-edited phase
+			this.$set(phases[`phase${phaseId}`].main, 'validated', false)
+			this.$set(phases[`phase${phaseId}`].main, 'opened', true)
+		},
+
+		invalidateField({ phaseId, field }) {
+			this.$set(this.phases[`phase${phaseId}`][field], 'valid', false)
+		},
+
 		submitCheckout() {
-			const checkoutData = this.customerData
+			const phases = this.phases
+			let parsedCustomerData = {}
+
+			for (const phase in phases) {
+				const { main, ...fields } = phases[phase]
+				const key = main.title.toLowerCase()
+
+				parsedCustomerData[key] = {}
+				for (const field in fields) {
+					parsedCustomerData[key][field] = fields[field].value
+				}
+			}
+
+			const checkoutData = JSON.stringify(parsedCustomerData)
 			console.log('Checkout!:', checkoutData);
 		}
 	}

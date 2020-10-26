@@ -74,8 +74,8 @@ export default {
 				if (currentField.pattern && !currentField.pattern.test(currentField.value)) {
 					allValid = false
 
-					// Invalidate all necessary fields
-					this.$emit('invalidate-field', {
+					// Invalidate all necessary fields					
+					this.$store.dispatch('INVALIDATE_CHECKOUT_PHASE_FIELD', {
 						phaseId: this.phase.main.id,
 						field
 					})
@@ -90,7 +90,7 @@ export default {
 					phaseFields[field] = this.fields[field].value
 				}
 
-				this.$emit('update-phase', {
+				this.$store.dispatch('UPDATE_CHECKOUT_PHASE', {
 					phaseFields,
 					phaseId: this.phase.main.id,
 					duplicated: this.billingSameAsShipping
@@ -101,7 +101,7 @@ export default {
 		},
 
 		editPhase() {
-			this.$emit('edit-phase', this.phase.main.id)
+			this.$store.dispatch('EDIT_CHECKOUT_PHASE', this.phase.main.id)
 		},
 
 		toggleCheckbox() {

@@ -6,6 +6,7 @@
 </template>
 
 <script>
+import { productData } from '@/store/productData'
 import NavTop from '@/components/NavTop'
 
 export default {
@@ -14,6 +15,9 @@ export default {
 	components: { NavTop },
 
 	created() {
+		// Mimic database with external js file
+		this.$store.dispatch('STORE_PRODUCTS', productData)
+
 		// Check if local storage contains product data and get it
 		const ls = window.localStorage
 		const productsInLocalStorage = ls.getItem('whee-products')

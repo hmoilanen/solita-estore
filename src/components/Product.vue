@@ -65,7 +65,7 @@ export default {
 						this.amount = amount
 						break
 					case 'Cart':
-						this.$store.dispatch('UPDATE_PRODUCT_AMOUNT', {
+						this.$store.dispatch('UPDATE_PRODUCT_AMOUNT_IN_CART', {
 							productId: this.product.id,
 							amount
 						})
