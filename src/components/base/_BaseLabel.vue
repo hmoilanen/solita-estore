@@ -29,7 +29,7 @@ export default {
   span {
     //font-size: 1.45em;
     //color: $label-color--required;
-    color: purple;
+    color: green;
   }
 }
 </style>

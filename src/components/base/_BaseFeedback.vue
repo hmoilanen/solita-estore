@@ -20,6 +20,6 @@ export default {
 <style lang="scss" scoped>
 .base-feedback {
   line-height: 1.4em;
-	color: purple;
+	color: red;
 }
 </style>

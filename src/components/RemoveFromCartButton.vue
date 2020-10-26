@@ -1,12 +1,15 @@
 <template>
 	<div>
-		<button @click="openModal">poista tuote</button>
+		<Base-button @click="openModal">Remove product</Base-button>
 		
 		<Confirmation-modal v-if="displayRemoveModal">
 			<h3>Are you sure you want to remove this item?</h3>
 			<div>{{ product.amount }} x {{ product.name }}</div>
-			<button @click="confirmRemove">Ok</button>
-			<button @click="cancelRemove">Cancel</button>
+			<Base-button @click="confirmRemove">Ok</Base-button>
+			<Base-button
+				@click="cancelRemove"
+				:empty="true"
+			>Cancel</Base-button>
 		</Confirmation-modal>
 	</div>
 </template>

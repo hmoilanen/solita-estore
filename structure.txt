@@ -176,3 +176,11 @@ Toiminnallisuus:
 	-wheee
 	-plus ja miinus (?)
 	-x / sulkuruksi
+	-checkbox (empty / checked)
+
+	// // // // // // // // // //
+	TODO:
+	-404 (?)
+	-testaaminen (?)
+	-curtain
+	-payment-mimic in checkout

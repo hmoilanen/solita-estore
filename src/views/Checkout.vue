@@ -13,10 +13,12 @@
 				@edit-phase="editPhase"
 				@field-validation="fieldValidation"
 			/>
-			<button
-				v-if="allowCheckoutSubmit"
+			<Base-button
+				v-if="!allowCheckoutSubmit"
 				@click="submitCheckout"
-			>lähetä tilaus</button>
+				:stretch="true"
+				:size="1.2"
+			>Place order</Base-button>
 		</form>
   </div>
 </template>
@@ -136,7 +138,6 @@ export default {
 		},
 
 		fieldValidation({ phaseId, field, validationState }) {
-			console.log(validationState);
 			this.$set(this.phases[`phase${phaseId}`][field], 'valid', validationState)
 		},
 

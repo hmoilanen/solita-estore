@@ -4,10 +4,10 @@
 			{{ phase.main.id }}: {{ phase.main.title }}
 			<span v-if="phase.main.validated">OK!</span>
 		</h3>
-		<button
+		<Base-button
 			v-if="allowEditing"
 			@click="editPhase"
-		>muokkaa</button>
+		>Edit</Base-button>
 
 		<template v-if="phase.main.opened">
 			<Base-input
@@ -25,10 +25,10 @@
 					type="checkbox"
 					@keydown.enter.prevent="toggleCheckbox"
 				>
-				<span>Billing address same as shippping address</span>
+				<span>Billing address is same as shipping address</span>
 			</div>
 			<div v-if="phaseNotValidated">Please provide correct information to proceed...</div>
-			<button @click="validatePhase">jatka</button>
+			<Base-button @click="validatePhase">Continue</Base-button>
 		</template>
 	</div>
 </template>

@@ -3,8 +3,11 @@
 		<h2>Order summary</h2>
 
 		<div>Total: {{ dynamicPrice }}</div>
-		<button @click="goTo('Shop')">Continue shopping</button>
-		<button @click="goTo('Checkout')">Check out</button>
+		<Base-button
+			@click="goTo('Shop')"
+			:empty="true"
+		>Continue shopping</Base-button>
+		<Base-button @click="goTo('Checkout')">Check out</Base-button>
 	</div>
 </template>
 

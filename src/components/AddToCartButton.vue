@@ -1,6 +1,6 @@
 <template>
 	<div class="add-to-cart-button">
-		<button @click="addToCart">lisää ostoskoriin</button>
+		<Base-button @click="addToCart">lisää ostoskoriin</Base-button>
 
 		<Confirmation-modal v-if="displayConfirmationModal">
 			<div>Product has been added to cart!</div>
@@ -14,8 +14,11 @@
 			</div>
 			<router-link :to="{ name: 'Cart' }">View or edit your cart.</router-link>
 			<hr>
-			<button @click="closeConfirmationModal">Continue shopping</button>
-			<button @click="goToCheckout">Checkout</button>
+			<Base-button
+				@click="closeConfirmationModal"
+				:empty="true"
+			>Continue shopping</Base-button>
+			<Base-button @click="goToCheckout">Checkout</Base-button>
 		</Confirmation-modal>
 	</div>
 </template>

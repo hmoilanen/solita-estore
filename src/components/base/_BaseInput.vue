@@ -118,7 +118,7 @@ export default {
 		border-style: none;
   	//border-width: 1px;
 		border-radius: 3px;
-		border-color: purple;
+		//border-color: purple;
 		//border-color: $input-color--border;
 
 		width: 100%;
@@ -130,7 +130,7 @@ export default {
 		//font-family: $input-font;
 		//color: $input-color;
 		//&:focus { background: $input-color--bg-focus; }
-		&:focus { background: lightblue; }
+		&:focus { background: lightgreen; }
 		&::placeholder { // Not supported in all browsers... Otherwise behaves like regular text content
 			font-weight: 500;
 			//font-family: $input-font--placeholder;
