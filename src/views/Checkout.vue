@@ -11,7 +11,7 @@
 				:phase="phase"
 				@update-phase="updatePhase"
 				@edit-phase="editPhase"
-				@invalidate-field="invalidateField"
+				@field-validation="fieldValidation"
 			/>
 			<button
 				v-if="allowCheckoutSubmit"
@@ -39,24 +39,24 @@ export default {
 			phases: {
 				phase1: {
 					main: { id: 1, title: 'Customer', validated: false, opened: true },
-					email: { value: '', label: 'Email', type: 'email', valid: true, pattern: validateEmail }
+					email: { value: '', label: 'Email', type: 'email', valid: true, pattern: validateEmail, feedback: 'Provide proper email' }
 				},
 				phase2: {
 					main: { id: 2, title: 'Shipping', validated: false, opened: false },
-					firstName: { value: '', label: 'First name', valid: true, pattern: valueExists },
-					lastName: { value: '', label: 'Last name', valid: true, pattern: valueExists },
-					address: { value: '', label: 'Address', valid: true, pattern: valueExists },
-					city: { value: '', label: 'City', valid: true, pattern: valueExists },
-					country: { value: '', label: 'Country', valid: true, pattern: valueExists },
+					firstName: { value: '', label: 'First name', valid: true, pattern: valueExists, feedback: 'Provide information' },
+					lastName: { value: '', label: 'Last name', valid: true, pattern: valueExists, feedback: 'Provide information' },
+					address: { value: '', label: 'Address', valid: true, pattern: valueExists, feedback: 'Provide information' },
+					city: { value: '', label: 'City', valid: true, pattern: valueExists, feedback: 'Provide information' },
+					country: { value: '', label: 'Country', valid: true, pattern: valueExists, feedback: 'Provide information' },
 					phone: { value: '', label: 'Phone', type: 'number' }
 				},
 				phase3: {
 					main: { id: 3, title: 'Billing', validated: false, opened: false },
-					firstName: { value: '', label: 'Etunimi', valid: true, pattern: valueExists },
-					lastName: { value: '', label: 'Sukunimi', valid: true, pattern: valueExists },
-					address: { value: '', label: 'Katuosoite', valid: true, pattern: valueExists },
-					city: { value: '', label: 'Kaupunki', valid: true, pattern: valueExists },
-					country: { value: '', label: 'Maa', valid: true, pattern: valueExists },
+					firstName: { value: '', label: 'Etunimi', valid: true, pattern: valueExists, feedback: 'Provide information' },
+					lastName: { value: '', label: 'Sukunimi', valid: true, pattern: valueExists, feedback: 'Provide information' },
+					address: { value: '', label: 'Katuosoite', valid: true, pattern: valueExists, feedback: 'Provide information' },
+					city: { value: '', label: 'Kaupunki', valid: true, pattern: valueExists, feedback: 'Provide information' },
+					country: { value: '', label: 'Maa', valid: true, pattern: valueExists, feedback: 'Provide information' },
 					phone: { value: '', label: 'Puhelinnumero', type: 'number' }
 				},
 				phase4: {
@@ -135,8 +135,9 @@ export default {
 			this.$set(phases[`phase${phaseId}`].main, 'opened', true)
 		},
 
-		invalidateField({ phaseId, field }) {
-			this.$set(this.phases[`phase${phaseId}`][field], 'valid', false)
+		fieldValidation({ phaseId, field, validationState }) {
+			console.log(validationState);
+			this.$set(this.phases[`phase${phaseId}`][field], 'valid', validationState)
 		},
 
 		submitCheckout() {
@@ -165,10 +166,10 @@ export default {
 	max-width: 600px;
 	margin: 0 auto;
 
-	input {
-		display: block;
-		padding: 0.2rem;
-		margin-bottom: 0.2rem;
+	&::v-deep {
+		.base-input {
+			margin: 0.8rem 0;
+		}
 	}
 }
 </style>

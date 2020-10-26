@@ -167,3 +167,12 @@ Toiminnallisuus:
 			-> jos validoidaan koko phase, voidaan validoida samalla myös kaikki fieldit!
 		-> jos EI, invalidoi kaikki kentät jotka eivät läpäise patternia
 	-vaihtoehtoisia kenttiä ei tarvitse tarkastella / ei omaa patternia
+
+	// // // // // // // // // //
+	Ikonit:
+	-validated / ok
+	-shopping cart
+	-triangle / circle / square (vai img?)
+	-wheee
+	-plus ja miinus (?)
+	-x / sulkuruksi

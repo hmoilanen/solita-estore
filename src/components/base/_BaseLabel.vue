@@ -18,10 +18,6 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-//$label-color: $app-color--input-label;
-//$label-color--required: $app-color--error;
-//$label-font: $app-font--label;
-
 .base-label {
   display: block;
   margin-bottom: 0.3em;

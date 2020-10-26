@@ -17,6 +17,7 @@
 				:type="field.type || 'text'"
 				:label="field.label"
 				:optional="!field.pattern"
+				:feedback="!field.valid ? field.feedback : null"
 			/>
 			<div v-if="phase.main.id === 2">
 				<input
@@ -70,14 +71,19 @@ export default {
 			for (const field in this.fields) {
 				const currentField = this.fields[field]
 
-				// Check if field's value is provided as required
-				if (currentField.pattern && !currentField.pattern.test(currentField.value)) {
-					allValid = false
+				if (currentField.pattern) {
+					let validationState = true
+					
+					// Check if field's value is provided as required
+					if (!currentField.pattern.test(currentField.value)) {
+						allValid = false
+						validationState = false
+					}
 
-					// Invalidate all necessary fields
-					this.$emit('invalidate-field', {
+					this.$emit('field-validation', {
 						phaseId: this.phase.main.id,
-						field
+						field,
+						validationState
 					})
 				}
 			}
