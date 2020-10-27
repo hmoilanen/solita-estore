@@ -13,9 +13,10 @@
 				@edit-phase="editPhase"
 				@field-validation="fieldValidation"
 			/>
+			<br>
 			<Base-button
-				v-if="!allowCheckoutSubmit"
 				@click="submitCheckout"
+				:disabled="!allowCheckoutSubmit"
 				:stretch="true"
 				:size="1.2"
 			>Place order</Base-button>
@@ -24,9 +25,14 @@
 </template>
 
 <script>
-import { valueExists, validateEmail } from '@/utils/regex'
 import CheckoutSummary from '@/components/CheckoutSummary'
 import CheckoutPhase from '@/components/CheckoutPhase'
+import {
+	valueExists,
+	onlyLettersAndWhitespace,
+	onlyNumbers,
+	validateEmail
+} from '@/utils/regex'
 
 export default {
 	name: 'ViewCart',
@@ -54,19 +60,19 @@ export default {
 				},
 				phase3: {
 					main: { id: 3, title: 'Billing', validated: false, opened: false },
-					firstName: { value: '', label: 'Etunimi', valid: true, pattern: valueExists, feedback: 'Provide information' },
-					lastName: { value: '', label: 'Sukunimi', valid: true, pattern: valueExists, feedback: 'Provide information' },
-					address: { value: '', label: 'Katuosoite', valid: true, pattern: valueExists, feedback: 'Provide information' },
-					city: { value: '', label: 'Kaupunki', valid: true, pattern: valueExists, feedback: 'Provide information' },
-					country: { value: '', label: 'Maa', valid: true, pattern: valueExists, feedback: 'Provide information' },
-					phone: { value: '', label: 'Puhelinnumero', type: 'number' }
+					firstName: { value: '', label: 'First name', valid: true, pattern: valueExists, feedback: 'Provide information' },
+					lastName: { value: '', label: 'Last name', valid: true, pattern: valueExists, feedback: 'Provide information' },
+					address: { value: '', label: 'Address', valid: true, pattern: valueExists, feedback: 'Provide information' },
+					city: { value: '', label: 'City', valid: true, pattern: valueExists, feedback: 'Provide information' },
+					country: { value: '', label: 'Country', valid: true, pattern: valueExists, feedback: 'Provide information' },
+					phone: { value: '', label: 'Phone', type: 'number' }
 				},
 				phase4: {
 					main: { id: 4, title: 'Payment', validated: false, opened: false },
-					cardNumber: { value: '', label: 'Kortin numero', type: 'number', valid: true, pattern: valueExists },
-					nameOnCard: { value: '', label: 'Kortin omistaja', valid: true, pattern: valueExists },
-					validity: { value: '', label: 'Voimassa', type: 'number', valid: true, pattern: valueExists },
-					security: { value: '', label: 'CVV', type: 'number', valid: true, pattern: valueExists }
+					cardNumber: { value: '', label: 'Credit card number', type: 'number', valid: true, pattern: onlyNumbers, feedback: 'Provide only numbers' },
+					nameOnCard: { value: '', label: 'Name on card', valid: true, pattern: onlyLettersAndWhitespace, feedback: 'Provide correct name' },
+					validity: { value: '', label: 'Expiration', type: 'number', valid: true, pattern: onlyNumbers, feedback: 'Provide only numbers' },
+					security: { value: '', label: 'CVV', type: 'number', valid: true, pattern: onlyNumbers, feedback: 'Provide only numbers' }
 				}
 			}
 		}
@@ -142,21 +148,42 @@ export default {
 		},
 
 		submitCheckout() {
-			const phases = this.phases
-			let parsedCustomerData = {}
+			// Include only necessary customer data to 'POST'
+			const { phase4, ...customerData } = this.phases
+			const customerDataToPost = {}
 
-			for (const phase in phases) {
-				const { main, ...fields } = phases[phase]
+			for (const phase in customerData) {
+				const { main, ...fields } = customerData[phase]
 				const key = main.title.toLowerCase()
+				
+				customerDataToPost[key] = {}
 
-				parsedCustomerData[key] = {}
 				for (const field in fields) {
-					parsedCustomerData[key][field] = fields[field].value
+					customerDataToPost[key][field] = fields[field].value
 				}
 			}
 
-			const checkoutData = JSON.stringify(parsedCustomerData)
-			console.log('Checkout!:', checkoutData);
+			// Include only necessary product data to 'POST'
+			const productData = this.$store.state.cart.products
+			const productDataToPost = {}
+
+			for (const product in productData) {
+				const parsedProductData = {
+					name: productData[product].name,
+					amount: productData[product].amount
+				}
+
+				productDataToPost[productData[product].id] = parsedProductData
+			}
+
+			// Convert data to JSON
+			const customerJSON = JSON.stringify(customerDataToPost)
+			const productJSON = JSON.stringify(productDataToPost)
+			console.log('Checkout - customer data:', customerJSON)
+			console.log('Checkout - product data:', productJSON)
+
+			// POST data ->
+			//...
 		}
 	}
 }

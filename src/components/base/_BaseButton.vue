@@ -33,11 +33,11 @@ export default {
 
     classing() {
       return {
-        rounded: this.rounded,
-        highlight: this.highlight,
         disabled: this.disabled,
         center: this.center,
         stretch: this.stretch,
+        rounded: this.rounded,
+        highlight: this.highlight,
         empty: this.empty,
         pseudo: this.pseudo,
         inverted: this.inverted

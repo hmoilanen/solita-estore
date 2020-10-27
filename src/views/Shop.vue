@@ -1,6 +1,6 @@
 <template>
   <div class="view--home">
-		<h1>Tuotteet / kauppa</h1>
+		<h1>Products</h1>
 
     <Product
 			v-for="product in products"

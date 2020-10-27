@@ -15,6 +15,22 @@ export default {
 	components: { NavTop },
 
 	created() {
+		/* const urli = 'https://my-json-server.typicode.com/typicode/demo'
+		const urli2 = 'https://my-json-server.typicode.com/hmoilanen/solita-estore---fake-REST/products'
+
+		fetch(urli2, {
+			mode: 'no-cors',
+			headers: {
+				'Access-Control-Allow-Origin': '*',
+				"Access-Control-Allow-Credentials": true
+			}
+		})
+			.then(res => {
+				console.log('res:', res);
+				res.json()
+			})
+			.then(data => console.log(data)) */
+
 		// Mimic database with external js file
 		this.$store.dispatch('STORE_PRODUCTS', productData)
 

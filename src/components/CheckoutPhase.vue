@@ -18,7 +18,9 @@
 				:label="field.label"
 				:optional="!field.pattern"
 				:feedback="!field.valid ? field.feedback : null"
+				:disabled="mimicLoadingForCreditcardValidation"
 			/>
+
 			<div v-if="phase.main.id === 2">
 				<input
 					v-model="billingSameAsShipping"
@@ -27,7 +29,9 @@
 				>
 				<span>Billing address is same as shipping address</span>
 			</div>
-			<div v-if="phaseNotValidated">Please provide correct information to proceed...</div>
+
+			<div v-if="phaseNotValidated && !mimicLoadingForCreditcardValidation">Please provide correct information to proceed...</div>
+			<div v-if="mimicLoadingForCreditcardValidation">PLEASE WAIT...</div>
 			<Base-button @click="validatePhase">Continue</Base-button>
 		</template>
 	</div>
@@ -47,7 +51,8 @@ export default {
 	data() {
 		return {
 			billingSameAsShipping: false,
-			phaseNotValidated: false
+			phaseNotValidated: false,
+			mimicLoadingForCreditcardValidation: false
 		}
 	},
 
@@ -64,8 +69,10 @@ export default {
 	},
 
 	methods: {
-		validatePhase() {
+		async validatePhase() {
 			let allValid = true
+
+			await this.mimicAsyncForCreditcardValidation()
 
 			// Validate all fields
 			for (const field in this.fields) {
@@ -112,6 +119,17 @@ export default {
 
 		toggleCheckbox() {
 			this.billingSameAsShipping = !this.billingSameAsShipping
+		},
+
+		async mimicAsyncForCreditcardValidation() {
+			// Mimic async/await when validating assumed credit card data
+			if (this.phase.main.id === 4) {
+				const delay = duration => new Promise(res => setTimeout(res, duration))
+				
+				this.mimicLoadingForCreditcardValidation = true
+				await delay(3000)
+				this.mimicLoadingForCreditcardValidation = false
+			}
 		}
 	}
 }

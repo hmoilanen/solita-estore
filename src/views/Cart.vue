@@ -1,8 +1,6 @@
 <template>
   <div class="view--cart">
-		<router-link :to="{ name: 'Shop' }">takaisin kauppaan</router-link>
-
-		<h1>Ostoskori</h1>
+		<h1>Cart</h1>
 		
 		<template v-if="typeof productsInCart === 'object'">
 			<Product
@@ -34,7 +32,7 @@ export default {
 			
 			return Object.keys(productsInCart).length > 0
 				? productsInCart
-				: 'Ei lisättyjä tuotteita'
+				: 'No added products'
 		}
 	}
 }

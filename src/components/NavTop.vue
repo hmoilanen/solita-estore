@@ -1,7 +1,7 @@
 <template>
 	<div class="nav-top">
 		<div>
-			<strong>WHEE</strong>
+			<strong @click="goToShop">WHEE</strong>
 			<span>The most definitive shape store in the wööörld</span>
 		</div>
 		<Nav-top-options/>
@@ -14,7 +14,13 @@ import NavTopOptions from '@/components/NavTopOptions'
 export default {
 	name: 'NavTop',
 
-	components: { NavTopOptions }
+	components: { NavTopOptions },
+	
+	methods: {
+		goToShop() {
+			this.$router.push({ name: 'Shop' })
+		}
+	}
 }
 </script>
 

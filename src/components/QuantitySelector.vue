@@ -4,15 +4,19 @@
 			@click="increaseAmount"
 			:class="classing.increase"
 		>+</button>
-		<div class="amount">{{ value }}</div>
+		<input ref="paska" type="number" v-model="inputValue">
+		<!-- <div class="amount">{{ value }}</div> -->
 		<button
 			@click="decreaseAmount"
 			:class="classing.decrease"
 		>-</button>
+		<span v-if="displayFeedback">Maximum of {{ max }} products can be added at a time!</span>
 	</div>
 </template>
 
 <script>
+import { onlyNumbers } from '@/utils/regex'
+
 export default {
 	name: 'QuantitySelector',
 
@@ -30,8 +34,42 @@ export default {
 			default: 1
 		},
 	},
+
+	data() {
+		return {
+			displayFeedback: false
+		}
+	},
 	
 	computed: {
+		inputValue: {
+			get: function() {
+				return this.value
+			},
+			set: function(newValue) {
+				// Check if value of input consists only of numbers
+				if (onlyNumbers.test(newValue)) {
+					// Don't allow 0 or less as a value
+					if (Number(newValue) <= this.min) {
+						this.$emit('input', this.min)
+						this.$forceUpdate() // For forcing Vue to update input element's value
+					}
+					// Make sure value of input never exceed this.max
+					else if (Number(newValue) <= this.max) {
+						this.$emit('input', Number(newValue))
+						this.displayFeedback = false
+					}
+					else {
+						const controlledValue = newValue.slice(0, -1)
+
+						this.displayFeedback = true
+						this.$emit('input', Number(controlledValue))
+						this.$forceUpdate() // For forcing Vue to update input element's value
+					}
+				}
+			}
+		},
+
 		classing() {
 			return {
 				increase: { disabled: this.value >= this.max },
@@ -53,20 +91,32 @@ export default {
 				?	this.value - 1
 				: this.min
 			this.$emit('input', decreasedAmount)
-		},
+		}
 	}
 }
 </script>
 
 <style lang="scss" scoped>
+$quantity-selector--height: 1.6rem;
+
 .quantity-selector {
 	display: flex;
 	align-items: center;
 	& * { user-select: none; }
 
+	input {
+		outline: 0;
+		border: none;
+		text-align: center;
+		height: $quantity-selector--height;
+		width: calc(#{$quantity-selector--height} * 1.4);
+		font-size: 1.2rem;
+		font-weight: 700;
+	}
+
 	button {
-		width: 30px; // dummy
-		height: 30px; // dummy
+		width: $quantity-selector--height;
+		height: $quantity-selector--height;
 		text-align: center;
 		cursor: pointer;
 		&.disabled {
@@ -75,10 +125,10 @@ export default {
 		}
 	}
 
-	.amount {
+	/* .amount {
 		font-size: 2rem;
 		font-weight: 700;
 		margin: 0 0.4rem;
-	}
+	} */
 }
 </style>

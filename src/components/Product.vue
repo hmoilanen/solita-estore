@@ -45,6 +45,14 @@ export default {
 		}
 	},
 
+	/* watch: {
+		amount: function(njyy, ould) {
+			console.log('PARENT: njyy', njyy);
+			console.log('PARENT: ould', ould);
+			console.log('PARENT: this.amaunt', this.amount);
+		}
+	}, */
+
 	computed: {
 		amountOfProducts: {
 			// In shop, related to amount of the product to be added to cart.

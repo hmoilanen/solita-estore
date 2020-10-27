@@ -1,6 +1,4 @@
-https://mocki.io/docs
-
-// // // // // // // // // //
+// // // // // // // // // // // // // // // // // // // //
 POINTTEJA!!!:
 -tuttuus: ostotapahtuman pitää olla samaistuttava / tutun näköinen
 	-> lisää luotettavuudeen tunnetta suorittaa itse ostotapahtuma
@@ -9,178 +7,49 @@ POINTTEJA!!!:
 -projekti helpposti laajennettavissa
 -käyttäjäkäyttäjäkäyttäjäkäyttäjä
 
-// // // // // // // // // //
-App - yleisiä ajatuksia / ideoita:
--hae tuotteet erillisestä js-filusta (mock request) ja talleta ne storeen
-	-> see: https://mocki.io/
--kun ostoskori päivittyy, päivitä myös ko. cookiet / local storage
-	-> ...jotta ostotapahtuma ei mene hukkaan vaikka esim selain kaatuu
+// // // // // // // // // // // // // // // // // // // //
+TODOS - rakenne / toiminnallisuus:
+--OK -poista luottokorttidata checkout-JSON:sta
+	--OK -> lisää siihen myös itse tuotteet
+	--OK -> payment-mimic checkout:issa
+-lisää dyaaminen input-elementti QuantitySelectoriin
+--OK -lisää navTop:iin linkki myös itse kauppaan = WHEE-ikoni
+-talleta tilaajan tiedot localStorageen (?)
+-curtain (tai jonkun muunlainen implementaatio)
+-404
+-tee readme.md
+-tee kaaviot
+-tee email, jossa koko paska lähetetään Solitalle lilnkkeineen!
 
-// // // // // // // // // //
-Vuex / store:
--ostoskori
--itemit
+// // // // // 
+TODOS - tyylit yms.:
+-tee ikonit (ks. ikonilista)
+-tee tyyleistä globaalit
+-valitse värit
+-tee yleinen h1-komponentti, jota käytetään joka sivulla
+-tee yleinen tekstikomponentti
+-lisää gridit joka sivulle
+-lisää kokoluokat (ainakin) baseButton:iin (myöls muihin jos tarve)
+-lisää ERD -> tyylit sen mukaan
 
-// // // // // // // // // //
-Logiikka:
--increaseAmountOfProducts
--decreaseAmountOfProducts
--addProductToCart
--removeProductFromCart
--emptyCart
--makePurchase
-
-// // // // // // // // // //
-Rakenne:
--ländäysnäkymä / home
-	-linkki varisnaiseen kauppaan
--perusnäkymä (valittavat tuotteet)
-	-tuote
-		=tuotetiedot
-		-addToCart-nappi
--ostoskorinäkymä (valitut tuotteet) -> oma route?
-	-tuote
-		-määrä
-	-summa
-	-kassalle-nappi
--ostotapahtuma ("modaali"?)
-	-phase 1: valitut tuotteet ja varmistus
-	-phase 2: ostajan tiedot (+ vastaanottajan tiedot jos eri)
-	-phase 3: maksutiedot (tee dummyna!)
-	-phase 4: palaute ostotapahtumasta (success / error -> käytä huumoria :))
-
-// // // // // // // // // //
-Bäkkiin lähtevä data: 
-
-tilaus: {
-	tekijä: {
-		...tiedot
-	},
-	tuotteet: [
-		tuote1: {
-			id: '',
-			nimi: '',
-			määrä: '',
-			...?
-		},
-		tuote2: {
-			id: '',
-			nimi: '',
-			määrä: '',
-			...?
-		},
-		...
-	],
-	// laskutus ei kuulu tähän datapakettiin
-}
-
+// // // // // 
+TODOS - extrat:
+-testaaminen
 
 // // // // // // // // // // // // // // // // // // // // 
-Checkout:
--sisältää komponentit:
-	-CheckoutPhase
-	-CheckoutSummary
--pitää lukua mi(t)kä phaset on validoitu
--pitää lukua mikä phase on auki (piilottaa muut)
--syöttää CheckoutPhase:en proppina mitkä kaikki phaset on validoitu
+Ikonit:
+-validated / ok
+-shopping cart
+-triangle / circle / square (vai img?)
+-wheee
+-plus ja miinus (?)
+-x / sulkuruksi
+-checkbox (empty / checked)
 
-// // //
-CheckoutPhase:
--sisältää validate-napin (jatka)
-	-täytyy painaa joka kerta kun tietoja muutetaan
--sisältää edit-napin (muokkaa)
-	-täytyy painaa joka kerta kun tietoja haluaa uudelleenmuuttaa
 
--tallettaa tiedot storeen !!!
-	-halutaan pitää tallessa, koska esim tilausta pitää voida vielä muuttaa!
--huom!: pitääköhän tehdä niin että luottokortin tietoja ei koskaan tallenneta
-	-> pitää aina täyttää uudelleen tietoturvan takia
 
--viimeinen phase (= payment) sisältää "lähetä/vahvista tilaus"-napin
-	-...joka ottaa storesta tarvittavat tiedot ja koostaa niistä halutun dataobjektin
 
-// // //
-CheckoutSummary:
--sisältää tiedot:
-	-otsikko: "Tilauksen yhteenveto" + linkki takaisin ostoskoriin
-	-mitä tuotteita tilattu
-	-kuponki-input + vahvista-nappi (vaikuttaa summaan) -> lisää tähän myös jotain huumoria
-	-"yhteensä" + summa
+.......
 
-// // //
-CheckoutPhase:
--pitäisi täyttää kentät saman tien
--> kun käynnistetään, kentät tyhjiä
--> luetaan suoraan storesta?!
--> kun klikaataan edit, invalidate ko. phase
--> kun validoidaan, luetaan storen arvot ja jos ei ole ok invalidate
--> kun phase3 kopioidaan phase2:sta, sitä EI kuitenkaan validoida!!!
--> jos phase2 editoidaan ja duplikoidaan, se muuttaa AINA validoidessa valluet vastaamaan phase2:sta
-
-// // // // // // // // // // // // // // // // // // // // 
-Product:
-
--yhdistä CartProduct ja ShopProduct (turha tehdä samoja asioita moneen kertaan)
-
-// // //
-Product - ominaisuudet (toiminnallisuus mahdolistetaan tilanteen mukaan):
--1. tiedot
--2. tuotteiden määrän lisääminen (QuantitySelector)
--3. add product -nappi (AddToCartButton)
--4. remove product -nappi
-
-// // //
-Tilanteet:
--shop: 1,2,3
--cart: 1,2,4
--checkout: 1
-
-// // //
-Propit / data:
--jos SHOP:
-	-product: product
-	-amount: amount
--jos CART:
-	-product: product
-	-amount: product.amount
--jos CHECKOUT:
-	-product: product
-	-amount: product.amount
-
--> määrän päpivittäminen -> kaksi erilaista moodia
-	-päivitä määrä komponentissa ja vasta storessa, kun tuote lisätään koriin
-	-päivitä määrä suoraan storeen
-	-> props.mode = 'shop' /  'cart' TAI katsotaan aautomaattisesti!
-
-// // //
-Toiminnallisuus:
--kun painetaan "add to cart" -nappia, lisätäämn tuote storeen
-	-jos painetaan uudestaan, tarkastetaan onko tuotetta vielä storessa...
-		-jos on, lisätään vain lisättty määrä olemassaolevaan
--lisää myöhemmin: QuantitySelectorissa numero pitää voida syöttää myös näppäimistöltä (= input)
--lisää localStore refressi' varten
-
-// // // // // // // // // //
--kun klikataan 'validate'...
-	-tarkastetaan, läpäiseekö field valuet patternin
-		-> jos KYLLÄ, validate whole phase!
-			-> jos validoidaan koko phase, voidaan validoida samalla myös kaikki fieldit!
-		-> jos EI, invalidoi kaikki kentät jotka eivät läpäise patternia
-	-vaihtoehtoisia kenttiä ei tarvitse tarkastella / ei omaa patternia
-
-	// // // // // // // // // //
-	Ikonit:
-	-validated / ok
-	-shopping cart
-	-triangle / circle / square (vai img?)
-	-wheee
-	-plus ja miinus (?)
-	-x / sulkuruksi
-	-checkbox (empty / checked)
-
-	// // // // // // // // // //
-	TODO:
-	-404 (?)
-	-testaaminen (?)
-	-curtain
-	-payment-mimic in checkout
+Product
+-muuttaa 

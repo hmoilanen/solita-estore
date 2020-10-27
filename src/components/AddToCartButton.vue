@@ -1,6 +1,6 @@
 <template>
 	<div class="add-to-cart-button">
-		<Base-button @click="addToCart">lisää ostoskoriin</Base-button>
+		<Base-button @click="addToCart">Add to cart</Base-button>
 
 		<Confirmation-modal v-if="displayConfirmationModal">
 			<div>Product has been added to cart!</div>
@@ -78,12 +78,3 @@ export default {
 	}
 }
 </script>
-
-<style lang="scss" scoped>
-.add-to-cart-button {
-	
-	.confirmation-modal {
-		
-	}
-}
-</style>
