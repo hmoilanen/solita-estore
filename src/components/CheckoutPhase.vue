@@ -2,7 +2,10 @@
 	<div class="checkout-phase">
 		<h3>
 			{{ phase.main.id }}: {{ phase.main.title }}
-			<span v-if="phase.main.validated">OK!</span>
+			<Base-icon 
+				v-show="phase.main.validated"
+				size="1rem"
+			></Base-icon>
 		</h3>
 		<Base-button
 			v-if="allowEditing"
@@ -30,8 +33,7 @@
 				<span>Billing address is same as shipping address</span>
 			</div>
 
-			<div v-if="phaseNotValidated && !mimicLoadingForCreditcardValidation">Please provide correct information to proceed...</div>
-			<div v-if="mimicLoadingForCreditcardValidation">PLEASE WAIT...</div>
+			<div v-if="feedback.displayed">{{ feedback.message }}</div>
 			<Base-button @click="validatePhase">Continue</Base-button>
 		</template>
 	</div>
@@ -65,6 +67,24 @@ export default {
 		allowEditing() {
 			const main = this.phase.main
 			return main.validated && !main.opened
+		},
+
+		feedback() {
+			let displayed = true
+			let message = ''
+
+			if (this.phaseNotValidated && !this.mimicLoadingForCreditcardValidation) {
+				message = 'Please provide correct information to proceed...'
+			} else if (this.mimicLoadingForCreditcardValidation) {
+				message = 'PLEASE WAIT...'
+			} else {
+				displayed = false
+			}
+
+			return {
+				displayed,
+				message
+			}
 		}
 	},
 
@@ -127,7 +147,7 @@ export default {
 				const delay = duration => new Promise(res => setTimeout(res, duration))
 				
 				this.mimicLoadingForCreditcardValidation = true
-				await delay(3000)
+				await delay(2000)
 				this.mimicLoadingForCreditcardValidation = false
 			}
 		}

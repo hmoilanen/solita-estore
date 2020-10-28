@@ -12,29 +12,36 @@ TODOS - rakenne / toiminnallisuus:
 --OK -poista luottokorttidata checkout-JSON:sta
 	--OK -> lisää siihen myös itse tuotteet
 	--OK -> payment-mimic checkout:issa
--lisää dyaaminen input-elementti QuantitySelectoriin
+--OK -lisää dyaaminen input-elementti QuantitySelectoriin
 --OK -lisää navTop:iin linkki myös itse kauppaan = WHEE-ikoni
--talleta tilaajan tiedot localStorageen (?)
--curtain (tai jonkun muunlainen implementaatio)
--404
+-KORJAA BUGI! NYT TULEE HÄKSY JOS ON PAINETTU EDIT-NAPPIA JA KO. PHASE ON AUKI JA PAINAA TOISTA EDIT NAPPIA
+	->RATKAISU: PIILOTA MUUT EDIT NAPIT SILLÄ AIKAA!
+-talleta tilaajan tiedot localStorageen (? = JOS JÄÄ AIKAA!)
+	-> JOS EI JÄÄ, POISTA TURHAT KOODIT Checkout.vue:sta + storageCustomer.js!!!
+-curtain (tai jonkun muunlainen implementaatio) = whee
+--OK -404
 -tee readme.md
--tee kaaviot
+-tee luokkakaaviot
 -tee email, jossa koko paska lähetetään Solitalle lilnkkeineen!
 
 // // // // // 
 TODOS - tyylit yms.:
--tee ikonit (ks. ikonilista)
+--OK -tee ikonit (ks. ikonilista)
 -tee tyyleistä globaalit
 -valitse värit
 -tee yleinen h1-komponentti, jota käytetään joka sivulla
 -tee yleinen tekstikomponentti
 -lisää gridit joka sivulle
--lisää kokoluokat (ainakin) baseButton:iin (myöls muihin jos tarve)
+-lisää kokoluokat (ainakin) baseButton:iin / baseIcon:in (myöls muihin jos tarve)
 -lisää ERD -> tyylit sen mukaan
+-lisää favicon
 
 // // // // // 
 TODOS - extrat:
+-kiinnitä fake-REST (https://my-json-server.typicode.com), ks. App.vue
+	->...tai ainakin poista turhat koodit ko. komponentista
 -testaaminen
+-footer (?)
 
 // // // // // // // // // // // // // // // // // // // // 
 Ikonit:
@@ -47,9 +54,13 @@ Ikonit:
 -checkbox (empty / checked)
 
 
+LISÄYS STORAGEEN:
+-kun phase validoidaan:
+	-lisää uusi joka on sama kuin edellinen, mutta siihen on lisätty ko. vaihe
+		= "whee-customer"
+	-kun edit-nappiia painetaan, poista mahdollinen olemassa oleva value storagesta
 
+LUKU STORAGESTA:
+-kun checkout inittaa, tarkista onko dataa
+	-jos on, päivitä ko. komponentti
 
-.......
-
-Product
--muuttaa 

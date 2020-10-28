@@ -24,6 +24,15 @@ const routes = [
     name: 'Checkout',
     component: () => import('@/views/Checkout')
   },
+	{
+    path: '/404',
+    name: '404',
+		component: () => import('@/views/Error'),
+  },
+  {
+    path: '*',
+    redirect: '/404'
+  }
 ]
 
 const router = new VueRouter({

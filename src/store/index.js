@@ -1,7 +1,7 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
 
-import { valueExists, validateEmail, onlyNumbers } from '@/utils/regex'
+import storageProducts from '@/logic/storageProducts'
 
 Vue.use(Vuex)
 
@@ -16,7 +16,7 @@ export default new Vuex.Store({
 	
   getters: {
 		GET_PRICE: state => price => {
-			const euro = state.currency === 'eu'
+			const euro = state.currency.toLowerCase() === 'eu'
 			const conversionRate = euro ? 1 : 1.18
 			const convertedPrice = price * conversionRate
 			const type = euro ? '€' : '$'
@@ -46,6 +46,22 @@ export default new Vuex.Store({
 			}
 
 			return subtotal
+		},
+
+		PARSED_PRODUCTS_IN_CART: state => {
+			const products = state.cart.products
+			const parsedProducts = {}
+
+			for (const product in products) {
+				const parsedProduct = {
+					name: products[product].name,
+					amount: products[product].amount
+				}
+
+				parsedProducts[products[product].id] = parsedProduct
+			}
+
+			return parsedProducts
 		}
 	},
 
@@ -123,12 +139,3 @@ export default new Vuex.Store({
 		}
 	}
 })
-
-// For clearing old and storing updated products in local storage
-function storageProducts(state) {
-	const ls = window.localStorage
-	const key = 'whee-products'
-
-	ls.removeItem(key)
-	ls.setItem(key, JSON.stringify(state.cart.products))
-}

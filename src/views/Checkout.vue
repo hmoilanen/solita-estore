@@ -27,6 +27,7 @@
 <script>
 import CheckoutSummary from '@/components/CheckoutSummary'
 import CheckoutPhase from '@/components/CheckoutPhase'
+//import storageCustomer from '@/logic/storageCustomer'
 import {
 	valueExists,
 	onlyLettersAndWhitespace,
@@ -91,6 +92,30 @@ export default {
 			}
 
 			return allPhasesValidated
+		},
+
+		parsedCustomerData() {
+			// Include only necessary customer data and only from validated phases
+			const { phase4, ...customerData } = this.phases
+			const parsedCustomerData = {}
+
+			for (const phase in customerData) {
+				const { main, ...fields } = customerData[phase]
+
+				if (main.validated) {
+					const key = main.title.toLowerCase()
+					
+					//parsedCustomerData[`${main.id}-${key}`] = {}
+					parsedCustomerData[key] = {}
+	
+					for (const field in fields) {
+						parsedCustomerData[key][field] = fields[field].value
+					}
+
+				}
+			}
+
+			return parsedCustomerData
 		}
 	},
 
@@ -113,6 +138,9 @@ export default {
 			// Validate and close current phase
 			this.$set(currentPhase.main, 'validated', true)
 			this.$set(currentPhase.main, 'opened', false)
+
+			// Save updated customer data to local storage
+			//storageCustomer(this.parsedCustomerData)
 			
 			// Open next not-validated phase
 			const amountOfPhases = Object.keys(phases).length
@@ -128,9 +156,9 @@ export default {
 		},
 
 		editPhase(phaseId) {
-			// First close currently opened phase...
 			const phases = this.phases
 			
+			// First close currently opened phase...
 			for (const phase in phases) {
 				const mainOfPhase = phases[phase].main
 				if (mainOfPhase.opened) {
@@ -141,6 +169,9 @@ export default {
 			// ...then open the to-be-edited phase
 			this.$set(phases[`phase${phaseId}`].main, 'validated', false)
 			this.$set(phases[`phase${phaseId}`].main, 'opened', true)
+
+			// Update customer data to local storage / remove non-validated phases
+			//storageCustomer(this.parsedCustomerData)
 		},
 
 		fieldValidation({ phaseId, field, validationState }) {
@@ -148,42 +179,16 @@ export default {
 		},
 
 		submitCheckout() {
-			// Include only necessary customer data to 'POST'
-			const { phase4, ...customerData } = this.phases
-			const customerDataToPost = {}
-
-			for (const phase in customerData) {
-				const { main, ...fields } = customerData[phase]
-				const key = main.title.toLowerCase()
-				
-				customerDataToPost[key] = {}
-
-				for (const field in fields) {
-					customerDataToPost[key][field] = fields[field].value
-				}
-			}
-
-			// Include only necessary product data to 'POST'
-			const productData = this.$store.state.cart.products
-			const productDataToPost = {}
-
-			for (const product in productData) {
-				const parsedProductData = {
-					name: productData[product].name,
-					amount: productData[product].amount
-				}
-
-				productDataToPost[productData[product].id] = parsedProductData
-			}
+			const parsedProductData = this.$store.getters['PARSED_PRODUCTS_IN_CART']
 
 			// Convert data to JSON
-			const customerJSON = JSON.stringify(customerDataToPost)
-			const productJSON = JSON.stringify(productDataToPost)
+			const customerJSON = JSON.stringify(this.parsedCustomerData)
+			const productJSON = JSON.stringify(parsedProductData)
 			console.log('Checkout - customer data:', customerJSON)
 			console.log('Checkout - product data:', productJSON)
 
 			// POST data ->
-			//...
+			// ...
 		}
 	}
 }

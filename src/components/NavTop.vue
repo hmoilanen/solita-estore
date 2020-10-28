@@ -25,12 +25,17 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+$nav-top--color: $app-color--white;
+$nav-top--color-bg: $app-color--main;
+
 .nav-top {
-	padding: 1rem;
+	height: $app-vars--nav-top--height;
+	padding: 0 1rem;
 	display: flex;
 	align-items: center;
 	justify-content: space-between;
-	background: lightgreen;
+	background: $nav-top--color-bg;
+	color: $nav-top--color;
 }
 
 </style>

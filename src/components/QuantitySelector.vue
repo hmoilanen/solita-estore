@@ -27,7 +27,7 @@ export default {
 		},
 		max: {
 			type: Number,
-			default: 100
+			default: 999
 		},
 		min: {
 			type: Number,

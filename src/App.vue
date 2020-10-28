@@ -34,10 +34,11 @@ export default {
 		// Mimic database with external js file
 		this.$store.dispatch('STORE_PRODUCTS', productData)
 
-		// Check if local storage contains product data and get it
+		// Check if local storage contains products added in cart...
 		const ls = window.localStorage
 		const productsInLocalStorage = ls.getItem('whee-products')
 
+		// ...and store them if so.
 		if (productsInLocalStorage) {
 			this.$store.dispatch(
 				'SET_CART',
@@ -58,6 +59,7 @@ export default {
 	padding: 0;
 }
 
+body { background: $app-color--main-l3; }
 
 input {
 	&[type='number'] {
@@ -72,6 +74,6 @@ input {
 #app {
   font-family: Avenir, Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
+	-moz-osx-font-smoothing: grayscale;
 }
 </style>

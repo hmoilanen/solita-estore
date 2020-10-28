@@ -1,0 +1,30 @@
+// Colors
+
+$app-color--main: #4e2683;
+$app-color--main-l1: lighten($app-color--main, 30%);
+$app-color--main-l2: lighten($app-color--main, 50%);
+$app-color--main-l3: lighten($app-color--main, 65%); // most lightened
+
+$app-color--white: desaturate(lighten($app-color--main, 68%),20%);
+$app-color--black: desaturate(darken($app-color--main, 25%), 20%);
+$app-color--bg: desaturate(lighten($app-color--main, 100%), 10%);
+$app-color--hl: #ffda00;
+
+////////////////////////////////////////////////////////////////////////////////
+// Cheatsheet: SASS functions for adjusting colors
+
+// Hue:
+// adjust-hue($hsl-color, Xdeg)
+// Note: complementary color -> Xdeg + 180
+
+// Saturation:
+// saturate($hsl-color, X%)
+// desaturate($hsl-color, X%)
+
+// Lightness:
+// darken($hsl-color, X%)
+// lighten($hsl-color, X%)
+
+// Other:
+// transparentize($hsl-color, 0-1)
+// opacify($hsl-color, 0-1)

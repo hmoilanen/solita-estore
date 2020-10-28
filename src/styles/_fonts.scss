@@ -1,0 +1,14 @@
+// Fonts
+
+@font-face {
+	font-family: "MarkFF Pro";
+	src: url("~@/assets/fonts/MarkPro.otf") format("opentype");
+	font-weight: 500;
+}
+@font-face {
+	font-family: "MarkFF Pro bold";
+	src: url("~@/assets/fonts/MarkPro-Bold.otf") format("opentype");
+}
+
+$app-font: "MarkFF Pro",  sans-serif;
+$app-font--bold: "MarkFF Pro bold",  sans-serif;
