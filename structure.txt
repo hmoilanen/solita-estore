@@ -53,6 +53,8 @@ TODOS - bugit:
 	-> avaa se toinen EDIT ja sulje vanha tallentamatta sen mahdollisia muutoksia?!
 -navTop jää ChekoutSummaryn päälle kun se avataan
 	-> "nosta NavTop ulos ruudusta"?
+-ChekoutSummary jää kaiken muun sisälllön päälle kun input triggeröidään kännykällä ja näppis nousee esiin (koska sijoitettu fixedillä ruudun alareunaan, joka siis nousee kun näppis tulee esiin)
+	-> laske koko window:n korkeus ja sijoita se sen perusteella sille etäisyydelle YLÄREUNASTA
 
 
 
