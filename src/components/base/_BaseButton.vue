@@ -82,6 +82,7 @@ $base-button--color--main: $app-color--main;
 $base-button--color--main-l1: $app-color--main-l1;
 $base-button--color--main-l2: $app-color--main-l2;
 $base-button--color--hl: $app-color--hl;
+$base-button--color--hl2: $app-color--hl2;
 
 $base-button--height: 2.4em !default;
 $base-button--side-padding: 1.4em !default;
@@ -132,7 +133,7 @@ $base-button--side-padding: 1.4em !default;
 		background: $base-button--color--hl;
 		color: $base-button--color--black;
 		&:hover {
-			background: adjust-hue($base-button--color--hl, -3deg);
+			background: $base-button--color--hl2;
 			color: $base-button--color--white;
 		}
 	}

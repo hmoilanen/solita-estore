@@ -79,6 +79,7 @@ export default {
   components: {
     IconCart: () => import('@/components/icons/IconCart'),
     IconCheckbox: () => import('@/components/icons/IconCheckbox'),
+    IconCheckboxEmpty: () => import('@/components/icons/IconCheckboxEmpty'),
     IconCircle: () => import('@/components/icons/IconCircle'),
     IconDecrease: () => import('@/components/icons/IconDecrease'),
     IconIncrease: () => import('@/components/icons/IconIncrease'),

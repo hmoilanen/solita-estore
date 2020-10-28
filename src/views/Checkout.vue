@@ -18,7 +18,7 @@
 				@click="submitCheckout"
 				:disabled="!allowCheckoutSubmit"
 				:stretch="true"
-				:size="1.2"
+				size="1.1rem"
 			>Place order</Base-button>
 		</form>
   </div>

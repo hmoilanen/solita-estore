@@ -9,6 +9,7 @@ $app-color--white: desaturate(lighten($app-color--main, 68%),20%);
 $app-color--black: desaturate(darken($app-color--main, 25%), 20%);
 $app-color--bg: desaturate(lighten($app-color--main, 100%), 10%);
 $app-color--hl: #ffda00;
+$app-color--hl2: adjust-hue($app-color--hl, -8deg);
 
 ////////////////////////////////////////////////////////////////////////////////
 // Cheatsheet: SASS functions for adjusting colors

@@ -1,16 +1,20 @@
 <template>
 	<div class="checkout-phase">
-		<h3>
-			{{ phase.main.id }}: {{ phase.main.title }}
-			<Base-icon 
-				v-show="phase.main.validated"
-				size="1rem"
-			></Base-icon>
-		</h3>
-		<Base-button
-			v-if="allowEditing"
-			@click="editPhase"
-		>Edit</Base-button>
+		<div class="header">
+			<h3>
+				{{ phase.main.id }} - {{ phase.main.title }}
+				<Base-icon 
+					v-show="phase.main.validated"
+					size="1rem"
+				></Base-icon>
+			</h3>
+			<Base-button
+				v-if="allowEditing"
+				@click="editPhase"
+				:pseudo="true"
+				size="s"
+			>Edit</Base-button>
+		</div>
 
 		<template v-if="phase.main.opened">
 			<Base-input
@@ -24,17 +28,15 @@
 				:disabled="mimicLoadingForCreditcardValidation"
 			/>
 
-			<div v-if="phase.main.id === 2">
-				<input
-					v-model="billingSameAsShipping"
-					type="checkbox"
-					@keydown.enter.prevent="toggleCheckbox"
-				>
-				<span>Billing address is same as shipping address</span>
-			</div>
+			<Base-checkbox
+				v-if="phase.main.id === 2"
+				v-model="billingSameAsShipping"
+			>Billing address is same as shipping address</Base-checkbox>
 
-			<div v-if="feedback.displayed">{{ feedback.message }}</div>
-			<Base-button @click="validatePhase">Continue</Base-button>
+			<div class="bottom">
+				<Base-button @click="validatePhase">Continue</Base-button>
+				<span v-if="feedback.displayed">{{ feedback.message }}</span>
+			</div>
 		</template>
 	</div>
 </template>
@@ -137,6 +139,10 @@ export default {
 			this.$emit('edit-phase', this.phase.main.id)
 		},
 
+		testo() {
+			this.$refs.checkbox.click()
+		},
+
 		toggleCheckbox() {
 			this.billingSameAsShipping = !this.billingSameAsShipping
 		},
@@ -156,14 +162,32 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.checkout-phase {
-	padding: 0.5rem 0;
-	border-bottom: 1px solid lightgreen;
+$checkout-phase--color--separator: $app-color--main-l2;
 
-	input:not([type="checkbox"]) {
-		display: block;
-		padding: 0.2rem;
-		margin-bottom: 0.2rem;
+.checkout-phase {
+	padding: 0.8rem 0;
+	border-bottom: 1px solid $checkout-phase--color--separator;
+
+	.header {
+		display: flex;
+		align-items: center;
+		justify-content: space-between;
+		&::v-deep {
+			.base-icon {
+				position: relative;
+				top: 0.1rem;
+				left: 0.4rem;
+			}
+		}
+	}
+
+	.bottom {
+		display: flex;
+		align-items: center;
+		span {
+			margin-left: 0.4rem;
+			font-size: 0.8rem;
+		}
 	}
 }
 </style>

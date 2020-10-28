@@ -86,6 +86,9 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+$base-input--color-bg: desaturate(lighten($app-color--main-l2, 12%), 15%);
+$base-input--color-bg--active: $app-color--main-l2;
+
 //$input-color: $app-color--input;
 //$input-color--border: $app-color--input-border;
 //$input-color--bg: $app-color--theme;
@@ -99,12 +102,7 @@ export default {
 .base-input {
   width: 100%;
   font-size: 0.8rem;
-  &.disabled {
-		//@extend %input--disabled;
-		user-select: none;
-		pointer-events: none !important;
-		opacity: 0.2;
-	}
+  &.disabled { @extend %app-style--input-disabled; }
 
 	.input-container {
 		font-size: inherit !important;
@@ -123,14 +121,14 @@ export default {
 
 		width: 100%;
 		//padding, see: this.styling.input
-		background: rgb(240, 240, 240); 
+		background: $base-input--color-bg; 
 		//background: $input-color--bg; 
 		font-size: inherit;
 		letter-spacing: 0.05em;
 		//font-family: $input-font;
 		//color: $input-color;
 		//&:focus { background: $input-color--bg-focus; }
-		&:focus { background: lightgreen; }
+		&:focus { background: $base-input--color-bg--active; }
 		&::placeholder { // Not supported in all browsers... Otherwise behaves like regular text content
 			font-weight: 500;
 			//font-family: $input-font--placeholder;

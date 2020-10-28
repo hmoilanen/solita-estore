@@ -18,18 +18,13 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+$base-label--color: $app-color--main-l1;
+
 .base-label {
   display: block;
   margin-bottom: 0.3em;
   font-size: 0.9em; // Based on parent component's font-size
-  font-weight: 500;
-  //font-family: $label-font;
-  //color: $label-color;
 
-  span {
-    //font-size: 1.45em;
-    //color: $label-color--required;
-    color: green;
-  }
+  span { color: $base-label--color; }
 }
 </style>

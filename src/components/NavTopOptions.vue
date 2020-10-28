@@ -79,7 +79,6 @@ $nav-top-options--color--inactive: $app-color--main-l1;
 
 	.currencies {
 		display: flex;
-		margin-right: 1rem;
 		div {
 			@extend %clickable;
 			font-weight: 700;
@@ -100,6 +99,7 @@ $nav-top-options--color--inactive: $app-color--main-l1;
 	}
 
 	.cart-button {
+		margin-left: 1rem;
 		position: relative;
 		@extend %flex--center;
 		@extend %clickable;

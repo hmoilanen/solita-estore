@@ -18,8 +18,10 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+$base-feedback--color: $app-color--hl2;
+
 .base-feedback {
   line-height: 1.4em;
-	color: red;
+	color: $base-feedback--color;
 }
 </style>
