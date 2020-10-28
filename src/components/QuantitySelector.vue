@@ -1,15 +1,25 @@
 <template>
 	<div class="quantity-selector">
-		<button
+		<Base-icon
 			@click="increaseAmount"
 			:class="classing.increase"
-		>+</button>
+			:clickable="true"
+		>increase</Base-icon>
+		<!-- <button
+			@click="increaseAmount"
+			:class="classing.increase"
+		>+</button> -->
 		<input ref="paska" type="number" v-model="inputValue">
 		<!-- <div class="amount">{{ value }}</div> -->
-		<button
+		<Base-icon
 			@click="decreaseAmount"
 			:class="classing.decrease"
-		>-</button>
+			:clickable="true"
+		>decrease</Base-icon>
+		<!-- <button
+			@click="decreaseAmount"
+			:class="classing.decrease"
+		>-</button> -->
 		<span v-if="displayFeedback">Maximum of {{ max }} products can be added at a time!</span>
 	</div>
 </template>
@@ -113,22 +123,5 @@ $quantity-selector--height: 1.6rem;
 		font-size: 1.2rem;
 		font-weight: 700;
 	}
-
-	button {
-		width: $quantity-selector--height;
-		height: $quantity-selector--height;
-		text-align: center;
-		cursor: pointer;
-		&.disabled {
-			opacity: 0.4;
-			pointer-events: none;
-		}
-	}
-
-	/* .amount {
-		font-size: 2rem;
-		font-weight: 700;
-		margin: 0 0.4rem;
-	} */
 }
 </style>

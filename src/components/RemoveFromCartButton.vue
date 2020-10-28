@@ -1,15 +1,24 @@
 <template>
-	<div>
-		<Base-button @click="openModal">Remove product</Base-button>
+	<div class="remove-from-cart-button">
+		<Base-icon @click="openModal">x</Base-icon>
 		
 		<Confirmation-modal v-if="displayRemoveModal">
-			<h3>Are you sure you want to remove this item?</h3>
+			<!-- <h3>Are you sure you want to remove this item?</h3> -->
+			<Base-icon size="5rem">warning</Base-icon>
+			<h3>You are about to remove this item!</h3>
 			<div>{{ product.amount }} x {{ product.name }}</div>
-			<Base-button @click="confirmRemove">Ok</Base-button>
-			<Base-button
-				@click="cancelRemove"
-				:empty="true"
-			>Cancel</Base-button>
+			<h3>Are you sure?</h3>
+			<div class="buttons">
+				<Base-button
+					@click="confirmRemove"
+					size="m"
+				>Ok</Base-button>
+				<Base-button
+					@click="cancelRemove"
+					size="m"
+					:pseudo="true"
+				>Cancel</Base-button>
+			</div>
 		</Confirmation-modal>
 	</div>
 </template>
@@ -50,3 +59,12 @@ export default {
 	}
 }
 </script>
+
+<style lang="scss" scoped>
+.remove-from-cart-button {
+	.buttons {
+		display: flex;
+		& > * { margin-right: 1rem;}
+	}
+}
+</style>

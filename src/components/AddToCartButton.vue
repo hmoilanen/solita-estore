@@ -5,6 +5,7 @@
 		<Confirmation-modal v-if="displayConfirmationModal">
 			<div>Product has been added to cart!</div>
 			<h3>{{ product.name }}</h3>
+			<Base-icon>{{ product.image }}</Base-icon>
 			<div>{{ dynamicPrice }}</div>
 			<div>Quantity: <strong>{{ amount }}</strong></div>
 			<div>
@@ -13,12 +14,17 @@
 				products in your cart.
 			</div>
 			<router-link :to="{ name: 'Cart' }">View or edit your cart.</router-link>
-			<hr>
-			<Base-button
-				@click="closeConfirmationModal"
-				:empty="true"
-			>Continue shopping</Base-button>
-			<Base-button @click="goToCheckout">Checkout</Base-button>
+			<div class="buttons">
+				<Base-button
+					@click="closeConfirmationModal"
+					:empty="true"
+					size="m"
+				>Continue shopping</Base-button>
+				<Base-button
+					@click="goToCheckout"
+					size="m"
+				>To cart</Base-button>
+			</div>
 		</Confirmation-modal>
 	</div>
 </template>
@@ -78,3 +84,12 @@ export default {
 	}
 }
 </script>
+
+<style lang="scss" scoped>
+.add-to-cart-button {
+	.buttons {
+		display: flex;
+		& > * { margin-right: 1rem;}
+	}
+}
+</style>

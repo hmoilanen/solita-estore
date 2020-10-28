@@ -13,14 +13,20 @@
 }
 
 // App
-%app-style--border-radius { border-radius: 3px; }
 %app-style--input {
-  border-style: none;
-	@extend %app-style--border-radius;
+	border-style: none;
+	border-radius: $app-vars--border-radius;
 }
 %app-style--input-disabled {
   @extend %disabled;
-  opacity: 0.35;
+  opacity: 0.15;
+}
+%app-style--card-shadow {
+	box-shadow:
+		0 1.8px 2.2px rgba(0, 0, 0, 0.02),
+		0 3.7px 5.3px rgba(0, 0, 0, 0.03),
+		0 6.5px 10px rgba(0, 0, 0, 0.045),
+		0 11.3px 17.9px rgba(0, 0, 0, 0.055);
 }
 
 // Other

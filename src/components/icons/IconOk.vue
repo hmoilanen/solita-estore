@@ -6,6 +6,6 @@
 </template>
 
 <style lang="scss" scoped>
-  .base-icon--ok-1 { fill: purple; }
-  .base-icon--ok-2 { fill: white; }
+  .base-icon--ok-1 { fill: $app-color--main; }
+  .base-icon--ok-2 { fill: $app-color--white; }
 </style>

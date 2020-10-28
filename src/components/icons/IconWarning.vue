@@ -6,6 +6,6 @@
 </template>
 
 <style lang="scss" scoped>
-  .base-icon--warning-1 { fill: purple; }
-  .base-icon--warning-2 { fill: white; }
+  .base-icon--warning-1 { fill: $app-color--main; }
+  .base-icon--warning-2 { fill: $app-color--white; }
 </style>

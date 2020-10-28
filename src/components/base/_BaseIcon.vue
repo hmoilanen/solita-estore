@@ -3,8 +3,8 @@
   <svg
     xmlns="http://www.w3.org/2000/svg"
     viewBox="0 0 50 50"
-    :width="size"
-    :height="size"
+    :width="styling.size"
+    :height="styling.size"
     class="base-icon"
     :class="classing"
     v-on="listeners"
@@ -30,10 +30,7 @@ export default {
       type: String,
       default: 'ok'
 		},
-		size: {
-			type: String,
-			default: '50px'
-		},
+		size: String,
     tooltip: String,
 		clickable: Boolean,
   },
@@ -54,7 +51,29 @@ export default {
       return {
 				clickable: this.clickable
       }
-    }
+		},
+		
+		styling() {
+			let size
+
+			switch (this.size) {
+				case 's':
+					size = '1.1rem'
+					break
+				case 'm':
+					size = '1.7rem'
+					break
+				case 'l':
+					size = '2rem'
+					break
+				default:
+					size = this.size
+			}
+
+			return {
+				size: this.size ? size : '1.4rem'
+			}
+		}
   },
 
   components: {
@@ -74,11 +93,6 @@ export default {
 
 <style lang="scss">
 .base-icon {
-	&.clickable {
-		//@extend %clickable; ->>
-		user-select: none;
-		cursor: pointer;
-		-webkit-tap-highlight-color: transparent;
-	}
+	&.clickable { @extend %clickable; }
 }
 </style>

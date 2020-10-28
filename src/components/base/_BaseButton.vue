@@ -15,15 +15,16 @@ export default {
   name: 'BaseButton',
 
   props: {
-		size: [String, Number],
+		size: {
+			type: String
+		},
     disabled: Boolean,
     center: Boolean,
     stretch: Boolean,
     rounded: Boolean,
     highlight: Boolean,
     empty: Boolean,
-    pseudo: Boolean,
-    inverted: Boolean
+    pseudo: Boolean
   },
 
   computed: {
@@ -39,14 +40,29 @@ export default {
         rounded: this.rounded,
         highlight: this.highlight,
         empty: this.empty,
-        pseudo: this.pseudo,
-        inverted: this.inverted
+        pseudo: this.pseudo
       }
 		},
 		
 		styling() {
+			let size
+
+			switch (this.size) {
+				case 's':
+					size = '0.7rem'
+					break
+				case 'm':
+					size = '0.95rem'
+					break
+				case 'l':
+					size = '1.1rem'
+					break
+				default:
+					size = this.size
+			}
+
 			return {
-				fontSize: this.size ? `${this.size}rem` : false
+				fontSize: this.size ? size : '0.8rem'
 			}
 		}
 	},
@@ -60,61 +76,46 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-$button-color: white;
-$base-button--color-bg: lightgreen;
-$base-button--color-highlight: green;
-$base-button--color-focus: rgba(144, 238, 144, 0.6);
+$base-button--color--white: $app-color--white;
+$base-button--color--black: $app-color--black;
+$base-button--color--main: $app-color--main;
+$base-button--color--main-l1: $app-color--main-l1;
+$base-button--color--main-l2: $app-color--main-l2;
+$base-button--color--hl: $app-color--hl;
+
 $base-button--height: 2.4em !default;
 $base-button--side-padding: 1.4em !default;
 
 .base-button {
-	position: relative;
-  display: flex;
-  align-items: center;
+	position: relative; // For indication of :focus
+	display: block;
   padding: 0 $base-button--side-padding;
-  height: $base-button--height;
-	border: none;
-	//@extend %app-default--border-radius;
-	border-radius: 3px;
-	background: $base-button--color-bg;
-	//background: $base-button--color-bg;
-	color: $button-color;
-  //line-height, see: this.styling
-  //font-size, see: this.styling
-  font-size: 0.8rem;
-  font-weight: 700;
-  //font-family: $button-font;
+	height: $base-button--height;
+	@extend %app-style--input;
+	background: $base-button--color--main;
+	color: $base-button--color--white;
 	line-height: 1.4em;
-  //@extend %clickable; ->>
-	cursor: pointer;
-  user-select: none;
+  //font-size, see: this.styling
+  font-weight: 700;
+  @extend %clickable;
   outline: 0;
-  -webkit-tap-highlight-color: transparent; // Ignore tap active state (non-standard across browsers)
   &:focus {
     &::before {
-      $focused--border-width: -4px;
+      $focused--border-width: -0.2em;
       content: '';
       position: absolute;
       top: $focused--border-width;
       left: $focused--border-width;
       right: $focused--border-width;
       bottom: $focused--border-width;
-      border: 6px solid $base-button--color-focus;
-			border-radius: 3px;
+      border: calc(#{$focused--border-width} * -2) solid $base-button--color--main-l2;
+			border-radius: $app-vars--border-radius;
     }
   }
-	&:hover {
-		background: $base-button--color-highlight;
-		color: $base-button--color-bg;
-	}
-
+	&:hover { background: $base-button--color--main-l1; }
   &.disabled {
-    //@extend %disabled; ->>
-		pointer-events: none !important;
-    opacity: 0.2;
-    outline: 0;
+    @extend %app-style--input-disabled;
     &:focus {
-      outline: 0;
       &::before { border-color: transparent; }
     }
   }
@@ -124,65 +125,45 @@ $base-button--side-padding: 1.4em !default;
   }
   &.center { margin: 0 auto; }
   &.stretch {
-    width: 100%;
-    justify-content: center;
+		width: 100%;
+		height: calc(#{$base-button--height} * 1.2);
   }
 	&.highlight {
-		background: $base-button--color-highlight;
+		background: $base-button--color--hl;
+		color: $base-button--color--black;
 		&:hover {
-			opacity: 1;
-			color: $base-button--color-bg;
+			background: adjust-hue($base-button--color--hl, -3deg);
+			color: $base-button--color--white;
 		}
 	}
 	&.empty {
-		border: 1px solid $base-button--color-bg;
-		background: $button-color;
-		color: $base-button--color-bg;
+		$border-thickness: 2px;
+		// Compensate added border to keep button sizes coherent
+		padding: 0 calc(#{$base-button--side-padding} - #{$border-thickness});
+		height: $base-button--height;
+		border: $border-thickness solid $base-button--color--main;
+		background: $base-button--color--white;
+		color: $base-button--color--main;
 		&:hover {
 			opacity: 1 !important;
-			background-color: $base-button--color-bg;
-			color: $button-color;
+			background-color: $base-button--color--main;
+			color: $base-button--color--white;
 		}
 		&.highlight {
-			border: 1px solid $base-button--color-highlight;
-			background: $button-color;
-			color: $base-button--color-highlight;
+			border-color: $base-button--color--hl;
+			background: $base-button--color--white;
+			color: $base-button--color--hl;
 			&:hover {
-				background: $base-button--color-highlight;
-				color: $button-color;
+				background: $base-button--color--hl;
+				color: $base-button--color--black;
 			}
 		}
 	}
 	&.pseudo {
 		border: 1px solid transparent;
 		background: transparent;
-		color: $base-button--color-bg;
-		&:hover { background: transparentize($base-button--color-bg, 0.85); }
+		color: $base-button--color--main;
+		&:hover { background: $base-button--color--main-l2; }
 	}
-	&.inverted {
-		border: 1px solid transparent;
-		background: $button-color;
-		color: $base-button--color-bg;
-		&:hover { color: $base-button--color-highlight; }
-	}
-	&.loading {
-		color: $base-button--color-bg;
-		&.highlight { color: $base-button--color-highlight; }
-		&.empty { color: $button-color; }
-		&.pseudo { color: transparent; }
-	}
-
-	.base-icon {
-    width: calc(#{$base-button--height} * 0.7);
-    height: calc(#{$base-button--height} * 0.7);
-    margin-right: 0.6rem;
-  }
-  .base-loader {
-    position: absolute;
-    top: 50%;
-    transform: translateY(-50%);
-    left: 0.5em;
-    right: 0.5em;
-  }
 }
 </style>

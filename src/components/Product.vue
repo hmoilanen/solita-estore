@@ -3,6 +3,7 @@
 		<div>
 			<h2>{{ product.name }}</h2>
 			<p>{{ product.description }}</p>
+			<Base-icon size="4rem">{{ product.image }}</Base-icon>
 			<Quantity-selector v-model="amountOfProducts"/>
 		</div>
 		
@@ -45,14 +46,6 @@ export default {
 		}
 	},
 
-	/* watch: {
-		amount: function(njyy, ould) {
-			console.log('PARENT: njyy', njyy);
-			console.log('PARENT: ould', ould);
-			console.log('PARENT: this.amaunt', this.amount);
-		}
-	}, */
-
 	computed: {
 		amountOfProducts: {
 			// In shop, related to amount of the product to be added to cart.
@@ -92,10 +85,15 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+$product--color--bg: $app-color--white;
+
 .product {
+	background: $product--color--bg;
+	border-radius: $app-vars--border-radius;
+	@extend %app-style--card-shadow;
+
 	display: flex;
 	justify-content: space-between;
-	border: 1px solid lightgreen;
 	padding: 1rem;
 	max-width: 800px;
 	margin: 0.5rem auto;

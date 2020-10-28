@@ -72,7 +72,9 @@ input {
 }
 
 #app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
+	color: $app-color--black;
+  //font-family: Avenir, Helvetica, Arial, sans-serif;
+  font-family: $app-font--bold;
   -webkit-font-smoothing: antialiased;
 	-moz-osx-font-smoothing: grayscale;
 }

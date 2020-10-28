@@ -3,5 +3,5 @@
 </template>
 
 <style lang="scss" scoped>
-  .base-icon--triangle { fill: yellow; }
+  .base-icon--triangle { fill: $app-color--hl; }
 </style>

@@ -6,6 +6,6 @@
 </template>
 
 <style lang="scss" scoped>
-  .base-icon--checkbox-1 { fill: purple; }
-  .base-icon--checkbox-2 { fill: white; }
+  .base-icon--checkbox-1 { fill: $app-color--main; }
+  .base-icon--checkbox-2 { fill: $app-color--white; }
 </style>

@@ -3,5 +3,5 @@
 </template>
 
 <style lang="scss" scoped>
-  .base-icon--x { fill: purple; }
+  .base-icon--x { fill: $app-color--main; }
 </style>
