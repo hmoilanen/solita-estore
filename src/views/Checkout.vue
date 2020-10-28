@@ -1,30 +1,42 @@
 <template>
   <div class="view--cart">
-		<h1>Checkout</h1>
+		<Content-grid>
+			<template #title>
+				<Base-title
+					:center="true"
+					size="l"
+				>Checkout</Base-title>
+			</template>
 
-		<Checkout-summary/>
-		
-		<form @submit.prevent>
-			<Checkout-phase
-				v-for="phase in phases"
-				:key="phase.main.id"
-				:phase="phase"
-				@update-phase="updatePhase"
-				@edit-phase="editPhase"
-				@field-validation="fieldValidation"
-			/>
-			<br>
-			<Base-button
-				@click="submitCheckout"
-				:disabled="!allowCheckoutSubmit"
-				:stretch="true"
-				size="1.1rem"
-			>Place order</Base-button>
-		</form>
+			<template #main>
+				<form @submit.prevent>
+					<Checkout-phase
+						v-for="phase in phases"
+						:key="phase.main.id"
+						:phase="phase"
+						@update-phase="updatePhase"
+						@edit-phase="editPhase"
+						@field-validation="fieldValidation"
+					/>
+					<br>
+					<Base-button
+						@click="submitCheckout"
+						:disabled="!allowCheckoutSubmit"
+						:stretch="true"
+						size="1.1rem"
+					>Place order</Base-button>
+				</form>
+			</template>
+
+			<template #aside>
+				<Checkout-summary/>
+			</template>
+		</Content-grid>
   </div>
 </template>
 
 <script>
+import ContentGrid from '@/components/ContentGrid'
 import CheckoutSummary from '@/components/CheckoutSummary'
 import CheckoutPhase from '@/components/CheckoutPhase'
 //import storageCustomer from '@/logic/storageCustomer'
@@ -39,6 +51,7 @@ export default {
 	name: 'ViewCart',
 
 	components: {
+		ContentGrid,
 		CheckoutSummary,
 		CheckoutPhase
 	},
@@ -196,9 +209,6 @@ export default {
 
 <style lang="scss" scoped>
 .view--cart {
-	max-width: 600px;
-	margin: 0 auto;
-
 	&::v-deep {
 		.base-input {
 			margin: 0.8rem 0;

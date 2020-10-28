@@ -60,6 +60,11 @@ $nav-top--color: $app-color--white;
 $nav-top--color-bg: $app-color--main;
 
 .nav-top {
+	z-index: 1;
+	position: fixed;
+	top: 0;
+	left: 0;
+	right: 0;
 	overflow: hidden;
 	height: $app-vars--nav-top--height;
 	padding: 0 1.5rem;

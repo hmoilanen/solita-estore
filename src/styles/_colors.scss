@@ -3,11 +3,11 @@
 $app-color--main: #4e2683;
 $app-color--main-l1: lighten($app-color--main, 30%);
 $app-color--main-l2: lighten($app-color--main, 50%);
-$app-color--main-l3: lighten($app-color--main, 65%); // lightest
+$app-color--main-l3: lighten($app-color--main, 66%); // most lightened
 
-$app-color--white: desaturate(lighten($app-color--main, 68%),20%);
 $app-color--black: desaturate(darken($app-color--main, 25%), 20%);
-$app-color--bg: desaturate(lighten($app-color--main, 100%), 10%);
+$app-color--white: desaturate(lighten($app-color--main, 68%),40%);
+$app-color--white-d: darken($app-color--white, 10%); // darkened
 $app-color--hl: #ffda00;
 $app-color--hl2: adjust-hue($app-color--hl, -8deg);
 

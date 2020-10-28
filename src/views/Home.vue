@@ -28,6 +28,11 @@
 		<Base-icon>increase</Base-icon>
 		<Base-icon size="m">increase</Base-icon>
 		<Base-icon size="l">increase</Base-icon>
+		<hr>
+		<Base-title size="s"></Base-title>
+		<!-- <Base-title></Base-title> -->
+		<Base-title size="m"></Base-title>
+		<Base-title size="l"></Base-title>
   </div>
 </template>
 

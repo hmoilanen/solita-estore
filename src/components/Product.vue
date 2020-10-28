@@ -95,7 +95,6 @@ $product--color--bg: $app-color--white;
 	display: flex;
 	justify-content: space-between;
 	padding: 1rem;
-	max-width: 800px;
-	margin: 0.5rem auto;
+	margin-bottom: 1rem;
 }
 </style>

@@ -1,6 +1,9 @@
 <template>
 	<div class="remove-from-cart-button">
-		<Base-icon @click="openModal">x</Base-icon>
+		<Base-icon
+			@click="openModal"
+			:clickable="true"
+		>x</Base-icon>
 		
 		<Confirmation-modal v-if="displayRemoveModal">
 			<!-- <h3>Are you sure you want to remove this item?</h3> -->

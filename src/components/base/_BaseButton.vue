@@ -15,9 +15,7 @@ export default {
   name: 'BaseButton',
 
   props: {
-		size: {
-			type: String
-		},
+		size: String,
     disabled: Boolean,
     center: Boolean,
     stretch: Boolean,

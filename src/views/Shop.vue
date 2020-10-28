@@ -1,33 +1,39 @@
 <template>
-  <div class="view--home">
-		<h1>Products</h1>
+  <div class="view--shop">
+		<Content-grid>
+			<template #title>
+				<Base-title
+					:center="true"
+					size="l"
+				>Products</Base-title>
+			</template>
 
-    <Product
-			v-for="product in products"
-			:key="product.id"
-			:product="product"
-			@product-added-to-cart="openConfirmationModal"
-		/>
+			<template #main>
+				<Product
+					v-for="product in products"
+					:key="product.id"
+					:product="product"
+				/>
+			</template>
+		</Content-grid>
   </div>
 </template>
 
 <script>
+import ContentGrid from '@/components/ContentGrid'
 import Product from '@/components/Product'
 
 export default {
-	name: 'ViewHome',
+	name: 'ViewShop',
 
-	components: { Product },
+	components: {
+		ContentGrid,
+		Product
+	},
 
 	computed: {
 		products() {
 			return this.$store.state.products
-		}
-	},
-
-	methods: {
-		openConfirmationModal() {
-			
 		}
 	}
 }

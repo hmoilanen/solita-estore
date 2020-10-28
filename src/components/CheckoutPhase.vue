@@ -27,7 +27,6 @@
 				:feedback="!field.valid ? field.feedback : null"
 				:disabled="mimicLoadingForCreditcardValidation"
 			/>
-
 			<Base-checkbox
 				v-if="phase.main.id === 2"
 				v-model="billingSameAsShipping"
@@ -165,8 +164,11 @@ export default {
 $checkout-phase--color--separator: $app-color--main-l2;
 
 .checkout-phase {
-	padding: 0.8rem 0;
+	$phase-gap: 1.2rem;
+
+	padding-bottom: $phase-gap;
 	border-bottom: 1px solid $checkout-phase--color--separator;
+	margin-bottom: $phase-gap;
 
 	.header {
 		display: flex;

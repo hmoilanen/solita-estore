@@ -29,7 +29,7 @@ $confirmation-modal--color--wrapper: $app-color--white;
 	.wrapper {
 		max-width: 450px;
 		border-radius: $app-vars--border-radius;
-		padding: 2rem;
+		padding: 1rem;
 		background: $confirmation-modal--color--wrapper;
 		@extend %app-style--card-shadow;
 		

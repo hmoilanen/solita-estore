@@ -29,11 +29,11 @@ TODOS - tyylit yms.:
 --OK -tee ikonit (ks. ikonilista)
 --OK -tee tyyleistä globaalit
 --OK -valitse värit
--tee yleinen h1-komponentti, jota käytetään joka sivulla
+--OK -tee yleinen h1-komponentti, jota käytetään joka sivulla
 -tee yleinen tekstikomponentti
--lisää gridit joka sivulle
+--OK -lisää gridit joka sivulle
 --OK -lisää kokoluokat (ainakin) baseButton:iin / baseIcon:in (myöls muihin jos tarve)
--lisää ERD -> tyylit sen mukaan
+-lisää sivunvaihtotransitiot
 -lisää favicon
 
 // // // // // 
@@ -43,6 +43,16 @@ TODOS - extrat:
 -testaaminen
 -footer (?)
 
+// // // // // 
+TODOS - bugit:
+-mitä tapahtuu jos QuantitySelectorissa tyhjennetään input ja jätetään se silleen?
+	-@blur -> 1kpl ?
+-mitä tapahtuu jos carttiin lisätään sen verran tavaroita että kokonaismäärä ylittää 999 / this.max?
+	-> tallettaessa tarkasta ja jos menee yli, talleta 999 / this.max
+-mitä tappahtuu jos painaa checkoutissa hasen EDIT kun joku toinen EDIT on samalla auki?
+	-> avaa se toinen EDIT ja sulje vanha tallentamatta sen mahdollisia muutoksia?!
+-navTop jää ChekoutSummaryn päälle kun se avataan
+	-> "nosta NavTop ulos ruudusta"?
 
 
 

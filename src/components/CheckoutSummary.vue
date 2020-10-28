@@ -1,6 +1,7 @@
 <template>
-	<div class="checkout-summary">
+	<div class="checkout-summary" :class="{ eom: extendedOnMobile }">
 		<h2>Order summary</h2>
+		<button @click="extendOnMobile">auki</button>
 		<router-link :to="{ name: 'Cart' }">Edit cart</router-link>
 		<hr>
 		<div>
@@ -21,6 +22,12 @@ import { mapGetters } from 'vuex'
 export default {
 	name: 'CheckoutSummary',
 
+	data() {
+		return {
+			extendedOnMobile: false
+		}
+	},
+
 	computed: {
 		...mapGetters({
 			totalAmountOfProducts: 'TOTAL_AMOUNT_OF_PRODUCTS_IN_CART',
@@ -35,16 +42,26 @@ export default {
 		dynamicPrice() {
 			return this.getPrice(this.summaryOfProductPrices)
 		}
+	},
+
+	methods: {
+		extendOnMobile() {
+			this.extendedOnMobile = !this.extendedOnMobile
+		}
 	}
 }
 </script>
 
 <style lang="scss" scoped>
 .checkout-summary {
-	border: 1px solid grey;
+	border-radius: $app-vars--border-radius;
+	@extend %app-style--card-shadow;
 	padding: 1rem;
-	max-width: 800px;
-	margin: 0.5rem auto;
 	background: lightgrey;
+
+	&.eom { // VIMEISTELE TÄMÄ KOKO TSYDEEMI
+		z-index: 1000;
+		height: calc(100vh - 2rem);
+	}
 }
 </style>

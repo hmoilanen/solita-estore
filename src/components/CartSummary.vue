@@ -31,11 +31,11 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+$cart-summary--color--bg: $app-color--white;
 .cart-summary {
-	border: 1px solid grey;
+	border-radius: $app-vars--border-radius;
+	@extend %app-style--card-shadow;
 	padding: 1rem;
-	max-width: 800px;
-	margin: 0.5rem auto;
-	background: lightgrey;
+	background: $cart-summary--color--bg;
 }
 </style>
