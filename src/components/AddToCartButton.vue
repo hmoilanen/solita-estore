@@ -76,7 +76,7 @@ export default {
 		},
 
 		dynamicPrice() {
-			return this.$store.getters['GET_PRICE'](this.product.price)
+			return this.$store.getters['GET_PRICE'](this.product.price * this.amount)
 		}
 	},
 
