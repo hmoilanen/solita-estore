@@ -1,19 +1,34 @@
 <template>
 	<div class="cart-summary">
-		<h2>Order summary</h2>
+		<Base-title
+			:center="true"
+			size="s"
+		>Order summary</Base-title>
 
-		<div>Total: {{ dynamicPrice }}</div>
+		<Summary-info topic="Total">{{ dynamicPrice }}</Summary-info>
+		<Summary-info topic="Shipping">Free</Summary-info>
+
+		<Base-button
+			@click="goTo('Checkout')"
+			:stretch="true"
+			size="m"
+		>Check out</Base-button>
 		<Base-button
 			@click="goTo('Shop')"
-			:empty="true"
+			:pseudo="true"
+			:stretch="true"
+			size="m"
 		>Continue shopping</Base-button>
-		<Base-button @click="goTo('Checkout')">Check out</Base-button>
 	</div>
 </template>
 
 <script>
+import SummaryInfo from '@/components/SummaryInfo'
+
 export default {
 	name: 'CartSummary',
+
+	components: { SummaryInfo },
 
 	computed: {
 		dynamicPrice() {
@@ -32,10 +47,13 @@ export default {
 
 <style lang="scss" scoped>
 $cart-summary--color--bg: $app-color--white;
+
 .cart-summary {
 	border-radius: $app-vars--border-radius;
 	@extend %app-style--card-shadow;
 	padding: 1rem;
 	background: $cart-summary--color--bg;
+
+	.base-button:first-of-type { margin-bottom: 1rem; }
 }
 </style>

@@ -2,7 +2,6 @@
 POINTTEJA!!!:
 -tuttuus: ostotapahtuman pitää olla samaistuttava / tutun näköinen
 	-> lisää luotettavuudeen tunnetta suorittaa itse ostotapahtuma
-
 -koodi on maahdollisimman uudellenkäyteettävää
 -projekti helpposti laajennettavissa
 -käyttäjäkäyttäjäkäyttäjäkäyttäjä
@@ -14,8 +13,6 @@ TODOS - rakenne / toiminnallisuus:
 	--OK -> payment-mimic checkout:issa
 --OK -lisää dyaaminen input-elementti QuantitySelectoriin
 --OK -lisää navTop:iin linkki myös itse kauppaan = WHEE-ikoni
--KORJAA BUGI! NYT TULEE HÄKSY JOS ON PAINETTU EDIT-NAPPIA JA KO. PHASE ON AUKI JA PAINAA TOISTA EDIT NAPPIA
-	->RATKAISU: PIILOTA MUUT EDIT NAPIT SILLÄ AIKAA!
 -talleta tilaajan tiedot localStorageen (? = JOS JÄÄ AIKAA!)
 	-> JOS EI JÄÄ, POISTA TURHAT KOODIT Checkout.vue:sta + storageCustomer.js!!!
 -curtain (tai jonkun muunlainen implementaatio) = whee
@@ -30,11 +27,11 @@ TODOS - tyylit yms.:
 --OK -tee tyyleistä globaalit
 --OK -valitse värit
 --OK -tee yleinen h1-komponentti, jota käytetään joka sivulla
--tee yleinen tekstikomponentti
 --OK -lisää gridit joka sivulle
 --OK -lisää kokoluokat (ainakin) baseButton:iin / baseIcon:in (myöls muihin jos tarve)
+--OK -lisää favicon
+--OK -tee yleinen tekstikomponentti
 -lisää sivunvaihtotransitiot
--lisää favicon
 
 // // // // // 
 TODOS - extrat:

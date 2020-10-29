@@ -35,7 +35,7 @@ $content-grid--padding: 1rem;
 		max-width: 1000px;
 		margin: 0 auto;
 		display: grid;
-		grid-template-columns: 1fr minmax(0, 300px);
+		grid-template-columns: 1fr minmax(0, 360px);
 		grid-template-rows: auto;
 		grid-template-areas: "main aside";
 		column-gap: 30px;

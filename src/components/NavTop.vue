@@ -31,7 +31,7 @@ export default {
 
 	created() {		
 		const trackWindowWidth = () => {
-			if (window.innerWidth < 620) {
+			if (window.innerWidth < 600) {
 				this.displaySlogan = false
 				return
 			}
@@ -80,7 +80,7 @@ $nav-top--color-bg: $app-color--main;
 		span {
 			margin-left: 1rem;
 			margin-right: 2rem;
-			font-size: 0.7rem;
+			font-size: 0.75rem;
 		}
 	}
 }

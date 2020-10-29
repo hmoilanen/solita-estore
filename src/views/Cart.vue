@@ -17,9 +17,6 @@
 					/>
 				</template>
 				<h2 v-else>{{ productsInCart }}</h2>
-			</template>
-			
-			<template #aside>
 				<Cart-summary/>
 			</template>
 		</Content-grid>

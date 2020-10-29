@@ -30,9 +30,17 @@
 		<Base-icon size="l">increase</Base-icon>
 		<hr>
 		<Base-title size="s"></Base-title>
-		<!-- <Base-title></Base-title> -->
+		<Base-text size="s"></Base-text>
+		<hr>
+		<Base-title></Base-title>
+		<Base-text></Base-text>
+		<hr>
 		<Base-title size="m"></Base-title>
+		<Base-text size="m"></Base-text>
+		<hr>
 		<Base-title size="l"></Base-title>
+		<Base-text size="l"></Base-text>
+		<br><br><br><br>
   </div>
 </template>
 

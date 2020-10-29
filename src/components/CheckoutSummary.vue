@@ -1,26 +1,50 @@
 <template>
 	<div class="checkout-summary" :class="{ eom: extendedOnMobile }">
-		<h2>Order summary</h2>
-		<button @click="extendOnMobile">auki</button>
+		<!-- <h2>Order summary</h2> -->
+		<Base-title
+			:center="true"
+			size="s"
+		>Order summary</Base-title>
+
+		<!-- <button @click="extendOnMobile">auki</button> -->
+		
 		<router-link :to="{ name: 'Cart' }">Edit cart</router-link>
 		<hr>
-		<div>
-			<div>{{ totalAmountOfProducts }} items</div>
-			<div
-				v-for="product in products"
-				:key="product.id"
-			>{{ product.amount }} x {{ product.name }}</div>
+
+		<Summary-info topic="Total amount of items">{{ totalAmountOfProducts }}</Summary-info>
+		<!-- <Summary-info
+			v-for="product in products"
+			:key="product.id"
+		>{{ product.amount }} x {{ product.name }}</Summary-info> -->
+		<div
+			v-for="product in products"
+			:key="product.id"
+			class="product"
+		>
+			<div>
+				<Base-icon>{{ product.image }}</Base-icon>
+				<Base-text>{{ product.amount }} x {{ product.name }}</Base-text>
+			</div>
+			<Base-text>{{ dynamicPrice(product.price * product.amount) }}</Base-text>
+
 		</div>
 		<hr>
-		<div>total: {{ dynamicPrice }}</div>
+		<Summary-info topic="Shipping">Free</Summary-info>
+		<Summary-info
+			topic="Total"
+			:bold="true"
+		>{{ dynamicPrice(summaryOfProductPrices) }}</Summary-info>
 	</div>
 </template>
 
 <script>
 import { mapGetters } from 'vuex'
+import SummaryInfo from '@/components/SummaryInfo'
 
 export default {
 	name: 'CheckoutSummary',
+
+	components: { SummaryInfo },
 
 	data() {
 		return {
@@ -37,14 +61,14 @@ export default {
 
 		products() {
 			return this.$store.state.cart.products
-		},
-
-		dynamicPrice() {
-			return this.getPrice(this.summaryOfProductPrices)
 		}
 	},
 
 	methods: {
+		dynamicPrice(price) {
+			return this.getPrice(price)
+		},
+
 		extendOnMobile() {
 			this.extendedOnMobile = !this.extendedOnMobile
 		}
@@ -53,11 +77,31 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+$checkout-summary--color--bg: $app-color--white;
+$checkout-summary--color--hr: $app-color--main-l2;
+
 .checkout-summary {
 	border-radius: $app-vars--border-radius;
-	@extend %app-style--card-shadow;
 	padding: 1rem;
-	background: lightgrey;
+	background: $checkout-summary--color--bg;
+	@extend %app-style--card-shadow;
+
+	hr {
+		margin: 1rem 0;
+		border: 0;
+		border-top: 1px solid $checkout-summary--color--hr;
+	}
+
+	.product {
+		display: flex;
+		justify-content: space-between;
+		padding: 0.4rem 0;
+		div {
+			display: flex;
+			align-items: center;
+			.base-icon { margin-right: 0.8rem; }
+		}
+	}
 
 	&.eom { // VIMEISTELE TÄMÄ KOKO TSYDEEMI
 		z-index: 1000;
