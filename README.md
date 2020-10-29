@@ -1,39 +1,18 @@
-# solita-estore
+# Solita - estore
 
-## Project setup
-```
-npm install
-```
 
-### Compiles and hot-reloads for development
-```
-npm run serve
-```
+### Getting started
 
-### Compiles and minifies for production
+After cloning the repo, navigate to it's folder
 ```
-npm run build
+$ cd foldername
 ```
-
-### Run your tests
+For HTTP server, install npm package 'serve' (if already installed, skip this step :)
 ```
-npm run test
+$ npm install -g serve
 ```
-
-### Lints and fixes files
+Run the app
 ```
-npm run lint
+$ npm run app
 ```
-
-### Run your end-to-end tests
-```
-npm run test:e2e
-```
-
-### Run your unit tests
-```
-npm run test:unit
-```
-
-### Customize configuration
-See [Configuration Reference](https://cli.vuejs.org/config/).
+The app now runs on http://localhost:4000/
