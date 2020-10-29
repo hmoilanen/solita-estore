@@ -13,7 +13,6 @@
 		</div>
 
 		<div
-			v-if="displaySummary.button"
 			class="cart-button"
 			@click="goToCart"
 		>
@@ -45,7 +44,6 @@ export default {
 
 		displaySummary() {
 			return {
-				button: this.$route.name !== 'Checkout',
 				total: this.totalAmountOfProducts > 0
 			}
 		}

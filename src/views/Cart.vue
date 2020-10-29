@@ -11,14 +11,20 @@
 			</template>
 			
 			<template #main>
-				<template v-if="typeof productsInCart === 'object'">
+				<template v-if="productsInCart">
 					<Product
 						v-for="product in productsInCart"
 						:key="product.id"
 						:product="product"
 					/>
 				</template>
-				<h2 v-else>{{ productsInCart }}</h2>
+				<template v-else>
+					<Base-title
+						:center="true"
+						size="m"
+					>No products in cart</Base-title>
+					<br><br>
+				</template>
 			</template>
 			<template #aside>
 				<Cart-summary/>
@@ -53,7 +59,7 @@ export default {
 			
 			return Object.keys(productsInCart).length > 0
 				? productsInCart
-				: 'No added products'
+				: false
 		}
 	}
 }

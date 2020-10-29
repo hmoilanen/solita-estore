@@ -174,6 +174,9 @@ $checkout-phase--color--separator: $app-color--main-l2;
 		.base-input {
 			margin: 0.8rem 0;
 		}
+		.base-checkbox {
+			margin: 1.2rem 0;
+		}
 	}
 
 	.header {

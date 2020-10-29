@@ -24,6 +24,7 @@
 			<Product-price
 				class="price"
 				:product="product"
+				:narrow="narrow"
 			/>
 		</div>
 
@@ -63,25 +64,32 @@ export default {
 	data() {
 		return {
 			amount: 1, // Used only if in shop, not in cart, see: this.amountOfProducts
-			wide: false
+			wide: false,
+			narrow: false
 		}
 	},
 
 	mounted() {
-		const trackWindowWidth = () => {
-			if (this.$refs.product.offsetWidth > 500) {
+		const trackComponentWidth = () => {
+			const componentWidth = this.$refs.product.offsetWidth
+			if (componentWidth > 500) {
 				this.wide = true
-				return
+			} else {
+				this.wide = false
 			}
 
-			this.wide = false
+			if (componentWidth < 400) {
+				this.narrow = true
+			} else {
+				this.narrow = false
+			}
 		}
 
-		trackWindowWidth()
+		trackComponentWidth()
 
-		window.addEventListener('resize', trackWindowWidth)
+		window.addEventListener('resize', trackComponentWidth)
 		this.$once('hook:beforeDestroy', () => {      
-      window.removeEventListener('resize', trackWindowWidth)
+      window.removeEventListener('resize', trackComponentWidth)
     })
 	},
 
@@ -133,7 +141,7 @@ export default {
 			let sizeText = 'm'
 
 			if (this.$route.name === 'Cart') {
-				sizeImage = '3rem'
+				sizeImage = '2.4rem'
 				sizeTitle = 's'
 				sizeText = 's'
 			} else if (this.wide) {
@@ -225,7 +233,7 @@ $product--color--bg: $app-color--white;
 	}
 
 	&.cart-mode {
-		padding: calc(#{$app-vars--card-padding} * 0.8);
+		padding: calc(#{$app-vars--card-padding} * 0.7);
 		grid-template-columns: auto 1fr auto;
 		grid-template-rows: 1fr auto;
 		grid-template-areas:
@@ -248,7 +256,7 @@ $product--color--bg: $app-color--white;
 			flex-direction: row;
 			align-items: center;
 			justify-content: flex-start;
-			.price { margin: 0 0 0 1rem; }
+			.price { margin: 0 0 0 calc(#{$app-vars--card-padding} / 2); }
 		}
 		.buttons {
 			margin: 0;

@@ -1,39 +1,49 @@
 <template>
-	<div class="checkout-summary" :class="{ eom: extendedOnMobile }">
-		<!-- <h2>Order summary</h2> -->
+	<div class="checkout-summary">
 		<Base-title
 			:center="true"
 			size="s"
 		>Order summary</Base-title>
 
-		<!-- <button @click="extendOnMobile">auki</button> -->
-		
-		<router-link :to="{ name: 'Cart' }">Edit cart</router-link>
-		<hr>
-
-		<Summary-info topic="Total amount of items">{{ totalAmountOfProducts }}</Summary-info>
-		<!-- <Summary-info
-			v-for="product in products"
-			:key="product.id"
-		>{{ product.amount }} x {{ product.name }}</Summary-info> -->
 		<div
-			v-for="product in products"
-			:key="product.id"
-			class="product"
+			v-if="minimized"
+			class="narrow"
 		>
-			<div>
-				<Base-icon>{{ product.image }}</Base-icon>
-				<Base-text>{{ product.amount }} x {{ product.name }}</Base-text>
-			</div>
-			<Base-text>{{ dynamicPrice(product.price * product.amount) }}</Base-text>
-
+			<Base-text size="l">{{ totalAmountOfProducts }} items</Base-text>
+			<Base-title tag="h3">{{ dynamicPrice(summaryOfProductPrices) }}</Base-title>
 		</div>
-		<hr>
-		<Summary-info topic="Shipping">Free</Summary-info>
-		<Summary-info
-			topic="Total"
-			:bold="true"
-		>{{ dynamicPrice(summaryOfProductPrices) }}</Summary-info>
+
+		<template v-else>
+			<hr>
+			<Summary-info topic="Total amount of items">{{ totalAmountOfProducts }}</Summary-info>
+			<div
+				v-for="product in products"
+				:key="product.id"
+				class="product"
+			>
+				<div>
+					<Base-icon>{{ product.image }}</Base-icon>
+					<Base-text>{{ product.amount }} x {{ product.name }}</Base-text>
+				</div>
+				<Base-text>{{ dynamicPrice(product.price * product.amount) }}</Base-text>
+			</div>
+			<hr>
+			<Summary-info topic="Shipping">Free</Summary-info>
+			<Summary-info
+				topic="Total"
+				:bold="true"
+			>{{ dynamicPrice(summaryOfProductPrices) }}</Summary-info>
+		</template>
+
+		<div
+			class="toggle"
+			@click="toggleSummaryMode"
+		>
+			<Base-text
+				:center="true"
+				size="s"
+			>{{ textOfToggle }}</Base-text>
+		</div>
 	</div>
 </template>
 
@@ -46,9 +56,13 @@ export default {
 
 	components: { SummaryInfo },
 
+	props: {
+		narrow: false // Comes from Checkout.vue's scoped slot this components lives in
+	},
+
 	data() {
 		return {
-			extendedOnMobile: false
+			minimized: true
 		}
 	},
 
@@ -61,6 +75,10 @@ export default {
 
 		products() {
 			return this.$store.state.cart.products
+		},
+
+		textOfToggle() {
+			return this.minimized ? 'show details' : 'minimize'
 		}
 	},
 
@@ -69,8 +87,10 @@ export default {
 			return this.getPrice(price)
 		},
 
-		extendOnMobile() {
-			this.extendedOnMobile = !this.extendedOnMobile
+		toggleSummaryMode() {
+			if (this.narrow) {
+				this.minimized = !this.minimized
+			}
 		}
 	}
 }
@@ -81,10 +101,19 @@ $checkout-summary--color--bg: $app-color--white;
 $checkout-summary--color--hr: $app-color--main-l2;
 
 .checkout-summary {
+	position: relative;
 	border-radius: $app-vars--border-radius;
 	padding: $app-vars--card-padding;
 	background: $checkout-summary--color--bg;
 	@extend %app-style--card-shadow;
+	margin-bottom: 2rem;
+
+	.narrow {
+		margin-top: 0.2rem;
+		display: flex;
+		align-items: baseline;
+		justify-content: space-between;
+	}
 
 	.product {
 		display: flex;
@@ -97,9 +126,17 @@ $checkout-summary--color--hr: $app-color--main-l2;
 		}
 	}
 
-	&.eom { // VIMEISTELE TÄMÄ KOKO TSYDEEMI
-		z-index: 1000;
-		height: calc(100vh - 2rem);
+	.toggle {
+		position: absolute;
+		left: 0;
+		right: 0;
+		bottom: 0;
+		padding: 0.35rem 0;
+		@extend %clickable;
+		&:hover {
+			//background: $checkout-summary--color--hr;
+			background: transparentize($checkout-summary--color--hr, 0.7);
+		}
 	}
 }
 </style>

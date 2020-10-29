@@ -9,8 +9,16 @@
 			:class="classing"
 		>
 			<main class="main">
+				<slot 
+					v-if="dynamicSlots.displayHelper.top"
+					:narrow="!wide"
+					:name="dynamicSlots.helper"
+				></slot>
 				<slot name="main"></slot>
-				<slot :name="dynamicSlots.helper"></slot>
+				<slot
+					v-if="dynamicSlots.displayHelper.bottom"
+					:name="dynamicSlots.helper"
+				></slot>
 			</main>
 
 			<aside
@@ -60,10 +68,17 @@ export default {
 			// Display default aside slot if currently not on shop route
 			// and / or screen width is enough for wide layout.
 			// If displayed, change helper slot's name to 'dummy' to leave it empty.
+			const route = this.$route.name
 
 			return {
 				displayAside: this.wide && !this.inShop,
-				helper: this.wide ? 'dummy' : 'aside'
+				helper: this.wide ? 'dummy' : 'aside',
+				displayHelper: {
+					top: route === 'Checkout' ? true : false,
+					bottom: route === 'Cart' ? true : false
+				}
+				//helperTop: this.wide && route === 'Checkout' ? 'dummy' : 'aside',
+				//helperBottom: this.wide && route === 'Cart' ? 'dummy' : 'aside'
 			}
 		},
 

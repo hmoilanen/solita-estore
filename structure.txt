@@ -33,12 +33,12 @@ TODOS - tyylit yms.:
 --OK -lisää kokoluokat (ainakin) baseButton:iin / baseIcon:in (myöls muihin jos tarve)
 --OK -lisää favicon
 --OK -tee yleinen tekstikomponentti
--vimeistele leiskat /  summaryboksit
+--OK -vimeistele leiskat /  summaryboksit
 	--OK -product layout and grid in shop
 	--OK -addProductModal layout
 	--OK -product layout and summary logic in cart
 	--OK -removeProductModal layout
-	-checkooutSummary ja toimintalogiikka kännykällä
+	--OK -checkooutSummary ja toimintalogiikka kännykällä
 
 // // // JOS JÄÄ AIKAA:
 -lisää sivunvaihtotransitiot
@@ -75,3 +75,6 @@ LISÄYS STORAGEEN:
 LUKU STORAGESTA:
 -kun checkout inittaa, tarkista onko dataa
 	-jos on, päivitä ko. komponentti
+
+
+	-JOS 

@@ -3,6 +3,7 @@
 		<Base-icon
 			@click="openModal"
 			:clickable="true"
+			size="s"
 		>x</Base-icon>
 		
 		<Confirmation-modal v-if="displayRemoveModal">

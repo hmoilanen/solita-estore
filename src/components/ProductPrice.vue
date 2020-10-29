@@ -5,20 +5,23 @@
 		</template>
 
 		<template v-else>
-			<div class="in-cart">
+			<div
+				class="in-cart"
+				:class="classing"
+			>
 				<div>
 					<Base-text size="s">Price: </Base-text>
 					<Base-text
 						size="s"
 						:bold="true"
-					>{{ dynamicPrice(product.price) }}</Base-text>
+					> {{ dynamicPrice(product.price) }}</Base-text>
 				</div>
 				<div>
 					<Base-text size="s">Total: </Base-text>
 					<Base-text
 						size="s"
 						:bold="true"
-					>{{ dynamicPrice(totalPrice) }}</Base-text>
+					> {{ dynamicPrice(totalPrice) }}</Base-text>
 				</div>
 			</div>
 		</template>
@@ -33,7 +36,8 @@ export default {
 		product: {
 			type: Object,
 			required: true
-		}
+		},
+		narrow: Boolean
 	},
 
 	computed: {
@@ -43,6 +47,12 @@ export default {
 
 		totalPrice() {
 			return this.product.price * this.product.amount
+		},
+
+		classing() {
+			return {
+				'narrow-mode': this.narrow
+			}
 		}
 	},
 
@@ -58,9 +68,11 @@ export default {
 .product-price {
 	.in-cart {
 		display: flex;
+		&.narrow-mode { flex-direction: column; }
 		& > * {
 			display: flex;
-			&:first-child { margin-right: 1rem; }
+			&:first-child { margin-right: 0.6rem; }
+			& > *:first-child { margin-right: 0.2rem; }
 		}
 	}
 }

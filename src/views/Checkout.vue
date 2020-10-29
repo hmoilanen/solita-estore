@@ -36,6 +36,7 @@
 					/>
 					<br>
 					<Base-button
+						class="submit-checkout"
 						@click="submitCheckout"
 						:disabled="!allowCheckoutSubmit"
 						:stretch="true"
@@ -44,8 +45,8 @@
 				</form>
 			</template>
 
-			<template #aside>
-				<Checkout-summary/>
+			<template #aside="{ narrow }">
+				<Checkout-summary :narrow="narrow"/>
 			</template>
 		</Content-grid>
   </div>
@@ -253,5 +254,6 @@ export default {
 			&:last-child { margin-top: 4rem; }
 		}
 	}
+	.submit-checkout { margin-bottom: 2rem; }
 }
 </style>
