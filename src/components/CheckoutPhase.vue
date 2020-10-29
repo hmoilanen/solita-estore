@@ -34,7 +34,7 @@
 
 			<div class="bottom">
 				<Base-button @click="validatePhase">Continue</Base-button>
-				<span v-if="feedback.displayed">{{ feedback.message }}</span>
+				<Base-text v-if="feedback.displayed">{{ feedback.message }}</Base-text>
 			</div>
 		</template>
 	</div>
@@ -77,7 +77,7 @@ export default {
 			if (this.phaseNotValidated && !this.mimicLoadingForCreditcardValidation) {
 				message = 'Please provide correct information to proceed...'
 			} else if (this.mimicLoadingForCreditcardValidation) {
-				message = 'PLEASE WAIT...'
+				message = 'Please wait...'
 			} else {
 				displayed = false
 			}
@@ -195,10 +195,7 @@ $checkout-phase--color--separator: $app-color--main-l2;
 	.bottom {
 		display: flex;
 		align-items: center;
-		span {
-			margin-left: 0.4rem;
-			font-size: 0.8rem;
-		}
+		& > *:last-child { margin-left: 0.4rem; }
 	}
 }
 </style>
