@@ -7,7 +7,19 @@
 </template>
 
 <script>
-export default { name: 'ConfirmationModal' }
+export default {
+	name: 'ConfirmationModal',
+
+	created() {
+		// Prevent scrolling of underlying layout when modal is open
+		document.body.style.setProperty('overflow', 'hidden')
+
+		// Allow scrolling again when modal is closed
+		this.$once('hook:beforeDestroy', () => {      
+      document.body.style.removeProperty('overflow')
+    })
+	}
+}
 </script>
 
 <style lang="scss" scoped>

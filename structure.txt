@@ -34,8 +34,8 @@ TODOS - tyylit yms.:
 --OK -lisää favicon
 --OK -tee yleinen tekstikomponentti
 -vimeistele leiskat /  summaryboksit
-	-product layout and grid in shop
-	-addProductModal layout
+	--OK -product layout and grid in shop
+	--OK -addProductModal layout
 	-product layout and summary logic in cart
 	-removeProductModal layout
 	-checkooutSummary ja toimintalogiikka kännykällä
