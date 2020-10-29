@@ -1,4 +1,4 @@
-Simple instructions for undestanding code base / folder structure
+Simple instructions for understanding code base / folder structure
 
 // // // // //
 Explanation by folders:
@@ -8,7 +8,7 @@ Explanation by folders:
 
 -src/components
 	-includes all the components used in view components
-	-if used only with certain parent comopnent / view, named with the parent as a prefix
+	-if used only with certain parent component / view, named with the parent as a prefix
 	-...if not, used in various contexts
 
 -src/components/base
