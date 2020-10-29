@@ -86,12 +86,6 @@ $checkout-summary--color--hr: $app-color--main-l2;
 	background: $checkout-summary--color--bg;
 	@extend %app-style--card-shadow;
 
-	hr {
-		margin: 1rem 0;
-		border: 0;
-		border-top: 1px solid $checkout-summary--color--hr;
-	}
-
 	.product {
 		display: flex;
 		justify-content: space-between;

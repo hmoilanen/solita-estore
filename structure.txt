@@ -7,21 +7,23 @@ POINTTEJA!!!:
 -käyttäjäkäyttäjäkäyttäjäkäyttäjä
 
 // // // // // // // // // // // // // // // // // // // //
+// // // // // // // // // // // // // // // // // // // //
 TODOS - rakenne / toiminnallisuus:
 --OK -poista luottokorttidata checkout-JSON:sta
 	--OK -> lisää siihen myös itse tuotteet
 	--OK -> payment-mimic checkout:issa
 --OK -lisää dyaaminen input-elementti QuantitySelectoriin
 --OK -lisää navTop:iin linkki myös itse kauppaan = WHEE-ikoni
--talleta tilaajan tiedot localStorageen (? = JOS JÄÄ AIKAA!)
-	-> JOS EI JÄÄ, POISTA TURHAT KOODIT Checkout.vue:sta + storageCustomer.js!!!
--curtain (tai jonkun muunlainen implementaatio) = whee
 --OK -404
 -tee readme.md
 -tee luokkakaaviot
 -tee email, jossa koko paska lähetetään Solitalle lilnkkeineen!
+// // // JOS JÄÄ AIKAA:
+-talleta tilaajan tiedot localStorageen (? = JOS JÄÄ AIKAA!)
+	-> JOS EI JÄÄ, POISTA TURHAT KOODIT Checkout.vue:sta + storageCustomer.js!!!
+-curtain (tai jonkun muunlainen implementaatio) = whee
 
-// // // // // 
+// // // // // // // // // // // // // // // // // // // //
 TODOS - tyylit yms.:
 --OK -tee ikonit (ks. ikonilista)
 --OK -tee tyyleistä globaalit
@@ -31,16 +33,18 @@ TODOS - tyylit yms.:
 --OK -lisää kokoluokat (ainakin) baseButton:iin / baseIcon:in (myöls muihin jos tarve)
 --OK -lisää favicon
 --OK -tee yleinen tekstikomponentti
+-vimeistele leiskat /  summaryboksit
+	-product layout and grid in shop
+	-addProductModal layout
+	-product layout and summary logic in cart
+	-removeProductModal layout
+	-checkooutSummary ja toimintalogiikka kännykällä
+
+// // // JOS JÄÄ AIKAA:
 -lisää sivunvaihtotransitiot
+-QuantitySelector - disable (opacity: 0.5) nappi jos ei voi enää lisätä/vähentää
 
-// // // // // 
-TODOS - extrat:
--kiinnitä fake-REST (https://my-json-server.typicode.com), ks. App.vue
-	->...tai ainakin poista turhat koodit ko. komponentista
--testaaminen
--footer (?)
-
-// // // // // 
+// // // // // // // // // // // // // // // // // // // //
 TODOS - bugit:
 -mitä tapahtuu jos QuantitySelectorissa tyhjennetään input ja jätetään se silleen?
 	-@blur -> 1kpl ?
@@ -53,7 +57,12 @@ TODOS - bugit:
 -ChekoutSummary jää kaiken muun sisälllön päälle kun input triggeröidään kännykällä ja näppis nousee esiin (koska sijoitettu fixedillä ruudun alareunaan, joka siis nousee kun näppis tulee esiin)
 	-> laske koko window:n korkeus ja sijoita se sen perusteella sille etäisyydelle YLÄREUNASTA
 
-
+// // // // // // // // // // // // // // // // // // // //
+TODOS - extrat:
+-kiinnitä fake-REST (https://my-json-server.typicode.com), ks. App.vue
+	->...tai ainakin poista turhat koodit ko. komponentista
+-testaaminen
+-footer (?)
 
 
 
@@ -66,19 +75,3 @@ LISÄYS STORAGEEN:
 LUKU STORAGESTA:
 -kun checkout inittaa, tarkista onko dataa
 	-jos on, päivitä ko. komponentti
-
-
-
-/* &:focus {
-				&::before {
-					$focused--border-width: -2rem;
-					content: '';
-					position: absolute;
-					top: $focused--border-width;
-					left: $focused--border-width;
-					right: $focused--border-width;
-					bottom: $focused--border-width;
-					border: calc(#{$focused--border-width} * -2) solid $base-checkbox--color--border;
-					border-radius: $app-vars--border-radius;
-				}
-			} */

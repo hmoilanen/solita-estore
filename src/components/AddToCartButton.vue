@@ -1,29 +1,45 @@
 <template>
 	<div class="add-to-cart-button">
-		<Base-button @click="addToCart">Add to cart</Base-button>
+		<Base-button
+			@click="addToCart"
+			:stretch="stretch"
+			:size="size"
+		>Add to cart</Base-button>
 
 		<Confirmation-modal v-if="displayConfirmationModal">
-			<div>Product has been added to cart!</div>
-			<h3>{{ product.name }}</h3>
-			<Base-icon>{{ product.image }}</Base-icon>
-			<div>{{ dynamicPrice }}</div>
-			<div>Quantity: <strong>{{ amount }}</strong></div>
-			<div>
-				You have currently
-				<strong>{{ totalAmountOfProductsInCart }}</strong>
-				products in your cart.
+			<Base-title>Product has been added to cart!</Base-title>
+			<hr>
+			<div class="product">
+				<Base-icon>{{ product.image }}</Base-icon>
+				<Base-title
+					tag="h3"
+					size=s
+				>{{ product.name }}</Base-title>
 			</div>
-			<router-link :to="{ name: 'Cart' }">View or edit your cart.</router-link>
+			<div class="info">
+				<Summary-info topic="Quantity">{{ amount }}</Summary-info>
+				<Summary-info topic="Total">{{ dynamicPrice }}</Summary-info>
+			</div>
+			<hr>
+			
+			<!-- <div>{{ dynamicPrice }}</div>
+			<div>Quantity: <strong>{{ amount }}</strong></div> -->
+			<Base-text v-html="`You have currently <strong>${totalAmountOfProductsInCart}</strong> products in your cart.`"></Base-text>
+			<!-- <div class="conclusion">
+			</div> -->
+			
 			<div class="buttons">
 				<Base-button
+					@click="goToCheckout"
+					:stretch="true"
+					size="m"
+				>Checkout</Base-button>
+				<Base-button
 					@click="closeConfirmationModal"
-					:empty="true"
+					:pseudo="true"
+					:stretch="true"
 					size="m"
 				>Continue shopping</Base-button>
-				<Base-button
-					@click="goToCheckout"
-					size="m"
-				>To cart</Base-button>
 			</div>
 		</Confirmation-modal>
 	</div>
@@ -31,11 +47,15 @@
 
 <script>
 import ConfirmationModal from '@/components/ConfirmationModal'
+import SummaryInfo from '@/components/SummaryInfo'
 
 export default {
 	name: 'AddToCartButton',
 
-	components: { ConfirmationModal },
+	components: {
+		ConfirmationModal,
+		SummaryInfo
+	},
 
 	props: {
 		product: {
@@ -45,7 +65,9 @@ export default {
 		amount: {
 			type: Number,
 			required: true
-		}
+		},
+		size: String,
+		stretch: Boolean
 	},
 
 	data() {
@@ -87,9 +109,17 @@ export default {
 
 <style lang="scss" scoped>
 .add-to-cart-button {
-	.buttons {
+	.product {
+		//margin-top: 1.6rem;
+		margin-bottom: 1rem;
 		display: flex;
-		& > * { margin-right: 1rem;}
+		align-items: center;
+		.base-icon { margin-right: 0.8rem; }
+	}
+	//.conclusion { margoin-bottom}
+	.buttons {
+		margin-top: 2rem;
+		*:first-child { margin-bottom: 1rem; }
 	}
 }
 </style>

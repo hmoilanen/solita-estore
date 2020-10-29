@@ -24,12 +24,12 @@ $confirmation-modal--color--wrapper: $app-color--white;
 	display: flex;
 	align-items: center;
 	justify-content: center;
-	padding: 2rem;
+	padding: $app-vars--layout-padding;
 
 	.wrapper {
 		max-width: 450px;
 		border-radius: $app-vars--border-radius;
-		padding: 1rem;
+		padding: $app-vars--card-padding;
 		background: $confirmation-modal--color--wrapper;
 		@extend %app-style--card-shadow;
 		

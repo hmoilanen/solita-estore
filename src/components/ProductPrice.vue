@@ -1,13 +1,19 @@
 <template>
 	<div class="product-price">
-		<div>
-			<span v-if="inCart">price:</span>
-			<strong>{{ dynamicPrice(product.price) }}</strong>
-		</div>
-		<div v-if="inCart">
-			<span>total:</span>
-			<strong>{{ dynamicPrice(totalPrice) }}</strong>
-		</div>
+		<template v-if="inShop">
+			<Base-title tag="h3" size="m">{{ dynamicPrice(product.price) }}</Base-title>
+		</template>
+
+		<template v-else>
+			<div>
+				<span >price:</span>
+				<strong>{{ dynamicPrice(product.price) }}</strong>
+			</div>
+			<div>
+				<span>total:</span>
+				<strong>{{ dynamicPrice(totalPrice) }}</strong>
+			</div>
+		</template>
 	</div>
 </template>
 
@@ -23,8 +29,8 @@ export default {
 	},
 
 	computed: {
-		inCart() {
-			return this.$route.name === 'Cart'
+		inShop() {
+			return this.$route.name === 'Shop'
 		},
 
 		totalPrice() {
@@ -39,7 +45,3 @@ export default {
 	}
 }
 </script>
-
-<style>
-
-</style>

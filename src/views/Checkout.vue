@@ -5,6 +5,7 @@
 				<Base-title
 					:center="true"
 					size="l"
+					tag="h1"
 				>Checkout</Base-title>
 			</template>
 

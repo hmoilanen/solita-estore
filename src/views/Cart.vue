@@ -5,6 +5,7 @@
 				<Base-title
 					:center="true"
 					size="l"
+					tag="h1"
 				>Cart</Base-title>
 			</template>
 			

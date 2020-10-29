@@ -71,6 +71,12 @@ input {
 	}
 }
 
+hr {
+	margin: 1rem 0;
+	border: 0;
+	border-top: 1px solid $app-color--main-l2;
+}
+
 #app {
 	color: $app-color--black;
   //font-family: Avenir, Helvetica, Arial, sans-serif;

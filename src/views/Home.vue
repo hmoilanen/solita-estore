@@ -1,7 +1,7 @@
 <template>
   <div class="view--home">
 		<router-link :to="{ name: 'Shop' }">to shop</router-link>
-		<div class="box colors">
+		<!-- <div class="box colors">
 			<div class="maini"></div>
 			<div class="maini l1"></div>
 			<div class="maini l2"></div>
@@ -9,8 +9,8 @@
 			<div class="maini hl"></div>
 			<div class="maini black"></div>
 			<div class="maini white"></div>
-		</div>
-		<Base-button></Base-button>
+		</div> -->
+		<!-- <Base-button></Base-button>
 		<Base-button :disabled="true"></Base-button>
 		<Base-button :center="true"></Base-button>
 		<Base-button :rounded="true"></Base-button>
@@ -18,7 +18,6 @@
 		<Base-button :empty="true"></Base-button>
 		<Base-button :empty="true" :highlight="true"></Base-button>
 		<Base-button :pseudo="true"></Base-button>
-		<Base-button :stretch="true"></Base-button>
 		<Base-button size="s"></Base-button>
 		<Base-button></Base-button>
 		<Base-button size="m"></Base-button>
@@ -40,7 +39,7 @@
 		<hr>
 		<Base-title size="l"></Base-title>
 		<Base-text size="l"></Base-text>
-		<br><br><br><br>
+		<br><br><br><br> -->
   </div>
 </template>
 
@@ -51,8 +50,9 @@ export default { name: 'ViewHome' }
 <style lang="scss" scoped>
 .box {
 	border: 1px solid $app-color--main;
-	padding: 2rem;
+	//padding: 2rem;
 	display: inline-flex;
+	flex-wrap: wrap;
 	//&.colors { display: inline-flex; }
 	&::v-deep .base-button {
 		& > * { margin: 0.5rem;}

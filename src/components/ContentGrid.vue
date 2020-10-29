@@ -3,12 +3,18 @@
 		<div class="title">
 			<slot name="title"></slot>
 		</div>
-		<div class="wrapper">
+
+		<div
+			class="wrapper"
+			:class="currentView"
+		>
 			<main class="main">
 				<slot name="main"></slot>
 			</main>
 
-			<aside class="aside">
+			<aside
+				v-if="currentView !== 'mode-shop'"
+				class="aside">
 				<slot name="aside"></slot>
 			</aside>
 		</div>
@@ -18,11 +24,19 @@
 <script>
 export default {
 	name: 'ContentGrid',
+
+	computed: {
+		currentView() {
+			const view = this.$route.name
+			
+			return `mode-${view.toLowerCase()}`
+		}
+	}
 }
 </script>
 
 <style lang="scss" scoped>
-$content-grid--padding: 1rem;
+$content-grid--padding: $app-vars--layout-padding;
 
 .content-grid {
 	padding:
@@ -32,13 +46,22 @@ $content-grid--padding: 1rem;
 		$content-grid--padding;
 
 	.wrapper {
-		max-width: 1000px;
 		margin: 0 auto;
+		max-width: 1000px;
 		display: grid;
-		grid-template-columns: 1fr minmax(0, 360px);
 		grid-template-rows: auto;
-		grid-template-areas: "main aside";
-		column-gap: 30px;
+		&.mode-shop {
+			max-width: 800px;
+			grid-template-columns: 1fr;
+			grid-template-areas: "main";
+		}
+		&.mode-cart,
+		&.mode-checkout {
+			
+			grid-template-areas: "main aside";
+			column-gap: 30px;
+		}
+		
 
 		@media only screen and (max-width: 700px) {
 			grid-template-columns: 1fr;

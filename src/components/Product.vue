@@ -1,18 +1,38 @@
 <template>
-	<div class="product">
-		<div>
-			<h2>{{ product.name }}</h2>
-			<p>{{ product.description }}</p>
-			<Base-icon size="4rem">{{ product.image }}</Base-icon>
-			<Quantity-selector v-model="amountOfProducts"/>
+	<div
+		ref="product"
+		class="product"
+		:class="classing"
+	>
+		<div class="image">
+			<Base-icon :size="styling.image">{{ product.image }}</Base-icon>
 		</div>
-		
-		<div>
-			<Product-price :product="product"/>
+
+		<div class="info">
+			<Base-title
+				class="name"
+				size="m"
+			>{{ product.name }}</Base-title>
+			<Base-text
+				class="description"
+				size="m"
+			>{{ product.description }}</Base-text>
+		</div>
+
+		<div class="specs">
+			<Quantity-selector v-model="amountOfProducts"/>
+			<Product-price
+				class="price"
+				:product="product"
+			/>
+		</div>
+
+		<div class="buttons">
 			<Add-to-cart-button
 				v-if="allowButtons.add"
 				:product="product"
 				:amount="amount"
+				:stretch="true"
 			/>
 			<Remove-from-cart-button
 				v-if="allowButtons.remove"
@@ -42,8 +62,27 @@ export default {
 
 	data() {
 		return {
-			amount: 1 // Used only if in shop, not in cart, see: this.amountOfProducts
+			amount: 1, // Used only if in shop, not in cart, see: this.amountOfProducts
+			wide: false
 		}
+	},
+
+	mounted() {
+		const trackWindowWidth = () => {
+			if (this.$refs.product.offsetWidth > 500) {
+				this.wide = true
+				return
+			}
+
+			this.wide = false
+		}
+
+		trackWindowWidth()
+
+		window.addEventListener('resize', trackWindowWidth)
+		this.$once('hook:beforeDestroy', () => {      
+      window.removeEventListener('resize', trackWindowWidth)
+    })
 	},
 
 	computed: {
@@ -80,6 +119,18 @@ export default {
 				remove: this.$route.name === 'Cart'
 			}
 		},
+
+		classing() {
+			return {
+				'wide-mode': this.wide
+			}
+		},
+
+		styling() {
+			return {
+				image: this.wide ? '8rem' : '6rem'
+			}
+		}
 	}
 }
 </script>
@@ -88,13 +139,74 @@ export default {
 $product--color--bg: $app-color--white;
 
 .product {
+	margin-bottom: $app-vars--card-padding;
 	background: $product--color--bg;
 	border-radius: $app-vars--border-radius;
+	padding: $app-vars--card-padding;
 	@extend %app-style--card-shadow;
+	display: grid;
+	grid-template-columns: 1fr;
+	grid-template-rows: auto;
+	grid-template-areas:
+		"image"
+		"info"
+		"specs"
+		"buttons";
+	.image {
+		grid-area: image;
+		padding-top: 1rem;
+		margin-bottom: 1.2rem;
+		display: flex;
+		justify-content: center;
+	}
+	.info {
+		grid-area: info;
+		margin-bottom: 2rem;
+		display: flex;
+		flex-direction: column;
+		align-items: center;
+		.description { text-align: center; }
+	}
+	.specs {
+		grid-area: specs;
+		margin-bottom: 1.2rem;
+		display: flex;
+		justify-content: space-between;
+	}
+	.buttons { grid-area: buttons; }
 
-	display: flex;
-	justify-content: space-between;
-	padding: 1rem;
-	margin-bottom: 1rem;
+	&.wide-mode {
+		grid-template-columns: auto 1fr auto;
+		grid-template-rows: auto auto;
+		grid-template-areas:
+			"image info specs"
+			"buttons buttons buttons";
+		.image {
+			padding-top: 0;
+			margin-bottom: 0;
+			display: block;
+		}
+		.info {
+			margin: 0 $app-vars--card-padding;
+			display: flex;
+			flex-direction: column;
+			align-items: flex-start;
+			.description {
+				margin-top: 0.4rem;
+				text-align: left;
+			}
+		}
+		.specs {
+			display: flex;
+			flex-direction: column;
+			justify-content: flex-start;
+			.price { margin-top: 0.8rem; }
+		}
+		.buttons {
+			margin-top: 2rem;
+			margin: 2rem 0 0 auto;
+			width: 250px;
+		}
+	}
 }
 </style>
