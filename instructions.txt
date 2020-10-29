@@ -1,0 +1,50 @@
+Simple instructions for undestanding code base / folder structure
+
+// // // // //
+Explanation by folders:
+
+-src/views
+	-includes all the components used with routes
+
+-src/components
+	-includes all the components used in view components
+	-if used only with certain parent comopnent / view, named with the parent as a prefix
+	-...if not, used in various contexts
+
+-src/components/base
+	-inlcludes all the components used multiple times everywhere, eg.:
+		-BaseButton.vue
+		-BaseTitle.vue
+		-BaseIcons.vue...
+	-made global through webpack, so can be used without importing separately every time
+
+-src/components/icons
+	-inlcludes all the icons, stored as their own components
+	-done this way for more control
+	-used by BaseIcon.vue
+
+-src/logic
+	-mimics business logic
+	-contains usage of local storage instead of backend, which would be used in normal case
+	-used with vuex / store in actions / mutations (realted to products)
+
+-src/router
+	-creates router
+	-includes all routes and related logic
+	-used with components of src/views
+
+-src/store
+	-includes vuex / store
+	-consist mainly of storing products and manipulating stored ones
+	-note: productData.js mimics product data normally fetched from backend / database once app initiates
+	-note: not splitted into modules due to small scale of the project
+
+-src/styles
+	-contains all global styles of the app (= SCSS)
+	-made global through webpack / style-resources-loader
+		-> ... so no need to import separately to components
+	-includes only variables / placeholders / etc.
+
+-src/utils
+	-includes all helper functions
+	-only one file used in this project but would propably contain a lot more in larger projects

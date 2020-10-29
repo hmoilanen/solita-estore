@@ -18,3 +18,8 @@ Run the app
 $ npm run app
 ```
 The app now runs on http://localhost:4000/
+
+
+### Intructions for undestanding the code
+
+See: /instructions.txt

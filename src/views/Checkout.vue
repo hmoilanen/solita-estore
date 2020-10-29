@@ -56,7 +56,6 @@
 import ContentGrid from '@/components/ContentGrid'
 import CheckoutSummary from '@/components/CheckoutSummary'
 import CheckoutPhase from '@/components/CheckoutPhase'
-//import storageCustomer from '@/logic/storageCustomer'
 import {
 	valueExists,
 	onlyLettersAndWhitespace,
@@ -184,9 +183,6 @@ export default {
 			// Validate and close current phase
 			this.$set(currentPhase.main, 'validated', true)
 			this.$set(currentPhase.main, 'opened', false)
-
-			// Save updated customer data to local storage
-			//storageCustomer(this.parsedCustomerData)
 			
 			// Open next not-validated phase
 			const amountOfPhases = Object.keys(phases).length
@@ -215,9 +211,6 @@ export default {
 			// ...then open the to-be-edited phase
 			this.$set(phases[`phase${phaseId}`].main, 'validated', false)
 			this.$set(phases[`phase${phaseId}`].main, 'opened', true)
-
-			// Update customer data to local storage / remove non-validated phases
-			//storageCustomer(this.parsedCustomerData)
 		},
 
 		fieldValidation({ phaseId, field, validationState }) {
