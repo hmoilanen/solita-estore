@@ -36,8 +36,8 @@ TODOS - tyylit yms.:
 -vimeistele leiskat /  summaryboksit
 	--OK -product layout and grid in shop
 	--OK -addProductModal layout
-	-product layout and summary logic in cart
-	-removeProductModal layout
+	--OK -product layout and summary logic in cart
+	--OK -removeProductModal layout
 	-checkooutSummary ja toimintalogiikka kännykällä
 
 // // // JOS JÄÄ AIKAA:

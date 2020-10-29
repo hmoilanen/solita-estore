@@ -5,13 +5,21 @@
 		</template>
 
 		<template v-else>
-			<div>
-				<span >price:</span>
-				<strong>{{ dynamicPrice(product.price) }}</strong>
-			</div>
-			<div>
-				<span>total:</span>
-				<strong>{{ dynamicPrice(totalPrice) }}</strong>
+			<div class="in-cart">
+				<div>
+					<Base-text size="s">Price: </Base-text>
+					<Base-text
+						size="s"
+						:bold="true"
+					>{{ dynamicPrice(product.price) }}</Base-text>
+				</div>
+				<div>
+					<Base-text size="s">Total: </Base-text>
+					<Base-text
+						size="s"
+						:bold="true"
+					>{{ dynamicPrice(totalPrice) }}</Base-text>
+				</div>
 			</div>
 		</template>
 	</div>
@@ -45,3 +53,15 @@ export default {
 	}
 }
 </script>
+
+<style lang="scss" scoped>
+.product-price {
+	.in-cart {
+		display: flex;
+		& > * {
+			display: flex;
+			&:first-child { margin-right: 1rem; }
+		}
+	}
+}
+</style>

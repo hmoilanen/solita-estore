@@ -1,6 +1,21 @@
 <template>
   <div class="view--cart">
-		<Content-grid>
+		<div
+			v-if="noProductsToCheckout || orderHasBeenSent"
+			class="special-message"
+		>
+			<Base-title
+				:center="true"
+				size="m"
+			>{{ specialMessage }}</Base-title>
+			<Base-button
+				@click="$router.push({ name: 'Shop' })"
+				:pseudo="true"
+				size="l"
+			>Back to shop</Base-button>
+		</div>
+
+		<Content-grid v-else>
 			<template #title>
 				<Base-title
 					:center="true"
@@ -49,7 +64,7 @@ import {
 } from '@/utils/regex'
 
 export default {
-	name: 'ViewCart',
+	name: 'ViewCheckout',
 
 	components: {
 		ContentGrid,
@@ -89,7 +104,8 @@ export default {
 					validity: { value: '', label: 'Expiration', type: 'number', valid: true, pattern: onlyNumbers, feedback: 'Provide only numbers' },
 					security: { value: '', label: 'CVV', type: 'number', valid: true, pattern: onlyNumbers, feedback: 'Provide only numbers' }
 				}
-			}
+			},
+			orderHasBeenSent: false
 		}
 	},
 
@@ -125,11 +141,26 @@ export default {
 					for (const field in fields) {
 						parsedCustomerData[key][field] = fields[field].value
 					}
-
 				}
 			}
 
 			return parsedCustomerData
+		},
+
+		noProductsToCheckout() {
+			return this.$store.getters['TOTAL_AMOUNT_OF_PRODUCTS_IN_CART'] === 0
+				? true
+				: false
+		},
+
+		specialMessage() {
+			let message = 'There is nothing to checkout... Go pick some cool shapes!'
+
+			if (this.orderHasBeenSent) {
+				message = 'Your order has been sent! Thank you for spending your money for nothing. XD'
+			}
+
+			return message
 		}
 	},
 
@@ -201,6 +232,10 @@ export default {
 			console.log('Checkout - customer data:', customerJSON)
 			console.log('Checkout - product data:', productJSON)
 
+			// Remove all products from cart (and local storage)
+			this.$store.dispatch('CLEAR_CART')
+			this.orderHasBeenSent = true
+
 			// POST data ->
 			// ...
 		}
@@ -210,9 +245,12 @@ export default {
 
 <style lang="scss" scoped>
 .view--cart {
-	&::v-deep {
-		.base-input {
-			margin: 0.8rem 0;
+	.special-message {
+		padding: calc(#{$app-vars--nav-top--height} * 2) $app-vars--layout-padding 0;
+		& > * {
+			margin: 0 auto;
+			&:first-child { max-width: 800px; }
+			&:last-child { margin-top: 4rem; }
 		}
 	}
 }

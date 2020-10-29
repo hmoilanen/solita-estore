@@ -82,7 +82,7 @@ $checkout-summary--color--hr: $app-color--main-l2;
 
 .checkout-summary {
 	border-radius: $app-vars--border-radius;
-	padding: 1rem;
+	padding: $app-vars--card-padding;
 	background: $checkout-summary--color--bg;
 	@extend %app-style--card-shadow;
 

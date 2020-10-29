@@ -6,6 +6,7 @@
 					:center="true"
 					size="l"
 					tag="h1"
+					@click="jee = !jee"
 				>Cart</Base-title>
 			</template>
 			
@@ -18,6 +19,8 @@
 					/>
 				</template>
 				<h2 v-else>{{ productsInCart }}</h2>
+			</template>
+			<template #aside>
 				<Cart-summary/>
 			</template>
 		</Content-grid>
@@ -36,6 +39,12 @@ export default {
 		ContentGrid,
 		CartSummary,
 		Product
+	},
+
+	data() {
+		return {
+			jee: false
+		}
 	},
 
 	computed: {

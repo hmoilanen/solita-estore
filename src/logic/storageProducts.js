@@ -4,5 +4,8 @@ export default function(state) {
 	const key = 'whee-products'
 
 	ls.removeItem(key)
-	ls.setItem(key, JSON.stringify(state.cart.products))
+
+	if (state) {
+		ls.setItem(key, JSON.stringify(state.cart.products))
+	}
 }

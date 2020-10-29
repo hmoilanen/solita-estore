@@ -4,12 +4,13 @@
 			:center="true"
 			size="s"
 		>Order summary</Base-title>
-
+		<hr>
 		<Summary-info topic="Total">{{ dynamicPrice }}</Summary-info>
 		<Summary-info topic="Shipping">Free</Summary-info>
-
+		<hr>
 		<Base-button
 			@click="goTo('Checkout')"
+			:disabled="noProductsInCart"
 			:stretch="true"
 			size="m"
 		>Check out</Base-button>
@@ -34,7 +35,13 @@ export default {
 		dynamicPrice() {
 			const summaryOfProductPrices = this.$store.getters['SUMMARY_OF_PRODUCT_PRICES']
 			return this.$store.getters['GET_PRICE'](summaryOfProductPrices)
-		}
+		},
+
+		noProductsInCart() {
+			return this.$store.getters['TOTAL_AMOUNT_OF_PRODUCTS_IN_CART'] === 0
+				? true
+				: false
+		},
 	},
 
 	methods: {
@@ -51,7 +58,7 @@ $cart-summary--color--bg: $app-color--white;
 .cart-summary {
 	border-radius: $app-vars--border-radius;
 	@extend %app-style--card-shadow;
-	padding: 1rem;
+	padding: $app-vars--card-padding;
 	background: $cart-summary--color--bg;
 
 	.base-button:first-of-type { margin-bottom: 1rem; }

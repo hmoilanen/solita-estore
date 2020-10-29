@@ -11,11 +11,11 @@
 		<div class="info">
 			<Base-title
 				class="name"
-				size="m"
+				:size="styling.title"
 			>{{ product.name }}</Base-title>
 			<Base-text
 				class="description"
-				size="m"
+				:size="styling.text"
 			>{{ product.description }}</Base-text>
 		</div>
 
@@ -122,13 +122,28 @@ export default {
 
 		classing() {
 			return {
-				'wide-mode': this.wide
+				'wide-mode': this.wide,
+				'cart-mode': this.$route.name === 'Cart'
 			}
 		},
 
 		styling() {
+			let sizeImage = '6rem'
+			let sizeTitle = 'm'
+			let sizeText = 'm'
+
+			if (this.$route.name === 'Cart') {
+				sizeImage = '3rem'
+				sizeTitle = 's'
+				sizeText = 's'
+			} else if (this.wide) {
+				sizeImage = '8rem'
+			}
+
 			return {
-				image: this.wide ? '8rem' : '6rem'
+				image: sizeImage,
+				title: sizeTitle,
+				text: sizeText
 			}
 		}
 	}
@@ -175,7 +190,7 @@ $product--color--bg: $app-color--white;
 	}
 	.buttons { grid-area: buttons; }
 
-	&.wide-mode {
+	&.wide-mode { // If at shop route and screen is wide enough
 		grid-template-columns: auto 1fr auto;
 		grid-template-rows: auto auto;
 		grid-template-areas:
@@ -206,6 +221,38 @@ $product--color--bg: $app-color--white;
 			margin-top: 2rem;
 			margin: 2rem 0 0 auto;
 			width: 250px;
+		}
+	}
+
+	&.cart-mode {
+		padding: calc(#{$app-vars--card-padding} * 0.8);
+		grid-template-columns: auto 1fr auto;
+		grid-template-rows: 1fr auto;
+		grid-template-areas:
+			"image info buttons"
+			"image specs buttons";
+		.image { padding-top: 0; }
+		.info {
+			margin: 0 $app-vars--card-padding;
+			display: flex;
+			flex-direction: column;
+			align-items: flex-start;
+			.description {
+				margin-top: 0.4rem;
+				text-align: left;
+			}
+		}
+		.specs {
+			margin: calc(#{$app-vars--card-padding} / 2) $app-vars--card-padding 0;
+			display: flex;
+			flex-direction: row;
+			align-items: center;
+			justify-content: flex-start;
+			.price { margin: 0 0 0 1rem; }
+		}
+		.buttons {
+			margin: 0;
+			width: auto;
 		}
 	}
 }

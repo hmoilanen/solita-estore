@@ -21,13 +21,7 @@
 				<Summary-info topic="Total">{{ dynamicPrice }}</Summary-info>
 			</div>
 			<hr>
-			
-			<!-- <div>{{ dynamicPrice }}</div>
-			<div>Quantity: <strong>{{ amount }}</strong></div> -->
 			<Base-text v-html="`You have currently <strong>${totalAmountOfProductsInCart}</strong> products in your cart.`"></Base-text>
-			<!-- <div class="conclusion">
-			</div> -->
-			
 			<div class="buttons">
 				<Base-button
 					@click="goToCheckout"
@@ -110,13 +104,11 @@ export default {
 <style lang="scss" scoped>
 .add-to-cart-button {
 	.product {
-		//margin-top: 1.6rem;
 		margin-bottom: 1rem;
 		display: flex;
 		align-items: center;
 		.base-icon { margin-right: 0.8rem; }
 	}
-	//.conclusion { margoin-bottom}
 	.buttons {
 		margin-top: 2rem;
 		*:first-child { margin-bottom: 1rem; }

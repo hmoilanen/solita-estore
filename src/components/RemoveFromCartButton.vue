@@ -6,20 +6,38 @@
 		>x</Base-icon>
 		
 		<Confirmation-modal v-if="displayRemoveModal">
-			<!-- <h3>Are you sure you want to remove this item?</h3> -->
-			<Base-icon size="5rem">warning</Base-icon>
-			<h3>You are about to remove this item!</h3>
-			<div>{{ product.amount }} x {{ product.name }}</div>
-			<h3>Are you sure?</h3>
+			<Base-icon
+				class="warning"
+				size="5rem"
+			>warning</Base-icon>
+			<Base-title>You are about to remove this item!</Base-title>
+			<hr>
+			<div class="product">
+				<div class="left">
+					<Base-icon>{{ product.image }}</Base-icon>
+					<Base-title
+						tag="h3"
+						size=s
+					>{{ product.name }}</Base-title>
+				</div>
+				<Base-text>x {{ product.amount }}</Base-text>
+			</div>
+			<hr>
+			<Base-text
+				size="m"
+				:bold="true"
+			>Are you sure?</Base-text>
 			<div class="buttons">
 				<Base-button
 					@click="confirmRemove"
+					:stretch="true"
 					size="m"
 				>Ok</Base-button>
 				<Base-button
 					@click="cancelRemove"
-					size="m"
 					:pseudo="true"
+					:stretch="true"
+					size="m"
 				>Cancel</Base-button>
 			</div>
 		</Confirmation-modal>
@@ -65,9 +83,24 @@ export default {
 
 <style lang="scss" scoped>
 .remove-from-cart-button {
-	.buttons {
+	.warning {
+		display: block;
+		margin: 0 auto 2rem auto;
+	}
+	.product {
+		margin: 2rem 0;
 		display: flex;
-		& > * { margin-right: 1rem;}
+		align-items: center;
+		justify-content: space-between;
+		.left {
+			display: flex;
+			align-items: center;
+			.base-icon { margin-right: 0.8rem; }
+		}
+	}
+	.buttons {
+		margin-top: 2rem;
+		*:first-child { margin-bottom: 1rem; }
 	}
 }
 </style>

@@ -102,6 +102,14 @@ export default new Vuex.Store({
 			storageProducts(state)
 		},
 
+		CLEAR_CART: state => {
+			Vue.delete(state.cart, 'products')
+			Vue.set(state.cart, 'products', {})
+
+			// Clear local storage
+			storageProducts()
+		},
+
 		SET_CART: (state, localStorageData ) => {
 			// For filling the cart with product data from localStorage.
 			// Mimics backend / database.
@@ -128,6 +136,10 @@ export default new Vuex.Store({
 
 		REMOVE_PRODUCT_FROM_CART: ({ commit }, productId) => {
 			commit('REMOVE_PRODUCT_FROM_CART', productId)
+		},
+
+		CLEAR_CART: ({ commit }) => {
+			commit('CLEAR_CART')
 		},
 
 		SET_CART: ({commit}, localStorageData) => {

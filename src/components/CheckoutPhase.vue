@@ -170,6 +170,12 @@ $checkout-phase--color--separator: $app-color--main-l2;
 	border-bottom: 1px solid $checkout-phase--color--separator;
 	margin-bottom: $phase-gap;
 
+	&::v-deep {
+		.base-input {
+			margin: 0.8rem 0;
+		}
+	}
+
 	.header {
 		display: flex;
 		align-items: center;

@@ -4,19 +4,19 @@
 			<slot name="title"></slot>
 		</div>
 
+			<!-- :class="currentView" -->
 		<div
 			class="wrapper"
 			:class="classing"
 		>
 			<main class="main">
 				<slot name="main"></slot>
-				<slot :name="dynamicSlots.helper"></slot>
+				<slot :name="dynamicAsideSlot.helper"></slot>
 			</main>
 
 			<aside
-				v-if="dynamicSlots.displayAside"
-				class="aside"
-			>
+				v-if="dynamicAsideSlot.displayed"
+				class="aside">
 				<slot name="aside"></slot>
 			</aside>
 		</div>
@@ -29,18 +29,18 @@ export default {
 
 	data() {
 		return {
-			wide: false
+			displayAside: false
 		}
 	},
 
 	created() {
 		const trackWindowWidth = () => {
-			if (window.innerWidth > 1050) {
-				this.wide = true
+			if (window.innerWidth > 800) {
+				this.displayAside = true
 				return
 			}
 
-			this.wide = false
+			this.displayAside = false
 		}
 
 		trackWindowWidth()
@@ -52,24 +52,33 @@ export default {
 	},
 
 	computed: {
-		inShop() {
-			return this.$route.name === 'Shop' ? true : false
+		currentView() {
+			const view = this.$route.name
+			
+			return `mode-${view.toLowerCase()}`
 		},
 
-		dynamicSlots() {
+		dynamicAsideSlot() {
 			// Display default aside slot if currently not on shop route
 			// and / or screen width is enough for wide layout.
 			// If displayed, change helper slot's name to 'dummy' to leave it empty.
+			let displayAside = true
+
+			//if (this.currentView === 'mode-shop' || !this.displayAside) {
+			if (this.$route.name === 'Shop' || !this.displayAside) {
+				displayAside = false
+			}
 
 			return {
-				displayAside: this.wide && !this.inShop,
-				helper: this.wide ? 'dummy' : 'aside'
+				displayed: displayAside,
+				helper: this.displayAside ? 'dummy' : 'aside'
 			}
 		},
 
 		classing() {
 			return {
-				'wide-mode': this.wide && !this.inShop
+				'narrow-mode': !this.displayAside,
+				[`mode-${this.$route.name.toLowerCase()}`]: true
 			}
 		}
 	}
@@ -85,21 +94,38 @@ $content-grid--padding: $app-vars--layout-padding;
 		$content-grid--padding
 		100px
 		$content-grid--padding;
-	
 	.wrapper {
 		margin: 0 auto;
-		max-width: 700px;
+		max-width: 1000px;
 		display: grid;
-		grid-template-columns: 1fr;
-		grid-template-areas: "main";
-		&.wide-mode {
-			max-width: 1050px;
-			grid-template-columns: 1fr 400px;
+		grid-template-rows: auto;
+		&.mode-shop {
+			max-width: 800px;
+			grid-template-columns: 1fr;
+			grid-template-areas: "main";
+		}
+		&.mode-cart,
+		&.mode-checkout {
 			grid-template-areas: "main aside";
-			column-gap: calc(#{$app-vars--layout-padding} * 1.5);
+			column-gap: 30px;
+		}
+		&.narrow-mode {
+			&.mode-cart,
+			&.mode-checkout {
+				//column-gap: 0;
+			}	
+		}
+		
+		@media only screen and (max-width: 700px) {
+			grid-template-columns: 1fr;
+			grid-template-rows: auto 1fr;
+			grid-template-areas:
+				"aside"
+				"main";
+			column-gap: 0;
 		}
 	}
-
+	
 	.title {
 		padding-bottom: 1.6rem;
 	}
