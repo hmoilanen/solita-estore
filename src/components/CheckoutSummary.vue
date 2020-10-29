@@ -9,7 +9,7 @@
 			v-if="minimized"
 			class="narrow"
 		>
-			<Base-text size="l">{{ totalAmountOfProducts }} items</Base-text>
+			<Base-text size="l">{{ totalAmountOfProducts }} item{{ totalAmountOfProducts > 1 ? 's' : '' }}</Base-text>
 			<Base-title tag="h3">{{ dynamicPrice(summaryOfProductPrices) }}</Base-title>
 		</div>
 

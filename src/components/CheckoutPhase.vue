@@ -195,7 +195,7 @@ $checkout-phase--color--separator: $app-color--main-l2;
 	.bottom {
 		display: flex;
 		align-items: center;
-		& > *:last-child { margin-left: 0.4rem; }
+		& > *:last-child { margin-right: 0.4rem; }
 	}
 }
 </style>
