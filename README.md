@@ -3,9 +3,11 @@
 
 ### Getting started
 
-After cloning the repo, navigate to it's folder
+
+Navigate to desired folder and clone the repo
 ```
 $ cd foldername
+$ git clone https://github.com/hmoilanen/solita-estore.git
 ```
 For HTTP server, install npm package 'serve' (if already installed, skip this step :)
 ```
